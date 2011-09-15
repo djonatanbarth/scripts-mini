@@ -1,0 +1,1218 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  cancelIdle();
+</onEnter>
+
+<onExit>
+  showIdle();
+</onExit>  
+
+	<mediaDisplay name=onePartView
+		sideLeftWidthPC = 0
+		sideRightWidthPC = 0
+
+		sideColorRight="0:0:0"
+		sideColorLeft="0:0:0"
+		itemImageHeightPC="0"
+		itemImageWidthPC="0"
+		itemBackgroundColor="0:0:0"
+
+		itemXPC="5"
+		itemYPC="20"
+		itemHeightPC="8"
+		itemWidthPC="90"
+		itemPerPage="9"
+    itemGap="0"
+
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+
+  	capXPC="5"
+  	capYPC="20"
+  	capWidthPC="90"
+  	capHeightPC="9"
+
+  	bottomYPC="90"
+  	infoYPC="90"
+  	infoXPC="90"
+
+		backgroundColor="0:0:0"
+		showHeader=no
+		>
+		
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="10" fontSize="24" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<text offsetXPC=5 offsetYPC=11 widthPC=67 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      STATION
+		</text>
+		<text offsetXPC=72 offsetYPC=11 widthPC=9 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      LISTENERS
+		</text>
+		<text offsetXPC=81 offsetYPC=11 widthPC=8 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      BITRATE
+		</text>
+		<text offsetXPC=89 offsetYPC=11 widthPC=6 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      TYPE
+		</text>
+
+		<itemDisplay>
+			<text offsetXPC=0 offsetYPC=0 widthPC=79 heightPC=100 fontSize=15>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "name");
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+			<text offsetXPC=79 offsetYPC=0 widthPC=9 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  getItemInfo(idx, "lc");
+				</script>
+			</text>
+			<text offsetXPC=86 offsetYPC=0 widthPC=7 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  getItemInfo(idx, "br");
+				</script>
+			</text>
+			<text offsetXPC=93 offsetYPC=0 widthPC=7 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  mt = getItemInfo(idx, "mt");
+				  if(mt == "audio/mpeg")
+				    "MP3";
+				  else
+				  if(mt == "audio/aacp")
+				    "AAC+";
+				  else
+				    "";
+				</script>
+			</text>
+		</itemDisplay>
+
+    <onUserInput>
+    <script>
+    ret = "false";
+    majorContext = getPageInfo("majorContext");
+    minorContext = getPageInfo("minorContext");
+    userInput = currentUserInput();
+    
+    if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+    {
+      itemSize = getPageInfo("itemCount");
+      idx = Integer(getFocusItemIndex());
+      if (userInput == "pagedown" || userInput == "PD")
+      {
+        idx -= -9;
+        if(idx &gt;= itemSize)
+          idx = itemSize-1;
+      }
+      else
+      {
+        idx -= 9;
+        if(idx &lt; 0)
+          idx = 0;
+      }
+      setFocusItemIndex(idx);
+    	setItemFocus(idx);
+      redrawDisplay();
+      ret = "true";
+    }
+    else if (userInput == "enter" || userInput == "ENTR") {
+      idx = getFocusItemIndex();
+      station_id = getItemInfo(idx, "id");
+      executeScript("sub_Play");
+      ret = "true";
+    } 
+    ret;
+    </script>
+    </onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>	
+    <mediaDisplay name=threePartsView>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		</mediaDisplay>
+	</item_template>
+
+<sub_Play>
+  station_id = getItemInfo(idx,"id");
+  station_name = getItemInfo(idx,"name");
+  station_mt = getItemInfo(idx,"mt");
+  station_br = getItemInfo(idx,"br");
+  station_genre = getItemInfo(idx,"genre");
+  url = translate_base_url + "app,"+urlEncode("Station-id:"+station_id+";Station-name:"+station_name+";Station-br:"+station_br+";Station-mt:"+station_mt+";Station-genre:"+station_genre+";")+",shoutcast/station";
+  
+  showIdle();
+  doModalRss(url);
+</sub_Play>
+
+<channel>
+  <title>Shoutcast Radio - 'german'</title>
+  <item>
+    <name>top 100 station - Germanys No.1 Web Hit Station - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1966819</id>
+    <br>128</br>
+    <genre>Top40</genre>
+    <ct>DJ dee-pAim - Mixery Hot Rotation LIVE aus dem Studio</ct>
+    <lc>14085</lc>
+  </item>
+  <item>
+    <name>DEFJAY.DE - 100% R&amp;B! (GERMANY) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>626766</id>
+    <br>128</br>
+    <genre>Pop</genre>
+    <ct>Chris Brown - Look At Me Now feat. Busta Rhymes, JD, Da Brat (So So Mix)</ct>
+    <lc>4236</lc>
+  </item>
+  <item>
+    <name>Russian Radio [Germany] - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1911676</id>
+    <br>128</br>
+    <genre>Russian  Pop  Dance  RnB</genre>
+    <ct>Yuta - Zhili-byli</ct>
+    <lc>331</lc>
+  </item>
+  <item>
+    <name>Golden Hit Radio Italia live italy for Germany Uk France Poland - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1277509</id>
+    <br>128</br>
+    <genre>pop top 40 european  italian m</genre>
+    <ct>Il giardino dei semplici - M`innamorai</ct>
+    <lc>256</lc>
+  </item>
+  <item>
+    <name>.....::::: THE BEST GERMAN AND INTERNATIONAL OLDIES AND LOVESONGS :::::.....  - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>218785</id>
+    <br>128</br>
+    <genre>Oldies  Work Mix  European  60</genre>
+    <ct>live: `Der Musik-Express` mit Haraldino</ct>
+    <lc>253</lc>
+  </item>
+  <item>
+    <name>DrAgOnDeViL.DyNDnS.OrG - German Top 100 Single Charts - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>493</id>
+    <br>192</br>
+    <genre>German Top 100 Single Charts</genre>
+    <ct>Israel Kamakawiwo`ole - German TOP100 Single Charts - Over The Rainbow</ct>
+    <lc>252</lc>
+  </item>
+  <item>
+    <name>Golden Radio Italia Best HIT 80s 70s live italy for Germany Uk France Poland Romania Spain Swiss - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>403449</id>
+    <br>128</br>
+    <genre>80s 70s italian dance italo</genre>
+    <ct>Easton Sheena - For Your Eyes Only</ct>
+    <lc>250</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Rock and Groove (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>938461</id>
+    <br>192</br>
+    <genre>Rock  Classic Rock</genre>
+    <ct>David Lee Roth - Last Call</ct>
+    <lc>128</lc>
+  </item>
+  <item>
+    <name>PLUSFM.NET - Eclectic Electro Pop TripHop Deep House Acid Jazz Groove Funk Germany France French UK - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>993211</id>
+    <br>192</br>
+    <genre>Electro Downtempo Trip Lounge</genre>
+    <ct>Jazz Liberatorz (Feat. Lizz Fi - Speak The Language</ct>
+    <lc>121</lc>
+  </item>
+  <item>
+    <name>Germanys No.1 Web Hit Station - top 100 station - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1439279</id>
+    <br>48</br>
+    <genre>Top 100 Charts</genre>
+    <ct>DJ dee-pAim - Mixery Hot Rotation LIVE aus dem Studio</ct>
+    <lc>110</lc>
+  </item>
+  <item>
+    <name>Germany-Stream e.V. |  Nadine und Ruebe - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1515658</id>
+    <br>192</br>
+    <genre>Various</genre>
+    <ct>ToMCat - Sternentor (Dance Fox Version)</ct>
+    <lc>94</lc>
+  </item>
+  <item>
+    <name>Veedelsradio Koeln - Das Beste aus den Top 100 in Deutschland/Germany (Vera) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>302884</id>
+    <br>128</br>
+    <genre>Pop</genre>
+    <ct>rosenstolz - ich bin ich wir sind wir</ct>
+    <lc>75</lc>
+  </item>
+  <item>
+    <name>~ oO( www.German-Gothic-Radio.de - The NexT GeneratioN !! )Oo ~  DSL ~NonStop ~ - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>282332</id>
+    <br>160</br>
+    <genre>Gothic Industrial Darkwave Mit</genre>
+    <ct>Joachim Witt - Dann Warst Du Da</ct>
+    <lc>71</lc>
+  </item>
+  <item>
+    <name>radioxeem1 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1290150</id>
+    <br>32</br>
+    <genre>classical</genre>
+    <ct>DBN - All My Life (top 100 station - Germanys No.1 Web Hit Station)</ct>
+    <lc>71</lc>
+  </item>
+  <item>
+    <name>Praises Radio Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1365146</id>
+    <br>32</br>
+    <genre>Ghana</genre>
+    <ct/>
+    <lc>69</lc>
+  </item>
+  <item>
+    <name>DEFJAY.DE - 100% R&amp;B! (GERMANY) - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>688905</id>
+    <br>48</br>
+    <genre>Pop</genre>
+    <ct>Snoop Dogg - Gangsta Luv feat. The Dream</ct>
+    <lc>65</lc>
+  </item>
+  <item>
+    <name>VIBES FM - GERMANY - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>626999</id>
+    <br>128</br>
+    <genre>R&amp;B  Hip Hop  Rap  Urban</genre>
+    <ct>Ashanti - Unfoolish(Ft Notorious B.I.G.)</ct>
+    <lc>53</lc>
+  </item>
+  <item>
+    <name>Netzradio Germania - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1272752</id>
+    <br>128</br>
+    <genre>Musik fuer das Volk</genre>
+    <ct>05 - Bereit zum Kampf</ct>
+    <lc>53</lc>
+  </item>
+  <item>
+    <name>Lovehits.net - Best Rock and Pop and todays Hit-Music! Deutschland Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1034070</id>
+    <br>128</br>
+    <genre>80s 90s Rock Pop Top40 Germany</genre>
+    <ct>Bad Boys Blue - Come Back An Stay</ct>
+    <lc>49</lc>
+  </item>
+  <item>
+    <name>Errorfm.com: @ErrorFM Music - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1265842</id>
+    <br>128</br>
+    <genre>indie pop</genre>
+    <ct>Wilco - Impossible Germany</ct>
+    <lc>48</lc>
+  </item>
+  <item>
+    <name>PRIDE1 Germany - Anders hoeren. - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>4465</id>
+    <br>128</br>
+    <genre/>
+    <ct>Britney Spears - 3</ct>
+    <lc>46</lc>
+  </item>
+  <item>
+    <name>Germany - Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1276948</id>
+    <br>128</br>
+    <genre>Discofox Dancefox Schlager Fox</genre>
+    <ct>Blue Lagoon - Break My Stride 2011 Steffi Krug / Studio Dresden</ct>
+    <lc>29</lc>
+  </item>
+  <item>
+    <name>top 100 station - Germanys No.1 Web Hit Station - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1898198</id>
+    <br>160</br>
+    <genre>Top40</genre>
+    <ct>DJ dee-pAim - Mixery Hot Rotation LIVE aus dem Studio</ct>
+    <lc>27</lc>
+  </item>
+  <item>
+    <name>Radio Ascolta  Italia milano veneto bologna torino UK Germany France Canada anni 60 anni 70 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1268296</id>
+    <br>128</br>
+    <genre>Italy Oldies 60  70 80</genre>
+    <ct>Remo Germani - Ceste di sogni</ct>
+    <lc>26</lc>
+  </item>
+  <item>
+    <name>RADIO NOW 94.5 FM PALMA DE MALLORCA BALEARES ESPAA SPAIN SPAGNE SPAGNA SPANIEN SPANJE SPANIA ESPANHA - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>965743</id>
+    <br>128</br>
+    <genre>Dance House Electronic Latin P</genre>
+    <ct>RADIO NOW STATION DIAL 94.5 FM BALEARES PALMA MALLORCA IBIZA MENORCA FORMENTERA http://www.radionow.es MADRID BARCELONA ANDALUCIA ASTURIAS GALICIA GERMANY TOP HITZ HITS http://www.futbolbalear.es</ct>
+    <lc>25</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Indie, Alternative (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>970538</id>
+    <br>192</br>
+    <genre>Alternative  Adult Alternative</genre>
+    <ct>Long-view - In A Dream</ct>
+    <lc>23</lc>
+  </item>
+  <item>
+    <name>SoE DJ PfalzBaer fr SoundofEmotion (Deutsch/German) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>640478</id>
+    <br>128</br>
+    <genre>Wave Pop Mixed World</genre>
+    <ct>Bon Jovi - Bed Of Roses</ct>
+    <lc>18</lc>
+  </item>
+  <item>
+    <name>ww3.ath.cx: German TOP 100 Single Charts - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2075999</id>
+    <br>192</br>
+    <genre>Charts</genre>
+    <ct>091 - rihanna - only girl (in the world)</ct>
+    <lc>17</lc>
+  </item>
+  <item>
+    <name>Top100 SingleCharts - Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1602849</id>
+    <br>320</br>
+    <genre>top40   charts   other   schla</genre>
+    <ct>Rihanna - S&amp;m</ct>
+    <lc>16</lc>
+  </item>
+  <item>
+    <name>PS-Radio Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1265890</id>
+    <br>128</br>
+    <genre>International</genre>
+    <ct>02 Love Affair - Everlasting Love</ct>
+    <lc>14</lc>
+  </item>
+  <item>
+    <name>Stolen Radio: All Mashups, All The Time - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>901511</id>
+    <br>128</br>
+    <genre>Mashups and Remixes</genre>
+    <ct>Mashup-Germany - Naive Snow (Live the way you lie Part 2)</ct>
+    <lc>11</lc>
+  </item>
+  <item>
+    <name>PRIDE1 Germany - Anders hoeren. - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1272235</id>
+    <br>128</br>
+    <genre>LGBT Top 40 World Pop gay schw</genre>
+    <ct>Marquess - Chapoteo</ct>
+    <lc>11</lc>
+  </item>
+  <item>
+    <name>Radio Weissblau * German Radio - Deutsche Hits, Schlager + Oldies * - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1273648</id>
+    <br>128</br>
+    <genre>Schlager   Oldies   deutsche H</genre>
+    <ct>Radio Weissblau * German Radio - Deutsche Hits, Schlager + Oldies *</ct>
+    <lc>11</lc>
+  </item>
+  <item>
+    <name>www.dondehaybaile.com flamaz - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1021858</id>
+    <br>80</br>
+    <genre>todo grupero</genre>
+    <ct>Banda Estrellas De Sinaloa De German Lizarraga - Quiubo Compa</ct>
+    <lc>10</lc>
+  </item>
+  <item>
+    <name>Radio Germanija - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1326505</id>
+    <br>128</br>
+    <genre/>
+    <ct/>
+    <lc>9</lc>
+  </item>
+  <item>
+    <name>QUERENCIA 1120 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1580484</id>
+    <br>32</br>
+    <genre>Various</genre>
+    <ct>P.Six - Git With U (top 100 station - Germanys No.1 Web Hit Station)</ct>
+    <lc>9</lc>
+  </item>
+  <item>
+    <name>G-town Radio: The Sound from Germantown - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1272365</id>
+    <br>128</br>
+    <genre>Community Internet Radio</genre>
+    <ct>G - town Radio: The Sound from Germantown</ct>
+    <lc>8</lc>
+  </item>
+  <item>
+    <name>PLUSFM.NET - Eclectic Electro Pop TripHop Deep House Acid Jazz Lounge Funk (Germany France French UK - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1820366</id>
+    <br>64</br>
+    <genre>Electro Downtempo Trip Lounge</genre>
+    <ct>Jazz Liberatorz (Feat. Lizz Fi - Speak The Language</ct>
+    <lc>7</lc>
+  </item>
+  <item>
+    <name>Angel On Air Aus M'Gladbach - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1276362</id>
+    <br>128</br>
+    <genre>24hs  Rock  Pop  Germany  Com</genre>
+    <ct>Pietro Lombardi Und Sarah Engels - I Miss You</ct>
+    <lc>7</lc>
+  </item>
+  <item>
+    <name>WEB HIT-RADIO www.webhitradio.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1443982</id>
+    <br>192</br>
+    <genre>Various Pop Rock</genre>
+    <ct>Hits FM Italia, Hits FM Germany</ct>
+    <lc>7</lc>
+  </item>
+  <item>
+    <name>TodosTusExitos la radio Mas escuchada By Tiago And Marcelo Nunez From Germantow Maryland Estados Uni - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1817665</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>Vicent - Don Mc Lean!</ct>
+    <lc>7</lc>
+  </item>
+  <item>
+    <name>PHC Radio - What Came In The Mail Wednesday - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1280322</id>
+    <br>128</br>
+    <genre>PUNK</genre>
+    <ct>Pornoheft (Frankfurt am Main, Germany) - dipuss</ct>
+    <lc>6</lc>
+  </item>
+  <item>
+    <name>LIVE FM GERMANY - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1342661</id>
+    <br>320</br>
+    <genre>POP ROCK CHARTS</genre>
+    <ct>Xavier Naidoo - Alles kann besser werden</ct>
+    <lc>6</lc>
+  </item>
+  <item>
+    <name>www.sky-fm.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1427915</id>
+    <br>128</br>
+    <genre>N A</genre>
+    <ct>Keri_Hilson - German Top100 Single Charts 27.06.2011 - Pretty_Girl_Rock</ct>
+    <lc>6</lc>
+  </item>
+  <item>
+    <name>Stahlradio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>321564</id>
+    <br>192</br>
+    <genre>German Metal</genre>
+    <ct>Sabaton - Primo Victoria</ct>
+    <lc>5</lc>
+  </item>
+  <item>
+    <name>Server 1 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>389568</id>
+    <br>128</br>
+    <genre>Dance trance</genre>
+    <ct>Adele - German TOP100 Single Charts - Set Fire To The Rain</ct>
+    <lc>5</lc>
+  </item>
+  <item>
+    <name>Musical Greetings From Germany - With Gunter Auerbach - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1184983</id>
+    <br>64</br>
+    <genre>German</genre>
+    <ct>Complete MGFG 10-03-2010</ct>
+    <lc>5</lc>
+  </item>
+  <item>
+    <name>Radio Germanica - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1271146</id>
+    <br>64</br>
+    <genre>M sica Alem</genre>
+    <ct>ANDREA BERG - DU HAST MICH TAUSENDMAL ...</ct>
+    <lc>5</lc>
+  </item>
+  <item>
+    <name>RADIO GOCCIOLINE italia for Italy Germany Canada France Spain Uk - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1944798</id>
+    <br>128</br>
+    <genre>oldies</genre>
+    <ct>On Air Now : Paps`n`Skar - Spazio fratto tempo (radio version)</ct>
+    <lc>5</lc>
+  </item>
+  <item>
+    <name>Radio Revolte-German Hardcore Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>508004</id>
+    <br>128</br>
+    <genre>Techno Hardcore Gabber Terror</genre>
+    <ct>Xt - No1</ct>
+    <lc>4</lc>
+  </item>
+  <item>
+    <name>Radio freeFM Ulm/Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>563980</id>
+    <br>160</br>
+    <genre>Alternative</genre>
+    <ct>Sounds of Africa</ct>
+    <lc>3</lc>
+  </item>
+  <item>
+    <name>www.magic-of-sound.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1229517</id>
+    <br>128</br>
+    <genre>N A</genre>
+    <ct>Usher - German TOP100 Single Charts - More</ct>
+    <lc>3</lc>
+  </item>
+  <item>
+    <name>DUKAT RADIO - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1276055</id>
+    <br>64</br>
+    <genre>Narodna Muzika</genre>
+    <ct>SLUSATE DUKAT RADIO GERMANY</ct>
+    <lc>3</lc>
+  </item>
+  <item>
+    <name>GermanMetal.com Radio - German metal, industrial, goth, rock, electronic, EBM, punk... - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1654549</id>
+    <br>96</br>
+    <genre>Alternative</genre>
+    <ct>Angelika Express - International Punkrock Jetset (feat. Aydo Abay)</ct>
+    <lc>3</lc>
+  </item>
+  <item>
+    <name>)) PopDanceRadio.de (( | streamed by da-webart.eu - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2094787</id>
+    <br>128</br>
+    <genre>German Top 100   80er   90er</genre>
+    <ct>Raff - Self control ()) PopDanceRadio.de (( | streamed by da-webart.eu)</ct>
+    <lc>3</lc>
+  </item>
+  <item>
+    <name>Auto DJ - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2294041</id>
+    <br>320</br>
+    <genre>pop</genre>
+    <ct>Unheilig - Geboren Um Zu Leben [German Charts Platz 44]</ct>
+    <lc>3</lc>
+  </item>
+  <item>
+    <name>ExNor's RADIO: Isotope - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1542504</id>
+    <br>48</br>
+    <genre>Astro Surf Punk Folk Rock Pop</genre>
+    <ct>Spermbirds (Kaiserslautern, Germany) - Only a Phase</ct>
+    <lc>2</lc>
+  </item>
+  <item>
+    <name>RADIO STIL ROMANIA www.radiostil.ro [GERMANIA 64 Aac] - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>2273852</id>
+    <br>64</br>
+    <genre>Top 1000</genre>
+    <ct/>
+    <lc>2</lc>
+  </item>
+  <item>
+    <name>SoE DJ PfalzBaer fr SoundofEmotion (Deutsch/German) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>847982</id>
+    <br>32</br>
+    <genre>Wave Pop Mixed World</genre>
+    <ct>Bon Jovi - Bed Of Roses</ct>
+    <lc>2</lc>
+  </item>
+  <item>
+    <name>Radio Supergau Jukebox - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1275269</id>
+    <br>128</br>
+    <genre>Charts</genre>
+    <ct>Die Fantastischen Vier - German TOP100 Single Charts - Danke</ct>
+    <lc>2</lc>
+  </item>
+  <item>
+    <name>www.radiosonnensee.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1620373</id>
+    <br>128</br>
+    <genre>N A</genre>
+    <ct>Linkin Park - German TOP100 Single Charts - Burning In The Skies</ct>
+    <lc>2</lc>
+  </item>
+  <item>
+    <name>Errorfm.com: @ErrorFM Music (mobile) - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>423119</id>
+    <br>48</br>
+    <genre>indie pop</genre>
+    <ct>Wilco - Impossible Germany</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Omega Hits ::: DJ DiegoGermano - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1671141</id>
+    <br>32</br>
+    <genre>Various</genre>
+    <ct>FUNK QUEM VA DANAR A NOITE INTEIRA</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>THE MOOV RADIO HD - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1754902</id>
+    <br>128</br>
+    <genre>Global</genre>
+    <ct>Mashup-Germany - Schne Zucker Welt</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>GermanGrid Radio  - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>763536</id>
+    <br>128</br>
+    <genre>Rock Pop</genre>
+    <ct>Foreigner - Urgent</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Server 1 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>896808</id>
+    <br>128</br>
+    <genre>N A</genre>
+    <ct>B.o.B - German Top100 Single-Charts - Airplanes</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Radio KAB Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1017123</id>
+    <br>96</br>
+    <genre>Mixed</genre>
+    <ct>Radio KAB / Your Sound - Die Nacht hat 1000 Augen</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Konzertmeisterrr E10 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1046580</id>
+    <br>192</br>
+    <genre>random tunes</genre>
+    <ct>Oktoberfest - GERMAN-Polkas Accordeon - Oberkrainer Ferien Polka</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Sthoerbeatz : : Radio : : Germany : : powered by : : HardTekk4Life - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1048662</id>
+    <br>192</br>
+    <genre>Mittwoch Resi  Day</genre>
+    <ct>Evil Dead - HT4L meets - HardTekk4Life meets Dark Art Records</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Germany - Radio (70/80er) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1275802</id>
+    <br>128</br>
+    <genre>Discofox Dancefox Schlager Fox</genre>
+    <ct>Rick Astley - My Arms keep missing You</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Tertulia Web - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1580485</id>
+    <br>48</br>
+    <genre>Various</genre>
+    <ct>Mohombi feat. Nicole Scherzinger - CocoNut Tree (top 100 station - Germanys No.1 Web Hit Station)</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Blazin Vibes Radio - German Reggae Dancehall Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1683687</id>
+    <br>128</br>
+    <genre>Reggae</genre>
+    <ct>Jingles - john holt2 [t]</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>RADIO GOCCIOLINE italia for Italy Germany Canada France Spain Uk - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1750143</id>
+    <br>64</br>
+    <genre>oldies</genre>
+    <ct>On Air Now : Paps`n`Skar - Spazio fratto tempo (radio version)</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>RadioNetpower.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1836417</id>
+    <br>128</br>
+    <genre>Classical</genre>
+    <ct>Aura Dione - German Top100 Single Charts - Song For Sophie</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Dynamite AutoDJ (www.radio-dynamite.com) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1859330</id>
+    <br>128</br>
+    <genre>Querbeet</genre>
+    <ct>Eliza Doolittle - German Top 100 SC 18.04.2011 - Pack Up</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>ADULT RADIO - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1888744</id>
+    <br>128</br>
+    <genre>TOP 100</genre>
+    <ct>Revolverheld - German TOP100 Single Charts - Halt Dich An Mir Fest</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Germany - Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1894092</id>
+    <br>128</br>
+    <genre>Discofox Dancefox Schlager Fox</genre>
+    <ct>Blue Lagoon - Break My Stride 2011 Steffi Krug / Studio Dresden</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Germany - Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1943101</id>
+    <br>64</br>
+    <genre>Discofox Dancefox Schlager Fox</genre>
+    <ct>Blue Lagoon - Break My Stride 2011 Steffi Krug / Studio Dresden</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Radio-underground-world - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2234663</id>
+    <br>128</br>
+    <genre>N A</genre>
+    <ct>LMFAO Feat. Lauren Bennett And Goonock - German TOP100 Single Charts - Party Rock Anthem</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>GGRN Global German Radio Network - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>722323</id>
+    <br>24</br>
+    <genre>Rock</genre>
+    <ct/>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Rock and Groove (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1733074</id>
+    <br>48</br>
+    <genre>Rock  Adult Rock  Groove</genre>
+    <ct>David Lee Roth - Last Call</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio-German Angel - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>2192145</id>
+    <br>64</br>
+    <genre>Gemischt</genre>
+    <ct>BassBros - Amanda</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>-=www.SPEEDTEC-GERMANY.de=- -=www.TKKG-CLAN.com=- -=www.VoCo-Club.de=- - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>20934</id>
+    <br>80</br>
+    <genre>LIVE STREAMS by www SPEEDTEC G</genre>
+    <ct>01-carl_cox_-_global-sat-03-21-2009-talion</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>POP Stream Test - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>502025</id>
+    <br>128</br>
+    <genre>Var</genre>
+    <ct>Kid Cudi Vs. Crookers - German ODC Top50 - Day N Nite</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>radio-biet-club-fm - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>525570</id>
+    <br>128</br>
+    <genre>Mp3</genre>
+    <ct>Afrojack Feat. Eva Simons - German TOP50 ODC JAHRESCHARTS - Take Over Control</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>DRS 2006 - G-town Radio: The Sound from Germantown - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>917412</id>
+    <br>24</br>
+    <genre>Community Internet Radio</genre>
+    <ct>G - town Radio: The Sound from Germantown</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio-Germany@Auto-DJ - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1022821</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>++ Der Radio-Germany Auto-DJ On Air ++</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Muckis Non-Stop Stream - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1030375</id>
+    <br>128</br>
+    <genre>Dance</genre>
+    <ct>Dj Hells German HandsupMix</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>RadioneverendingStory - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1194631</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>Darius and Finlay and Shaun Baker - German TOP50 ODC - Zeigt Mir 10 (Explode 3)</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio Germanija - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1326519</id>
+    <br>64</br>
+    <genre>Rock</genre>
+    <ct/>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radiosounddevision - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1609478</id>
+    <br>128</br>
+    <genre>Queerbeet</genre>
+    <ct>Beth Ditto - German Top 100 SC 25.04.2011 - I Wrote The Book</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>DrAgOnDeViL.DyNDnS.OrG - German Top 100 Single Charts - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1689973</id>
+    <br>192</br>
+    <genre>German Top 100 Single Charts</genre>
+    <ct>Sophie Ellis Bextor - Music Gets The Best Of Me</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>bigbeat-radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1912160</id>
+    <br>128</br>
+    <genre>mashups</genre>
+    <ct>Mashup-Germany - Mashup-Germany - Vol.1 - The Killers vs. Germany</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Server 1 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1990372</id>
+    <br>128</br>
+    <genre>Auto Dj</genre>
+    <ct>James Blunt - German TOP100 Single Charts - Stay The Night</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>DJ-Ralli - German-Radio.net - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2005598</id>
+    <br>128</br>
+    <genre>N A</genre>
+    <ct>Billy Swan - 40 Jahre Disco - The Disco Pop Years (CD 1) - I Can Help</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Big Webradio Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2055166</id>
+    <br>128</br>
+    <genre/>
+    <ct>Belinda Carlisle - Heaven is a Place on Earth ( Paul van K Radio Edit )</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Big Webradio Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2055168</id>
+    <br>64</br>
+    <genre/>
+    <ct>Belinda Carlisle - Heaven is a Place on Earth ( Paul van K Radio Edit )</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Server 1 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2078729</id>
+    <br>128</br>
+    <genre>rock und techno</genre>
+    <ct>Leona Lewis - German Top 100 SingleCharts 23.05.2011 - Run</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>wunschradio.fm Schlager - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2106913</id>
+    <br>192</br>
+    <genre>Schlager  Deutsch  German</genre>
+    <ct>Zweifach - Wer Lieben Will, Muss Leiden</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>mfl - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2124905</id>
+    <br>64</br>
+    <genre>Various</genre>
+    <ct>De Fabriek - Made In Germany - Wollt Ihr - Alles Klar - Schneetanz - Kein Spass In Zwolle - Nachtschatten - Allein - 1977-1991 Wie Der Wayne</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>German-Power-Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2157177</id>
+    <br>256</br>
+    <genre>A bis Z</genre>
+    <ct>Flash And The Pan - Waiting For A Train</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Hit-Radio-Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2180000</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>Gerry - Vogel der Nacht (Remix 2011)</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio-Autoscooter - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2183037</id>
+    <br>56</br>
+    <genre>N A</genre>
+    <ct>Horny United - German ODC Top50 - Crazy Paris</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Willkommen auf beatzsound.com - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2193982</id>
+    <br>128</br>
+    <genre>Charts  Black  Hip Hop  Pop &amp;</genre>
+    <ct>Flo Rida feat. David Guetta - German Top 100 Single Charts KW 11 - Club can`t handle me</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>AutoDj - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2201299</id>
+    <br>128</br>
+    <genre/>
+    <ct>Puff Daddy &amp; Faith feat. 112 - 20 Years Of Mtv-German Charts - I`ll Be Missing You</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>RADIO LA IXHUATECA - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2213700</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>German Montero - FOTOGRAFIA</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>AutoDJ - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2220205</id>
+    <br>128</br>
+    <genre/>
+    <ct>Nickelback - German Top100 Single Charts - Rockstar</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>xRadio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2261429</id>
+    <br>128</br>
+    <genre>N A</genre>
+    <ct>David Guetta &amp; Afrojack Feat. Niles Mason - German TOP50 ODC - Louder Than Words</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>..::DJ Homer's Autostream::.. - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2272171</id>
+    <br>128</br>
+    <genre>pop</genre>
+    <ct>Bob_Sinclar_Feat._Raffaella_Carra - German Top100 Single Charts 27.06.2011 - Far_Lamore</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>mobil caquetaradio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2312702</id>
+    <br>32</br>
+    <genre>crossover</genre>
+    <ct>Tu Olor Remix Pull Up By Dj German Fonseca</ct>
+    <lc>0</lc>
+  </item>
+</channel>
+
+
+</rss>

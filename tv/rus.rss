@@ -1,0 +1,1929 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="50"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="50"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(titlu); titlu;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+  image/tv_radio.png
+		</image>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>mozhay TV</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>Первый канал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://001.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Первый канал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://167.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://002.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТВ Центр</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://003.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТВ Центр International</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://169.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>НТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://004.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Культура</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://005.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://006.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>7 канал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://007.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>СТС</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://010.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>РЕН ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://011.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>РЕН ТВ (+2)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://143.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТНТ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://012.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Домашний</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://013.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ДТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://140.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТВ3</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://015.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Звезда</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://016.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>5 канал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://017.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>2х2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://020.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>МИР</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://021.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>МИР (+1)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://142.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия РТР</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://027.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Comedy TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://99.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>РБК</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://024.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Эксперт</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://026.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Эксперт</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://22.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия 24</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://030.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>КХЛ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://036.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Русский Extreme</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://037.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Viasat Sport</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://040.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Спорт 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://041.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EuroSport LIVE</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://042.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EuroSport 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://043.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://006.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Zone Reality</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://046.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Extreme Sport</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://047.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Extreme Sports</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://39.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>AXN SciFi</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://052.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Феникс плюс Кино</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://053.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV1000</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://054.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV1000 Action</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://055.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV1000 Русское кино</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://056.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Русский Иллюзион</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://062.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Иллюзион +</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://063.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>FoxCrime</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://064.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>FoxLife HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://065.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Настоящее страшное кино</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://060.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Настоящее Смешное ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://067.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>XXI</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://057.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ЕвроКино</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://49.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Европа плюс ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://90.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MTV Film</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://82.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Карусель</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://074.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Disney channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://075.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Nickelodeon</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://076.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Детский</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://077.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Discovery channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://100.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Discovery Science</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://115.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Discovery World</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://116.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>National Geographic</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://111.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ViaSat Nature</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://101.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ViaSat Explorer</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://102.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ViaSat History</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://103.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Da Vinci Learning</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://104.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>24 Техно</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://105.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ZooПарк</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://106.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Домашние животные</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://107.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Психология 21</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://108.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Вопросы и ответы</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://109.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Загородная Жизнь</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://110.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Охота и рыбалка</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://123.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Драйв</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://122.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Animal Planet</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://112.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>1+1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://222.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>CITY</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://223.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TVi</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://224.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>QTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://225.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Inter</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://226.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Enter</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://227.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MTV Ukraine</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://228.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Classic</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://229.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Music Box</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://230.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>МузТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://88.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Шансон ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://89.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://81.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>A-ONE</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://83.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>1 Музыка</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://84.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия сегодня</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://025.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Aljazeera</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://032.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>BBC World News</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://033.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Euronews</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://034.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>NHK World</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://035.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Россия сегодня Док</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://045.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EuroNews</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://28.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>NHK World</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://29.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Italia channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://176.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Press TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://181.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Korea Global TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://179.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>CNN</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://200.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>K+</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://178.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RTG</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://113.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Pentagon channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://114.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Мужской</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://120.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Ретро</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://121.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Здоровое ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://124.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Усадьба</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://125.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Моя планета</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://126.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV Club</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://127.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV Club</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://152.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Домашний магазин</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://150.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV Sale</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://151.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТНВ Татарстан</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://160.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТРО</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://161.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>INT</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://162.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Беларусь ТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://168.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>AzTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://170.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>C1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://171.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>8 канал</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://173.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>НТК</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://174.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TVRi</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://177.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ТБН</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://182.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>VIVA</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://231.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HD Media</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://232.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>JimJam</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://68.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TiJi</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://69.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Gulli</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://70.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Fashion TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://80.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Живи!</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://85.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>1 Телекафе</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://86.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ВТВ</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://87.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>O-TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://221.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>O-TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://9.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>O-TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://8.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Zone Reality</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://38.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Universal channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://050.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>SONY Entertainment channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/mozhay.cgi?http://051.tv.mozhay.net";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    </channel>
+</rss>

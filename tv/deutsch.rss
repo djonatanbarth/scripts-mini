@@ -1,0 +1,669 @@
+<?xml version='1.0' ?>
+<rss version="2.0" xmlns:dc="http://purl.org/dc/elements/1.1/">
+
+<!--
+#
+#   http://code.google.com/media-translate/
+#   Copyright (C) 2010  Serge A. Timchenko
+#
+#   This program is free software: you can redistribute it and/or modify
+#   it under the terms of the GNU General Public License as published by
+#   the Free Software Foundation, either version 3 of the License, or
+#   (at your option) any later version.
+#
+#   This program is distributed in the hope that it will be useful,
+#   but WITHOUT ANY WARRANTY; without even the implied warranty of
+#   MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+#   GNU General Public License for more details.
+#
+#   You should have received a copy of the GNU General Public License
+#   along with this program. If not, see <http://www.gnu.org/licenses/>.
+#
+-->
+<onEnter>
+    translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+  screenXp = 4;
+  screenYp = 3;
+  rssconf = readStringFromFile(getStoragePath("key")+"translate.dat");
+  print("rssconf:",rssconf);
+  if(rssconf != null)
+  {
+    value = getStringArrayAt(rssconf, 0);
+    if(value != null &amp;&amp; value != "")
+      translate_base_url = value;
+    value = getStringArrayAt(rssconf, 1);
+    if(value != null &amp;&amp; value != "")
+      screenXp = Integer(value);
+    value = getStringArrayAt(rssconf, 2);
+    if(value != null &amp;&amp; value != "")
+      screenYp = Integer(value);
+  }
+  print("rssconf:",translate_base_url,screenXp,screenYp);
+
+  cancelIdle();
+</onEnter>
+
+<onExit>
+  showIdle();
+</onExit>  
+
+	<mediaDisplay name=onePartView
+		sideLeftWidthPC = 0
+		sideRightWidthPC = 0
+
+		sideColorRight="0:0:0"
+		sideColorLeft="0:0:0"
+		itemImageHeightPC="0"
+		itemImageWidthPC="0"
+		itemBackgroundColor="0:0:0"
+
+		itemXPC="5"
+		itemYPC="20"
+		itemHeightPC="8"
+		itemWidthPC="90"
+		itemPerPage="9"
+    itemGap="0"
+
+  	imageFocus=""
+  	imageUnFocus=""
+  	imageParentFocus=""
+
+  	capXPC="5"
+  	capYPC="20"
+  	capWidthPC="90"
+  	capHeightPC="9"
+
+  	bottomYPC="90"
+  	infoYPC="90"
+  	infoXPC="90"
+
+		backgroundColor="0:0:0"
+		showHeader=no
+		>
+		
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+  	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="10" fontSize="24" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+		<text offsetXPC=5 offsetYPC=11 widthPC=67 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      STATION
+		</text>
+		<text offsetXPC=72 offsetYPC=11 widthPC=9 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      LISTENERS
+		</text>
+		<text offsetXPC=81 offsetYPC=11 widthPC=8 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      BITRATE
+		</text>
+		<text offsetXPC=89 offsetYPC=11 widthPC=6 heightPC=8 fontSize=12 backgroundColor=80:80:80 foregroundColor=255:255:255>
+      TYPE
+		</text>
+
+		<itemDisplay>
+			<text offsetXPC=0 offsetYPC=0 widthPC=79 heightPC=100 fontSize=15>
+				<script>
+					idx = getQueryItemIndex();
+					getItemInfo(idx, "name");
+				</script>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "150:150:150"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "0:0:0"; else "200:200:200";
+  				</script>
+			  </foregroundColor>
+			</text>
+			<text offsetXPC=79 offsetYPC=0 widthPC=9 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  getItemInfo(idx, "lc");
+				</script>
+			</text>
+			<text offsetXPC=86 offsetYPC=0 widthPC=7 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  getItemInfo(idx, "br");
+				</script>
+			</text>
+			<text offsetXPC=93 offsetYPC=0 widthPC=7 heightPC=100 fontSize=15 backgroundColor=-1:-1:-1 foregroundColor=100:100:100>
+				<script>
+					idx = getQueryItemIndex();
+				  mt = getItemInfo(idx, "mt");
+				  if(mt == "audio/mpeg")
+				    "MP3";
+				  else
+				  if(mt == "audio/aacp")
+				    "AAC+";
+				  else
+				    "";
+				</script>
+			</text>
+		</itemDisplay>
+
+    <onUserInput>
+    <script>
+    ret = "false";
+    majorContext = getPageInfo("majorContext");
+    minorContext = getPageInfo("minorContext");
+    userInput = currentUserInput();
+    
+    if (userInput == "pagedown" || userInput == "pageup" || userInput == "PG" || userInput == "PD")
+    {
+      itemSize = getPageInfo("itemCount");
+      idx = Integer(getFocusItemIndex());
+      if (userInput == "pagedown" || userInput == "PD")
+      {
+        idx -= -9;
+        if(idx &gt;= itemSize)
+          idx = itemSize-1;
+      }
+      else
+      {
+        idx -= 9;
+        if(idx &lt; 0)
+          idx = 0;
+      }
+      setFocusItemIndex(idx);
+    	setItemFocus(idx);
+      redrawDisplay();
+      ret = "true";
+    }
+    else if (userInput == "enter" || userInput == "ENTR") {
+      idx = getFocusItemIndex();
+      station_id = getItemInfo(idx, "id");
+      executeScript("sub_Play");
+      ret = "true";
+    } 
+    ret;
+    </script>
+    </onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>	
+    <mediaDisplay name=threePartsView>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_01.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_02.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_03.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_04.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_05.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_06.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_07.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+    	<idleImage idleImageYPC="45" idleImageHeightPC="10">../etc/translate/rss/image/POPUP_LOADING_08.png<idleImageWidthPC><script>10 * screenYp / screenXp;</script></idleImageWidthPC><idleImageXPC><script>45 + 10 * (1 - screenYp / screenXp) / 2;</script></idleImageXPC></idleImage>
+		</mediaDisplay>
+	</item_template>
+
+<sub_Play>
+  station_id = getItemInfo(idx,"id");
+  station_name = getItemInfo(idx,"name");
+  station_mt = getItemInfo(idx,"mt");
+  station_br = getItemInfo(idx,"br");
+  station_genre = getItemInfo(idx,"genre");
+  url = translate_base_url + "app,"+urlEncode("Station-id:"+station_id+";Station-name:"+station_name+";Station-br:"+station_br+";Station-mt:"+station_mt+";Station-genre:"+station_genre+";")+",shoutcast/station";
+  
+  showIdle();
+  doModalRss(url);
+</sub_Play>
+
+<channel>
+  <title>Shoutcast Radio - 'deutsch'</title>
+  <item>
+    <name>ENJOYSTATION.NET France Vichy! Paris, Canada, America, Italia, England, Deutschland, French - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2292470</id>
+    <br>128</br>
+    <genre>Top40 RnB pop rock dance elect</genre>
+    <ct>In Da Mix - Dj Lucas Divino</ct>
+    <lc>1924</lc>
+  </item>
+  <item>
+    <name>Radio Paloma - 100% Deutscher Schlager! - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>710507</id>
+    <br>128</br>
+    <genre>Pop</genre>
+    <ct>Udo Jrgens - Mit 66 Jahren</ct>
+    <lc>1126</lc>
+  </item>
+  <item>
+    <name>Radio Arabella Deutschland - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1000709</id>
+    <br>96</br>
+    <genre/>
+    <ct>Service--Werbung</ct>
+    <lc>205</lc>
+  </item>
+  <item>
+    <name>Dancefox-Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>838734</id>
+    <br>128</br>
+    <genre>Deutsch</genre>
+    <ct>Michael Wendler - Echolot-Dancefox Radio ))))kommen Sie zu uns - Ihre Musik ist schon da(((( (www.dancefox-radio.de)------</ct>
+    <lc>128</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Rock and Groove (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>938461</id>
+    <br>192</br>
+    <genre>Rock  Classic Rock</genre>
+    <ct>Deep Purple - Pictures Of Home</ct>
+    <lc>96</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Indie, Alternative (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>947248</id>
+    <br>192</br>
+    <genre>Alternative  Adult Alternative</genre>
+    <ct>James - Fear</ct>
+    <lc>75</lc>
+  </item>
+  <item>
+    <name>Veedelsradio Koeln - Das Beste aus den Top 100 in Deutschland/Germany (Vera) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>302884</id>
+    <br>128</br>
+    <genre>Pop</genre>
+    <ct>Billy Joel - We Didn`t Start The Fire</ct>
+    <lc>53</lc>
+  </item>
+  <item>
+    <name>Netzradio Germania - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1272752</id>
+    <br>128</br>
+    <genre>Musik fuer das Volk</genre>
+    <ct>Kategorie C - Deutsche Jungs - Deutsche Jungs</ct>
+    <lc>46</lc>
+  </item>
+  <item>
+    <name>Lovehits.net - Best Rock and Pop and todays Hit-Music! Deutschland Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1034070</id>
+    <br>128</br>
+    <genre>80s 90s Rock Pop Top40 Germany</genre>
+    <ct>Whitney Houston - I Believe In You And Me</ct>
+    <lc>36</lc>
+  </item>
+  <item>
+    <name>RADIO MUNDUS - Songs of Life - www.radiomundus.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1377445</id>
+    <br>192</br>
+    <genre>Rock und Pop Klassiker abseits</genre>
+    <ct>Bonfire - Die Deutsche Nationalhymne</ct>
+    <lc>35</lc>
+  </item>
+  <item>
+    <name>Nuestra Radio Cristiana - NuestraRadio.org - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2004620</id>
+    <br>64</br>
+    <genre>Latin</genre>
+    <ct>Radio Cristiana hispana Canada Chile Mexico Australia Colombia Barcelona Madrid Brasil Texas California Florida Illinois Michigan New York Ohio Pennsylvania kgei France Deutschland Holland ipu ipua</ct>
+    <lc>31</lc>
+  </item>
+  <item>
+    <name>Deutschsongs.de - * DSR *  Schlager,Pop,Rock,Oldies,Fox,Country,Newcomer - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1675547</id>
+    <br>128</br>
+    <genre>Schlager Pop Rock Oldies Fox C</genre>
+    <ct>Wolfgang Beer - Engel-Teufel-Himmel-Hoelle</ct>
+    <lc>21</lc>
+  </item>
+  <item>
+    <name>Radio Paloma - 100% Deutscher Schlager! (AAC+) - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>670599</id>
+    <br>48</br>
+    <genre>Pop</genre>
+    <ct>Udo Jrgens - Mit 66 Jahren</ct>
+    <lc>19</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Indie, Alternative (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>970538</id>
+    <br>192</br>
+    <genre>Alternative  Adult Alternative</genre>
+    <ct>James - Fear</ct>
+    <lc>16</lc>
+  </item>
+  <item>
+    <name>Deutschsongs.eu Deutschsongs.eu *Radio Deutschsongs.eu*Das orange Unikat*DJ Dyana *Studio Dreilndere - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1674471</id>
+    <br>128</br>
+    <genre>Mixed Deutscher Schlager Oldie</genre>
+    <ct>Sandy Wagner - Ich Werde Nie Ein Engel * Radio Deutschsongs.eu*Das orange Unikat*DJ Dyana</ct>
+    <lc>15</lc>
+  </item>
+  <item>
+    <name>RADIO FLENSBURG - Top 100 Hits, Charts, News und mehr aus dem Norden (Schleswig-Holstein - Deutschla - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2284403</id>
+    <br>128</br>
+    <genre>Pop  Rock  Dance  Top 40  News</genre>
+    <ct>Elton John - Song for guy</ct>
+    <lc>14</lc>
+  </item>
+  <item>
+    <name>SoE DJ Strecki  fr SoundofEmotion (Deutsch/German) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>640478</id>
+    <br>128</br>
+    <genre>Wave Pop Mixed World</genre>
+    <ct>Seal - Amazing</ct>
+    <lc>13</lc>
+  </item>
+  <item>
+    <name>AP Radio 110% Deutschrock - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2020841</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>Raven Henley - Richtung Schicksal</ct>
+    <lc>13</lc>
+  </item>
+  <item>
+    <name>Radio-Happyfriends24 'Live on Air mit Saar_Michi'  - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1267780</id>
+    <br>128</br>
+    <genre>Deutsch Englisch Schlager  Dis</genre>
+    <ct>Rihanna - Te Amo</ct>
+    <lc>10</lc>
+  </item>
+  <item>
+    <name>Realfunonair - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1922841</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>Rio Reiser - Der Knig Von Deutschland *DjMullemaus-Sendestudio Salzgitter*</ct>
+    <lc>7</lc>
+  </item>
+  <item>
+    <name>Radio-RCF - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1984969</id>
+    <br>128</br>
+    <genre>Neue Deutsche Welle am Mittwoc</genre>
+    <ct>Grauzone - Eisbr</ct>
+    <lc>7</lc>
+  </item>
+  <item>
+    <name>Go FM Romania Europe - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2030626</id>
+    <br>128</br>
+    <genre>Misc   Oldies   Love</genre>
+    <ct>GoFm Romania - All The Hits, All The Time - www.gofm.ro - Love Song - Rock Ballads - Chanson - Romanian Ballads - Deutsche Schlager - SMS 0767 24 34 54</ct>
+    <lc>7</lc>
+  </item>
+  <item>
+    <name>4Reasons-Radio: 4-TEAM - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2247351</id>
+    <br>256</br>
+    <genre>Rock  Oldies  Charts  Dance  D</genre>
+    <ct>Wolfgang Petry - Sieben Tage, Sieben Nchte ))) Sendestudio Deutschland ::: Germany ::: 4-TEAM</ct>
+    <lc>6</lc>
+  </item>
+  <item>
+    <name>SW-Radio Plattdeutsch  www.sw-radio.com - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1674979</id>
+    <br>64</br>
+    <genre>Religion</genre>
+    <ct/>
+    <lc>5</lc>
+  </item>
+  <item>
+    <name>SW-Radio Deutsch - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1675538</id>
+    <br>64</br>
+    <genre>Religion</genre>
+    <ct/>
+    <lc>5</lc>
+  </item>
+  <item>
+    <name>Radio Weissblau * German Radio - Deutsche Hits, Schlager + Oldies * - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1273648</id>
+    <br>128</br>
+    <genre>Schlager   Oldies   deutsche H</genre>
+    <ct>Radio Weissblau * German Radio - Deutsche Hits, Schlager + Oldies *</ct>
+    <lc>4</lc>
+  </item>
+  <item>
+    <name>Biebers Musikstube - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1678458</id>
+    <br>128</br>
+    <genre>world</genre>
+    <ct>VA - Der Deutsche Party Megamix CD1 DJ Jenny</ct>
+    <lc>4</lc>
+  </item>
+  <item>
+    <name>Radio Blaue Laterne *Moderatorin Cookie* *aus dem Studio Wien Umgebung* (Volksmusik Schlager Discofo - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1928373</id>
+    <br>128</br>
+    <genre>Mixed Deutscher Schlager Oldie</genre>
+    <ct>tommy - Joana *Moderatorin Cookie* *aus dem Studio Wien Umgebung* (Volksmusik Schlager Discofox Austropop Oldie deutsche Musik)</ct>
+    <lc>2</lc>
+  </item>
+  <item>
+    <name>SuperGutesRadio / Auto-DJ-3  - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1675542</id>
+    <br>128</br>
+    <genre>Deutsch Dance Fox Schlager Pop</genre>
+    <ct>*Wooden Heart - We Belong Together*</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Radio Paloma - 100% Deutscher Schlager! - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1738822</id>
+    <br>64</br>
+    <genre>Pop</genre>
+    <ct>Udo Jrgens - Mit 66 Jahren</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Hit-Radio-Germany - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2180000</id>
+    <br>128</br>
+    <genre>Various</genre>
+    <ct>Bonfire - Deutsche Nationalhymne (Rock Ballade)</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Neumuehl Nights Auto DJ - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2189094</id>
+    <br>128</br>
+    <genre>von Abba bis Zappa</genre>
+    <ct>Olaf Henning - Fetenhits Discofox Die Deutsche Vol.2 - Fr Heute, Fr Morgen, Fr Immer</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>4Reasons-Radio: Modemstream - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2247354</id>
+    <br>48</br>
+    <genre>Rock  Oldies  Charts  Dance  D</genre>
+    <ct>Wolfgang Petry - Sieben Tage, Sieben Nchte ))) Sendestudio Deutschland ::: Germany ::: Modemstream</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>www.rockislandradio.com( DIE LIVE EVENT SIM IN SECOND LIFE) - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2294147</id>
+    <br>320</br>
+    <genre>DEUTSCHROCK  Rock  Rockklassik</genre>
+    <ct>Salome</ct>
+    <lc>1</lc>
+  </item>
+  <item>
+    <name>Power-Chaos-Radio - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1710499</id>
+    <br>128</br>
+    <genre>Misc</genre>
+    <ct>Oliver Frank - Deutsche Disco Box Vol.9 Bootleg - Du Bist Ein Teufel Mein Engel</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Rock and Groove (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1733074</id>
+    <br>48</br>
+    <genre>Rock  Adult Rock  Groove</genre>
+    <ct>Deep Purple - Pictures Of Home</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio im Internet.de - Indie, Alternative (Deutschland/Germany) RadioimInternet.de - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>1860122</id>
+    <br>48</br>
+    <genre>Alternative  Adult Alternative</genre>
+    <ct>James - Fear</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>** ((((((((((((( VIVA LA RADIO! * EMOZIONI * ITALIANE ))))))))))))) ** - a SHOUTcast.com member station</name>
+    <mt>audio/aacp</mt>
+    <id>2286536</id>
+    <br>32</br>
+    <genre/>
+    <ct>(((( I GRANDI INTERPRETI E LA VERA MUSICA D`AUTORE )))) Italia Italy Usa France Canada Belgique Deutschland Spain Australia Nederland Poland Norge Russia Austria Portugal Argentina</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>MegaFox24 | MobileStream - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>77996</id>
+    <br>48</br>
+    <genre>Discofox Schlager Deutschpop N</genre>
+    <ct>Andrea Berg - Die Gefuehle haben Schweigepflicht</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Hildes Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1271531</id>
+    <br>64</br>
+    <genre>Various</genre>
+    <ct>Drafi Deutscher - Wenn Man Liebt</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>WRN Deutsch - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1271669</id>
+    <br>64</br>
+    <genre>my own</genre>
+    <ct/>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Deutsche Botschaft-Radio - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1742926</id>
+    <br>64</br>
+    <genre>Christian</genre>
+    <ct>THE LANTERN - Disse Welt Es Nicht Mien Tus</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Radio HitMix - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1758096</id>
+    <br>128</br>
+    <genre>pop   club</genre>
+    <ct>The Sweet - 30 Jahre deutsche SingleCharts - Top 1000 - Teenage Rampage</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>ETR_Auto_DJ - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1770805</id>
+    <br>128</br>
+    <genre>Mixed</genre>
+    <ct>Dance Planet 4 - Der Deutsche_DJ Karsten</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Konservative Stimme - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>1792081</id>
+    <br>128</br>
+    <genre>pop</genre>
+    <ct>Konservative Stimme Deutschland - Eine freie Stimme fr ein freies Land</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>wunschradio.fm Schlager - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2106913</id>
+    <br>192</br>
+    <genre>Schlager  Deutsch  German</genre>
+    <ct>Lollies - Endlich Wieder Nchtern (...das mssen wir feiern)</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>soundbli - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2182840</id>
+    <br>320</br>
+    <genre>9884</genre>
+    <ct>Der Deutsche Beat Mix Teil 3</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>Server 1 - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2208532</id>
+    <br>56</br>
+    <genre>N A</genre>
+    <ct>Andreas Martin - Top 20 Vol. 2 (Aktuelles Aus Den Deutschen Charts) - Lichtstrahl</ct>
+    <lc>0</lc>
+  </item>
+  <item>
+    <name>DEUTSCH STREAM - a SHOUTcast.com member station</name>
+    <mt>audio/mpeg</mt>
+    <id>2309418</id>
+    <br>128</br>
+    <genre>world</genre>
+    <ct>Lukas &amp; Price - Bettler Und Prinz 2010</ct>
+    <lc>0</lc>
+  </item>
+</channel>
+
+
+</rss>

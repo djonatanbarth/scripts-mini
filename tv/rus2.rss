@@ -1,0 +1,1578 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="50"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="50"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(titlu); titlu;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+  image/tv_radio.png
+		</image>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "16"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>Russian TV (2)</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>1+1 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4501";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ICTV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4504";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>INTER -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4505";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>K1 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4506";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>NOVIJ -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4510";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HTH -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4514";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>PERSHIJ -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4518";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>REN -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4519";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RTR -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4520";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>CiTi -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4521";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>C -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4522";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TET -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4524";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TONIS -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4525";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>KIiV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4526";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>YKPAIHA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4528";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>24 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4530";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV5 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4531";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EURONEWS -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4535";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>UBC -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4538";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>??? -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4540";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>KTO -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4541";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>1_UKRAINA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4543";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>1_DELOVOI -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4544";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RADA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4546";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>PBK -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4547";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RTR_24 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4551";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>YTP -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4552";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>CHP_INFO -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4553";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>LUXE -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4555";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>K2 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4556";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>QTV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4557";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RTVi_teleclub -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4558";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MEGA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4559";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>??? -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4560";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>CTC -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4563";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>FIRST_FASHION -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4565";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ANIMAL_PLANET -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4569";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>DISCOVERY -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4571";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ID. -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4572";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>SCIENCE -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4573";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TRAVEL&LIVING -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4574";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>WORLD -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4575";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ENGLISH_CLUB -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4576";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>NATIONAL_GEOGRAPHIC -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4577";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>DRAIV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4579";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV_SALE -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4580";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>OXOTA&RIBALKA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4582";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>2+2 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4584";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>AXN_SCIFI -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4585";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ENTER_FILM -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4586";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ENTER_MUSIC -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4599";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>M1 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4600";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>M2 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4601";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>Mtv -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4604";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>M-BOX_UA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4605";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>QTV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4607";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>STAR -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4608";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EUROSPORT -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4611";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EUROSPORT_HD -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4612";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>SPORT1 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4616";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>FUTBOL -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4617";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>DISNEY -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4619";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MALYATKO_TV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4621";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>CARTOON_NETWORK -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4622";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>USADBA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4623";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RETRO -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4624";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MUSIC_RU -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4627";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>PLANETA_RU -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4629";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>POGODA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4630";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>SVIT -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4631";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>PRO_VSE -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4632";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>FASHION_TV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4633";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RTG_TV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4634";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RU_TV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4635";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV1000 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4636";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>1_VREMJA -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4637";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>?? -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4638";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ILUZION -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4640";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>XXY -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4641";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>KARUSEL -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4642";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MTV_DANCE -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4643";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>NICKELODEON -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4644";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TV1000_ACTION -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4645";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>NATURE -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4646";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>VOPROSI&OTVETI -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4647";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>DTV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4648";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>PSIHOLOGIA_21 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4649";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>SPORT2 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4650";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EUROSPORT2 -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4652";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>??? -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4653";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>NAT.GEO.WILD -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4654";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>RUSSKOE_KINO -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4655";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>DETSKIJ -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4656";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>ZOOPARK -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4657";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HOLLYWOOD_BUZZ -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4658";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HD_SPORT</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4659";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HD_NATONAL_GEOGRAPHIC -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4660";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>HD_MTV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4662";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>SPORT1/RU -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4663";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>24TVua -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4664";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>KRT -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4665";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>SCI -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4667";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>TBi -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4668";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>UBR -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4669";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>REAL_ESTATE -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4670";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>KIKO -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4671";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>MAKCI_TV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4672";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>COMEDY_TV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4674";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    
+    <item>
+    <title>EKO_TV -</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://91.210.251.170:4675";
+    titlu=url;
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    </channel>
+</rss>
