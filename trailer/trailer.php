@@ -229,6 +229,15 @@ ret;
 </item>
 
 <item>
+    <title>ElectronicArtsDE</title>
+    <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,ElectronicArtsDE</link>
+    <image>/usr/local/etc/www/cgi-bin/scripts/trailer/image/ea.png</image>
+    <location>http://www.youtube.com/user/ElectronicArtsDE</location>
+    <annotation>Electronic Arts (EA) ist ein weltweit führendes Unternehmen auf dem Gebiet der Videospiele und Computerspiele. EA entwickelt Spiele für PC, Wii, Xbox 360, PS3, iPhone, Online, PSP, NDS, 3DS, PS2 und Mac.</annotation>
+    <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/trailer/image/ea.png" />
+</item>
+
+<item>
 <title>Gametrailers</title>
 <link><?php echo $host; ?>/scripts/trailer/gt.php</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/trailer/image/gt.jpg" />

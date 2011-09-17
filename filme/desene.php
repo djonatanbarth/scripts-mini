@@ -159,6 +159,24 @@ ret;
 </item>
 
 <item>
+<title>DisneyChannel Germany - youtube</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DisneyChannelGermany</link>
+<image>image/youtube.gif</image>
+<location>http://www.youtube.com/user/DisneyChannelGermany</location>
+<annotation>DisneyChannel Germany - youtube</annotation>
+<media:thumbnail url="image/youtube.gif" />
+</item>
+
+<item>
+<title>WaltDisneyStudiosDE Germany - youtube</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,WaltDisneyStudiosDE</link>
+<image>image/youtube.gif</image>
+<location>http://www.youtube.com/user/WaltDisneyStudiosDE</location>
+<annotation>WaltDisneyStudiosDE Germany - youtube</annotation>
+<media:thumbnail url="image/youtube.gif" />
+</item>
+
+<item>
 <title>watchcartoononline.com</title>
 <link><?php echo $host; ?>/scripts/filme/php/watchcartoononline_main1.php</link>
 <annotation>http://www.watchcartoononline.com</annotation>

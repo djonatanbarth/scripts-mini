@@ -352,10 +352,10 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
      $link="http://127.0.0.1/cgi-bin/translate?stream,,".$filelink;
   }
 } elseif (strpos($filelink, 'megavideo.com') !== false) {
-   $f="/usr/local/etc/xVoD/php/config/config.php";
+   $f="/usr/local/etc//usr/local/etc/dvdplayer/megavideo.dat";
    if (file_exists($f)) {
       $h=file_get_contents($f);
-      $MEGA_COOKIE=str_between($h,'define("MEGAUPLOAD_COOKIE", "','"');
+      $MEGA_COOKIE=trim($h);
    } else {
       $MEGA_COOKIE="";
    }

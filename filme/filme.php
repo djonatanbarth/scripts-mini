@@ -46,9 +46,11 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
+		<!--
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
     For megavideo set premium account in xVoD!
 		</text>
+		-->
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
@@ -166,8 +168,15 @@ ret;
 	<title>Movies and Series</title>
 
 <item>
-<title>movie2k.to</title>
+<title>movie2k.to - movies</title>
 <link><?php echo $host; ?>/scripts/filme/php/movie2k_main.php</link>
+<annotation>http://www.movie2k.to</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>movie2k.to - series</title>
+<link><?php echo $host; ?>/scripts/filme/php/movie2ks_main.php</link>
 <annotation>http://www.movie2k.to</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -183,13 +192,6 @@ ret;
 <title>movfilm.net</title>
 <link><?php echo $host; ?>/scripts/filme/php/movfilm_main.php</link>
 <annotation>http://movfilm.net</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>mega-stream.to</title>
-<link><?php echo $host; ?>/scripts/filme/php/mega-stream.php</link>
-<annotation>http://www.mega-stream.to</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
 
@@ -289,6 +291,13 @@ ret;
     </script>
     </onClick>
     <mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>mega-stream.to</title>
+<link><?php echo $host; ?>/scripts/filme/php/mega-stream.php</link>
+<annotation>http://www.mega-stream.to</annotation>
+<mediaDisplay name="threePartsView"/>
 </item>
 </channel>
 </rss>

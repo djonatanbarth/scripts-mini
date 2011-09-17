@@ -249,7 +249,8 @@ $s=$s."videozer\.com|peteava\.ro\/embed|peteava\.ro\/id|content\.peteava\.ro";
 $s=$s."|vimeo\.com|googleplayer\.swf|filebox\.ro\/get_video|vkontakte\.ru|megavideo\.c|videobam\.com";
 $s=$s."|divxstage\.net|divxstage\.eu|stream2k\.com\/playerjw\/vConfig|sockshare\.com|xvidstage\.com";
 $s=$s."|nolimitvideo\.com|stage666\.net\/|rapidload\.org|vidstream\.us|2gb-hosting\.com";
-$s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net|royalvids\.eu/i";
+$s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net|royalvids\.eu";
+$s=$s."|skyload\.net|rapidvideo\.com/i";
 if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 }
@@ -355,5 +356,10 @@ for ($i=0;$i<count($links);$i++) {
 }
 }
 ?>
+<item>
+<title>Set megavideo premium account</title>
+<link>/usr/local/etc/www/cgi-bin/scripts/filme/php/megavideo.rss</link>
+<mediaDisplay name="onePartView" />
+</item>
 </channel>
 </rss>

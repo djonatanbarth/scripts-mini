@@ -317,6 +317,24 @@ columnCount=5
 </item>
 
 <item>
+    <title>ARD.de</title>
+    <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,ARD</link>
+    <image>/usr/local/etc/www/cgi-bin/scripts/clip/image/ard.jpg</image>
+    <location>http://www.ard.de/</location>
+    <annotation>ARD.de ist der zentrale Einstieg in die gesamte Internet-Welt der ARD - zu allen Sendern und Sendungen, zu allen Radio-, Fernseh- und Online-Angeboten.</annotation>
+    <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/ard.jpg" />
+</item>
+
+<item>
+<title>ZDF Mediathek</title>
+	<link><?php echo $host; ?>/scripts/clip/zdf_main.php</link>
+	<location>http://www.zdf.de/ZDFmediathek/hauptnavigation/startseite</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/zdf.jpg</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/zdf.jpg" />
+	<annotation>Die ZDFmediathek - das Videoportal des ZDF im Internet. Sendung verpasst? Hier können Sie zahlreiche ZDF-Sendungen online anschauen.</annotation>
+</item>
+
+<item>
 <title>ikiwi.at</title>
 	<link><?php echo $host; ?>/scripts/clip/php/ikiwi.php?query=1</link>
 	<location>http://www.ikiwi.at/</location>
@@ -324,7 +342,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/ikiwi.png" />
 	<annotation>Ziel von iKiwi ist es, die besten Videos des Internets auf einem Portal kostenlos anzubieten und durch innovative Funktionalitäten den Nutzern einen größtmöglichen Mehrwert und kreativen Spielraum zu bieten.</annotation>
 </item>
-
+<!--
 <item>
 <title>cooxt.de</title>
 	<link><?php echo $host; ?>/scripts/clip/php/cooxt_de.php?query=1</link>
@@ -333,7 +351,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/cooxt.gif" />
 	<annotation>COOXT - Wir bringen das Web zum Kochen</annotation>
 </item>
-
+-->
 <item>
 <title>luegmol.ch</title>
 	<link><?php echo $host; ?>/scripts/clip/php/luegmol.php?query=1</link>

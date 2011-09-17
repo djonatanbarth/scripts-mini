@@ -62,10 +62,10 @@ if($query) {
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
 			<script>print(annotation); annotation;</script>
 		</text>
-  	<text  redraw="yes" align="left" offsetXPC="55" offsetYPC="52" widthPC="15" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+  	<text  redraw="yes" align="center" offsetXPC="55" offsetYPC="52" widthPC="15" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>print(durata); durata;</script>
 		</text>
-  	<text  redraw="yes" align="left" offsetXPC="72" offsetYPC="52" widthPC="30" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+  	<text  redraw="yes" align="center" offsetXPC="72" offsetYPC="52" widthPC="23" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>print(pub); pub;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -230,6 +230,19 @@ if($search) {
 </item>
 <?php } ?>
 <?php
+  function sec2hms ($sec, $padHours = false)
+  {
+    $hms = "";
+    $hours = intval(intval($sec) / 3600);
+    $hms .= ($padHours)
+          ? str_pad($hours, 2, "0", STR_PAD_LEFT). ":"
+          : $hours. ":";
+    $minutes = intval(($sec / 60) % 60);
+    $hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
+    $seconds = intval($sec % 60);
+    $hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+    return $hms;
+  }
 $videos = explode('<entry>', $html);
 unset($videos[0]);
 $videos = array_values($videos);
@@ -237,12 +250,12 @@ foreach($videos as $video) {
 	$id = str_between($video,"<id>http://gdata.youtube.com/feeds/api/videos/","</id>");
 	$title = str_between($video,"<title type='text'>","</title>");
 	$descriere=str_between($video,"<content type='text'>","</content>");
-	$durata = "Durata:".str_between($video,"duration='","'");
+	$durata = sec2hms(str_between($video,"duration='","'"));
 	$data = str_between($video,"<updated>","</updated>");
 	$data = str_replace("T"," ",$data);
 	$data = str_replace("Z","",$data);
 	$data=explode(" ",$data);
-	$data="Data:".$data[0];
+	$data=$data[0];
 	$image = "http://i.ytimg.com/vi/".$id."/2.jpg";
 	$link = "http://www.youtube.com/watch?v=".$id;
     $link="http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=".$link;

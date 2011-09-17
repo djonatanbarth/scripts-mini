@@ -234,7 +234,11 @@ function getRewriteString($string) {
 $videos = explode("class='body sTLeft", $html);
 unset($videos[0]);
 $videos = array_values($videos);
-
+//http://video5.ui-portal.de/we/movie22/e4/thumbs/8267848_2.jpg
+//http://video1.ui-portal.de/we/movie22/e4/8267848.flv
+//http://video1.ui-portal.de/we/movie22/c2/8267847.flv
+//http://video4.ui-portal.de/we/movie22/c2/thumbs/8267847_0.jpg
+//http://video1.ui-portal.de/we/movie22/c2/8267847.flv
 foreach($videos as $video) {
 
   $t1 = explode("src='", $video);
@@ -243,6 +247,7 @@ foreach($videos as $video) {
   $t3=explode("_",$image);
   $link=str_replace("thumbs/","",$t3[0]);
   $link=$link.".flv";
+  //$link=preg_replace("/video(.*)\.ui/","video1.ui",$link);
   $date=str_between($video,"class='sCenter vAdded'>","<");
   $t1 = explode("title='", $video);
   $t2 = explode("'", $t1[2]);

@@ -31,7 +31,6 @@ $t1=explode("IMDB Rating:",$part);
 $t2=explode(">",$t1[1]);
 $t3=explode("<",$t2[1]);
 $imdb = "IMDB Rating: ".$t3[0];
-
 if (strpos($part,"Length") !==false) {
 $t1=explode('Length:',$part);
 } else {
@@ -41,7 +40,6 @@ $t2=explode('|',$t1[1]);
 $durata=$t2[0];
 $durata = trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$durata));
 $durata="Length: ".str_replace("&nbsp;","",$durata);
-
 if (strpos($part,"Year") !==false) {
 $t1=explode("Year:",$part);
 } else {
@@ -251,7 +249,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 
-$videos = explode('<tr id="tablemoviesindex2">', $html);
+$videos = explode('<tr id="tablemoviesindex2"', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);

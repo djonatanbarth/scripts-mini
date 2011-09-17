@@ -249,7 +249,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Pagina anterioara</annotation>
+<annotation>Previous Page</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/left.jpg</image>
@@ -266,12 +266,12 @@ foreach($videos as $video) {
 	$id = $match[2];
 	$title = str_between($video,"<title type='text'>","</title>");
 	$descriere=str_between($video,"<content type='text'>","</content>");
-	$durata = "Duration ".sec2hms(str_between($video,"duration='","'"));
+	$durata = sec2hms(str_between($video,"duration='","'");
 	$data = str_between($video,"<updated>","</updated>");
 	$data = str_replace("T"," ",$data);
 	$data = str_replace("Z","",$data);
 	$data=explode(" ",$data);
-	$data="Date:".$data[0];
+	$data=$data[0];
 	$image = "http://i.ytimg.com/vi/".$id."/2.jpg";
 	$link = "http://www.youtube.com/watch?v=".$id;
     $link="http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=".$link;
@@ -308,7 +308,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Pagina urmatoare</annotation>
+<annotation>Next Page</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/right.jpg</image>

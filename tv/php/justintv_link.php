@@ -6,7 +6,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $id = $_GET["file"];
-$link1="http://justin.tv/";
+$link1="http://justin.tv/".$id;
 $link2="http://usher.justin.tv/find/".$id.".xml?type=any";
 $h=file_get_contents($link1);
 $swf=str_between($h,'swfobject.embedSWF("','"');

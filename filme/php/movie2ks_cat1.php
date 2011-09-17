@@ -1,14 +1,13 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php
 echo "<?xml version='1.0' encoding='UTF8' ?>";
+$host = "http://127.0.0.1/cgi-bin";
 $query = $_GET["query"];
 if($query) {
    $queryArr = explode(',', $query);
-   $page = $queryArr[0];
-   $search = $queryArr[1];
-   $tit = urldecode($queryArr[2]);
+   $link = $queryArr[0];
+   $tit = urldecode($queryArr[1]);
 }
-$host = "http://127.0.0.1/cgi-bin";
 ?>
 <rss version="2.0">
 <onEnter>
@@ -160,20 +159,14 @@ ret;
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
 	</item_template>
-	<searchLink>
-	  <link>
-	    <script>"<?php echo $host."/scripts/filme/php/movie2k_cat.php?query="; ?>" + urlEncode(keyword) + ",<?php echo $search.",".urlencode($tit);?>";</script>
-	  </link>
-	</searchLink>
+
 <channel>
 	<title><?php echo $tit; ?></title>
 	<menu>main menu</menu>
 
 
 <?php
-//http://www.movie2k.to/movies-genre-4-3.html
 
-$link="http://www.movie2k.to/movies-genre-".$search."-".$page.".html";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -183,41 +176,8 @@ $link="http://www.movie2k.to/movies-genre-".$search."-".$page.".html";
   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
   $html = curl_exec($ch);
   curl_close($ch);
-$t1=explode('<div id="boxgrey">',$html);
-$totpage=count($t1);
-echo '
-		<item>
-			<title>Jump to page (1 of '.$totpage.')</title>
-			<onClick>
-				keyword = getInput();
-				if (keyword != null)
-				{
-	       jumpToLink("searchLink");
-				}
-			</onClick>
-		</item>
-';
-if($page > 1) { ?>
-
-<item>
-<?php
-$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?query=".($page-1).",";
-if($search) {
-  $url = $url.$search.",".urlencode($tit);
-}
-?>
-<title>Previous Page</title>
-<link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
-<image>image/left.jpg</image>
-<mediaDisplay name="threePartsView"/>
-</item>
 
 
-<?php } ?>
-
-<?php
 function str_between($string, $start, $end){
 	$string = " ".$string; $ini = strpos($string,$start);
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
@@ -234,17 +194,24 @@ foreach($videos as $video) {
   if (strpos($link,"http") ===false) {
     $link="http://www.movie2k.to/".$link;
   }
+  
   $t3 = explode(">",$t1[1]);
   $t4 = explode("<",$t3[1]);
   $title = trim($t4[0]);
+  $title=urlencode($title);
+  $title=str_replace("%09","",$title);
+  $title=str_replace("%2C","",$title);
+  $title=str_replace("++","",$title);
+  $title=urldecode($title);
 
-  $data=str_between($video,'<TD id="tdmovies" width="154">',"</TD>");
+  $data=str_between($video,'<TD id="tdmovies" width="175">',"</TD>");
   $data = preg_replace("/(<\/?)([^>]*>)/e","",$data);
   if ($data <> "") {
     $data="Date added: ".trim($data);
   } else {
     $data="";
   }
+
   for ($i=1;$i<10;$i++) {
   $t1=explode('src="',$video);
   $t2=explode('"',$t1[$i]);
@@ -252,7 +219,7 @@ foreach($videos as $video) {
   if (preg_match("/flag|us|ger/i",$image)) break;
   }
 
-	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/movie2k.php?query='.$link.",".urlencode($title);
+	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/movie2ks.php?query='.$link.",".urlencode($title);
 	echo '
   <item>
     <link>'.$link.'</link>
@@ -265,20 +232,6 @@ foreach($videos as $video) {
 }
 ?>
 
-<item>
-<?php
-$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?query=".($page+1).",";
-if($search) {
-  $url = $url.$search.",".urlencode($tit);
-}
-?>
-<title>Next Page</title>
-<link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
-<image>image/right.jpg</image>
-<mediaDisplay name="threePartsView"/>
-</item>
 
 </channel>
 </rss>

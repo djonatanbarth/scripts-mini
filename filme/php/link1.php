@@ -246,6 +246,23 @@ function dimshare($k,$char_rep,$pos_link,$h,$fn) {
   $r="http://".$server.".".$serv_name.".com:".$port."/d/".$hash."/video.".$ext;
   return $r;
 }
+function movdivx($k,$char_rep,$pos_link,$h,$fn) {
+  $f=explode("return p}",$h);
+  $e=explode("'.split",$f[$k]);
+  $ls=$e[0];
+  preg_match("/(\|)((www)\d{1})\|/",$ls,$m);
+  $server=$m[2];
+  preg_match("/(\|)([a-z0-9]{56})\|/",$ls,$m);
+  $hash=$m[2];
+  preg_match("/(\|)(182|384|364)\|/",$ls,$m);
+  $port=$m[2];
+  preg_match("/(\|)(movdivx)\|/",$ls,$m);
+  $serv_name=$m[2];
+  preg_match("/(\|)(avi|flv|mp4|mkv)\|/",$ls,$m);
+  $ext=$m[2];
+  $r="http://".$server.".".$serv_name.".com:".$port."/d/".$hash."/video.".$ext;
+  return $r;
+}
 function vix($k,$char_rep,$pos_link,$h,$fn) {
   $f=explode("return p}",$h);
   $e=explode("'.split",$f[$k]);
@@ -661,10 +678,10 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $f = str_between($filelink,"key=","&");
    $link = "http://static.filebox.ro/filme/".$s."/".$f.".flv";
 } elseif (strpos($filelink, 'megavideo') !== false) {
-   $f="/usr/local/etc/xVoD/php/config/config.php";
+   $f="/usr/local/etc//usr/local/etc/dvdplayer/megavideo.dat";
    if (file_exists($f)) {
       $h=file_get_contents($f);
-      $MEGA_COOKIE=str_between($h,'define("MEGAUPLOAD_COOKIE", "','"');
+      $MEGA_COOKIE=trim($h);
    } else {
       $MEGA_COOKIE="";
    }
@@ -759,7 +776,7 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    curl_setopt ($ch, CURLOPT_POST, 1);
    curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
    $h = curl_exec($ch);
-   $link=get_unpack1(2,11,5,$h);
+   $link=movdivx(2,11,5,$h);
 } elseif (strpos($filelink, 'sharevideo22.com') !== false) {
    $string=$filelink;
    $ch = curl_init($string);
@@ -807,6 +824,18 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
 } elseif (strpos($filelink, 'royalvids.eu') !== false) {
    $h=file_get_contents($filelink);
    $link=str_between($h,'"flashvars" value="file=','&');
+} elseif (strpos($filelink,'skyload.net') !== false) {
+   //http://skyload.net/File/11f90e69ce45ef43e55650a871ae85df.flv
+   //http://www.skyload.net/File/335c00e46e57e17ef690de605239c9dd.avi
+   $h=file_get_contents($filelink);
+   $link=str_between($h,"addVariable('file','","'");
+   if ($link=="") {
+     $link=str_between($h,"param name='src' value='","'");
+   }
+} elseif (strpos($filelink,'rapidvideo.com') !==false) {
+  //http://rapidvideo.com/view/tl9gewcl
+  $h=file_get_contents($filelink);
+  $link=str_between($h,"addVariable('file','","'");
 }
 print $link;
 ?>

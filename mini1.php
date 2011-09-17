@@ -284,7 +284,7 @@ columnCount=3
     <title>HDD Links</title>
   <item>
     <link><?php echo $host; ?>/scripts/trailer/trailer.php</link>
-    <title>Movie trailers</title>
+    <title>Movie &amp; games trailers</title>
     <annotation>Last movie and game trailers</annotation>
     <image>image/trailerb.png</image>
     <mediaDisplay name="photoView"/>

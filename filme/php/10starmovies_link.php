@@ -101,7 +101,7 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
 		  <script>sprintf("%s / ", getFocusItemIndex()-(-1))+itemCount;</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Apasati 1 pentru download manager, 2 pentru download
+    Press 1 for download manager, 2 for download
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
     <script>print(info_serial); info_serial;</script>
