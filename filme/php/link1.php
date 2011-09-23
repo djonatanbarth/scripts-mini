@@ -131,6 +131,80 @@ $h = curl_exec($ch);
 $url=get_unpack1(1,10,4,$h);
 return $url;
 }
+function uploadville($string) {
+$ch = curl_init($string);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+curl_setopt($ch, CURLOPT_REFERER, $string);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+$h = curl_exec($ch);
+$id=str_between($h,'"id" value="','"');
+$fname=str_between($h,'"fname" value="','"');
+$post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=&method_free=LOAD_HERE";
+//op=download1&usr_login=&id=z5g2on7obv7j&fname=Shark.Night.2011.TS.XviD-TaRiQ786.avi&referer=&method_free=LOAD_HERE
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+curl_setopt($ch, CURLOPT_REFERER, $string);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+curl_setopt ($ch, CURLOPT_POST, 1);
+curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+$h = curl_exec($ch);
+  //http://fs2.uploadville.com/files/2/66i4h3lg6hj0h3/video.avi
+  //<2 1="10"0="4://7.6.3/z/8/y/b.x"/>
+  //http://fs2.uploadville.com/files/9/zqerdhlfeo3ooy/video.avi
+  //<2 1="10"0="4://7.6.3/z/9/y/b.x"/>
+  $f=explode("return p}",$h);
+  $e=explode("'.split",$f[2]);
+  $ls=$e[0];
+  preg_match("/(\|)((fs)\d{1})\|/",$ls,$m);
+  $server=$m[2];
+  preg_match("/(\|)([a-z0-9]{14})\|/",$ls,$m);
+  $hash=$m[2];
+//  preg_match("/(\|)(182|384|364)\|/",$ls,$m);
+//  $port=$m[2];
+  preg_match("/(\|)(uploadville)\|/",$ls,$m);
+  $serv_name=$m[2];
+  preg_match("/(\|)(avi|flv|mp4|mkv)\|/",$ls,$m);
+  $ext=$m[2];
+  $t1=explode('1="10"0="',$ls);
+  $t2=explode('"',$t1[1]);
+  $t3=explode("/",$t2[0]);
+  $files=$t3[4];
+  $r="http://".$server.".".$serv_name.".com/files/".$files."/".$hash."/video.".$ext;
+  return $r;
+}
+function uploadc($string) {
+$ch = curl_init($string);
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+curl_setopt($ch, CURLOPT_REFERER, $string);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+$h = curl_exec($ch);
+$ipcount_val=str_between($h,'"ipcount_val" value="','"');
+$id=str_between($h,'"id" value="','"');
+$fname=str_between($h,'"fname" value="','"');
+$post="ipcount_val=".$ipcount_val."&op=download2&usr_login=&id=".$id."&fname=".$fname."&referer=&method_free=Slow+access";
+//ipcount_val=10&op=download2&usr_login=&id=a2baprw26l3m&fname=np-prophezeiung-xvid.avi&referer=&method_free=Slow+access
+curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+curl_setopt($ch, CURLOPT_REFERER, $string);
+curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+curl_setopt ($ch, CURLOPT_POST, 1);
+curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+$h = curl_exec($ch);
+  //6://v.u.5:t/d/s/r-q-p.o
+  $f=explode("return p}",$h);
+  $e=explode("'.split",$f[2]);
+  $ls=$e[0];
+  preg_match("/(\|)((www)\d{1})\|/",$ls,$m);
+  $server=$m[2];
+  preg_match("/(\|)([a-z0-9]{56})\|/",$ls,$m);
+  $hash=$m[2];
+  preg_match("/(\|)(182|384|364)\|/",$ls,$m);
+  $port=$m[2];
+  preg_match("/(\|)(uploadc)\|/",$ls,$m);
+  $serv_name=$m[2];
+  preg_match("/(\|)(avi|flv|mp4|mkv)\|/",$ls,$m);
+  $ext=$m[2];
+  $r="http://".$server.".".$serv_name.".com:".$port."/d/".$hash."/".$fname;
+  return $r;
+}
 function rapidload($string) {
 $ch = curl_init($string);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
@@ -443,6 +517,9 @@ $r = str_between($h,'"url": "','"');
 return $r;
 }
 function putlocker($string) {
+     //http://www.putlocker.com/embed/067DF715716F10C5
+     //http://www.putlocker.com/file/067DF715716F10C5
+     $string=str_replace("file","embed",$string);
      $id=substr(strrchr($string,"/"),1);
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $string);
@@ -456,6 +533,7 @@ function putlocker($string) {
      $t3=explode('"',$t2[1]);
      $hash=$t3[0];
      $post="hash=".$hash."&confirm=Close+Ad+and+Watch+as+Free+User";
+     //hash=fe41ab2306be4d45&confirm=Close+Ad+and+Watch+as+Free+User
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $string);
      curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
@@ -465,10 +543,13 @@ function putlocker($string) {
      curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
      $h = curl_exec($ch);
      curl_close($ch);
+     $id=str_between($h,"playlist: '","'");
+     //$url="http://www.putlocker.com/get_file.php?embed_stream=".$id;
+     ///get_file.php?embed_stream=MDY3REY3MTU3MTZGMTBDNStlNTY1Y2EwNDcyZjYwZjUy
      if (strpos($string,"putlocker") !==false) {
-       $url="http://www.putlocker.com/get_file.php?embed_stream=".$id;
+       $url="http://www.putlocker.com".$id;
      } elseif (strpos($string,"sockshare") !== false) {
-       $url="http://www.sockshare.com/get_file.php?embed_stream=".$id;
+       $url="http://www.sockshare.com".$id;
      }
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $url);
@@ -836,6 +917,12 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   //http://rapidvideo.com/view/tl9gewcl
   $h=file_get_contents($filelink);
   $link=str_between($h,"addVariable('file','","'");
+} elseif (strpos($filelink, 'uploadc.com') !== false) {
+   //http://www.uploadc.com/a2baprw26l3m/np-prophezeiung-xvid.avi.htm
+   $link=uploadc($filelink);
+} elseif (strpos($filelink, 'uploadville.com') !== false) {
+   //http://uploadville.com/z5g2on7obv7j
+   $link=uploadville($filelink);
 }
 print $link;
 ?>

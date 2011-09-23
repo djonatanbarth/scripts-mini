@@ -162,7 +162,7 @@ function str_between($string, $start, $end){
 	<item>
 	<title>neue Filme</title>
 	<link>'.$host.'/scripts/filme/php/movfilm_cat.php?query=1,/,,neue+Filme</link>
-	<annotation>Filme noi</annotation>
+	<annotation>neue Filme</annotation>
 	<mediaDisplay name="threePartsView"/>
 	</item>
 	';

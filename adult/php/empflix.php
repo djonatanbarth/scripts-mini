@@ -1,31 +1,12 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
-function str_between($string, $start, $end){
-	$string = " ".$string; $ini = strpos($string,$start);
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
-}
 $host = "http://127.0.0.1/cgi-bin";
-$query = $_GET["file"];
-if($query) {
-   $queryArr = explode(',', $query);
-   $link = $queryArr[0];
-   $tit = urldecode($queryArr[1]);
-}
-$html = file_get_contents($link);
-$t1=explode('<table align="center" width="100%"border="1" bordercolor="#000000">',$html);
-$t2=explode('src="',$t1[1]);
-$t3=explode('"',$t2[1]);
-$image=$t3[0];
-if (strpos($html,"Film Info:") !== false) {
-$description=str_between($html,"Film Info:","<br />");
-} else {
-$description=str_between($html,"Film Inhalt:","<br />");
-}
-$description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 ?>
 <rss version="2.0">
 <onEnter>
+    storagePath             = getStoragePath("tmp");
+    storagePath_stream      = storagePath + "stream.dat";
+    storagePath_playlist    = storagePath + "playlist.dat";
   startitem = "middle";
   setRefreshTime(1);
 </onEnter>
@@ -38,7 +19,7 @@ $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
-	
+
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -47,11 +28,11 @@ $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="40"
+	itemWidthPC="45"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="40"
+	capWidthPC="45"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -61,10 +42,9 @@ $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
-	sliding="no"
-    idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
-		
+
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
@@ -74,14 +54,15 @@ $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-		<text align="justify" redraw="yes"
+
+		<text align="center" redraw="yes"
           lines="10" fontSize=17
 		      offsetXPC=55 offsetYPC=55 widthPC=40 heightPC=42
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
-			<?php echo $description; ?>
+			<script>print(annotation); annotation;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=66 offsetYPC=22.5 widthPC=15 heightPC=30>
-  <?php echo $image; ?>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=25>
+		<script>print(img); img;</script>
 		</image>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
@@ -97,10 +78,11 @@ $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx) 
+					if(focus==idx)
 					{
 					  location = getItemInfo(idx, "location");
 					  annotation = getItemInfo(idx, "annotation");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -108,7 +90,7 @@ $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
   				<script>
   					idx = getQueryItemIndex();
   					focus = getFocusItemIndex();
-  			    if(focus==idx) "16"; else "14";
+  			    if(focus==idx) "14"; else "14";
   				</script>
 				</fontSize>
 			  <backgroundColor>
@@ -128,7 +110,7 @@ $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 			</text>
 
 		</itemDisplay>
-		
+
 <onUserInput>
 <script>
 ret = "false";
@@ -174,9 +156,9 @@ if (userInput == "three" || userInput == "3")
 ret;
 </script>
 </onUserInput>
-		
+
 	</mediaDisplay>
-	
+
 	<item_template>
 		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
@@ -195,39 +177,71 @@ ret;
 	</link>
 </destination>
 <channel>
-	<title><?php echo $tit; ?></title>
-	<menu>main menu</menu>
-
+	<title>empflix.com</title>
 
 <?php
-	echo '
-	<item>
-		<title>Servers</title>
-		<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
-$links=$matches[1];
+$query = $_GET["query"];
+if($query) {
+   $queryArr = explode(',', $query);
+   $page = $queryArr[0];
+   $search = $queryArr[1];
+   $search = str_replace(" ","%20",$search);
 }
-$s="/vidxden\.c|divxden\.c|vidbux\.c|movreel\.c|videoweed\.(c|e)|novamov\.(c|e)|vk\.com";
-$s=$s."|movshare\.net|videobb\.c|youtube\.c|flvz\.com|rapidmov\.net|putlocker\.com|";
-$s=$s."videozer\.com|peteava\.ro\/embed|peteava\.ro\/id|content\.peteava\.ro";
-$s=$s."|vimeo\.com|googleplayer\.swf|filebox\.ro\/get_video|vkontakte\.ru|megavideo\.c|videobam\.com";
-$s=$s."|divxstage\.net|divxstage\.eu|stream2k\.com\/playerjw\/vConfig|sockshare\.com|xvidstage\.com";
-$s=$s."|nolimitvideo\.com|stage666\.net\/|rapidload\.org|vidstream\.us|2gb-hosting\.com";
-$s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net|royalvids\.eu";
-$s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com/i";
-for ($i=0;$i<count($links);$i++) {
-  $cur_link=$links[$i];
-  if (preg_match($s,$cur_link)) {
-    if ($cur_link <> $last_link) {
-      if (!preg_match("/facebook|twitter|img\.youtube/",$cur_link)) {
-        $link="http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file=".urlencode($cur_link);
-        $server = str_between($cur_link,"http://","/");
-        $last_link=$cur_link;
-        $title=$server;
+if (strpos($search,"php") !==false) {
+  $link=$search.$page;
+} else {
+  $link=$search.$page.".html";
+}
+$html = file_get_contents($link);
 
-    $name = preg_replace('/[^A-Za-z0-9_]/','_',$tit).".flv";
+if($page > 1) { ?>
+
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page-1).",";
+if($search) { 
+  $url = $url.$search; 
+}
+?>
+<title>Previous Page</title>
+<link><?php echo $url;?></link>
+<annotation>Previous Page</annotation>
+<image>image/left.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+
+<?php } ?>
+
+<?php
+function str_between($string, $start, $end){ 
+	$string = " ".$string; $ini = strpos($string,$start); 
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
+	return substr($string,$ini,$len); 
+}
+$videos = explode('<div id="remove', $html);
+
+unset($videos[0]);
+$videos = array_values($videos);
+
+foreach($videos as $video) {
+    $t1=explode('href="',$video);
+    $t2 = explode('"', $t1[1]);
+    $link = $t2[0];
+
+    $title=str_between($video,'<span class="name">','</span>');
+    $link = $host."/scripts/adult/php/empflix_link.php?file=".$link;
+
+    $t1 = explode('src="', $video);
+    $t2 = explode('"', $t1[1]);
+    $image = $t2[0];
+
+    $data = trim(str_between($video,'<p class="length">','</p'));
+    $data = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$data);
+
+    $data = "Duration: ".$data;
+    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
 
     echo '
     <item>
@@ -238,15 +252,13 @@ for ($i=0;$i<count($links);$i++) {
     url="'.$link.'";
     movie=getUrl(url);
     cancelIdle();
-    storagePath = getStoragePath("tmp");
-    storagePath_stream = storagePath + "stream.dat";
     streamArray = null;
     streamArray = pushBackStringArray(streamArray, "");
     streamArray = pushBackStringArray(streamArray, "");
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, movie);
     streamArray = pushBackStringArray(streamArray, video/x-flv);
-    streamArray = pushBackStringArray(streamArray, "'.$tit.'");
+    streamArray = pushBackStringArray(streamArray, "'.$title.'");
     streamArray = pushBackStringArray(streamArray, "1");
     writeStringToFile(storagePath_stream, streamArray);
     doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
@@ -255,15 +267,30 @@ for ($i=0;$i<count($links);$i++) {
     <download>'.$link.'</download>
     <name>'.$name.'</name>
   <image>'.$image.'</image>
+  <annotation>'.$data.'</annotation>
   <media:thumbnail url="'.$image.'" />
   <mediaDisplay name="threePartsView"/>
   </item>
   ';
-    }
 }
-}
+
+
+?>
+
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page+1).",";
+if($search) { 
+  $url = $url.$search; 
 }
 ?>
+<title>Next Page</title>
+<link><?php echo $url;?></link>
+<annotation>Next Page</annotation>
+<image>image/right.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
 
 </channel>
 </rss>

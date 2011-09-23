@@ -190,6 +190,10 @@ foreach($videos as $video) {
     $link=$t1[0];
     if ($link == "#") {
       $link=$filelink;
+      $link=urlencode($link);
+      $link=str_replace("%3A%2F%2F","://",$link);
+      $link=str_replace("%2F","/",$link);
+      $link=str_replace("%2B","+",$link);
     } else {
       $link = "http://loads7.com/".$link;
     }

@@ -184,7 +184,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $html = str_between($html,'<TABLE id="tablemoviesindex">','</TABLE>');
-$videos = explode('<TR>', $html);
+$videos = explode('<TR', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {

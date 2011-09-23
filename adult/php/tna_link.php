@@ -7,8 +7,9 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
-$link = urldecode(str_between($html,"so.addVariable('config', '","'"));
+$link = urldecode(str_between($html,'config = escape("','"'));
 $html = file_get_contents($link);
-$link=str_between($html,"<file>","</file>");
+$link1=str_between($html,"<videoLink>","</videoLink>");
+$link1=str_replace("&amp;","&",$link1);
 print $link;
 ?>

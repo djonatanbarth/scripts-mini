@@ -200,14 +200,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/friktube.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>pornmehorny</title>
   <link><?php echo $host; ?>/scripts/adult/pornmehorny.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/pornmehorny.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>penthouse</title>
   <link><?php echo $host; ?>/scripts/adult/penthousevideos.php</link>
@@ -221,14 +221,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/tjoob.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>behindkink</title>
   <link><?php echo $host; ?>/scripts/adult/php/behindkink.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/behindkink.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>moviesand</title>
   <link><?php echo $host; ?>/scripts/adult/moviesand.php</link>
@@ -242,13 +242,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/pornrabbit.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>pornvisit</title>
   <link><?php echo $host; ?>/scripts/adult/pornvisit.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/pornvisit.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>eporner</title>
@@ -387,11 +388,39 @@ French Maid TV
 </mediaDisplay>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/french_maid_tv.png</image>
 </item>
--->
+
   <item>
 <title>TnaFlix</title>
 <link><?php echo $host; ?>/scripts/adult/tna.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/TnaFlix.png</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+-->
+  <item>
+<title>Youporn</title>
+<link><?php echo $host; ?>/scripts/adult/php/youporn_main.php</link>
+<image>/usr/local/etc/www/cgi-bin/scripts/adult/image/youporn.png</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+  <item>
+<title>Spankwire</title>
+<link><?php echo $host; ?>/scripts/adult/php/spankwire_main.php</link>
+<image>/usr/local/etc/www/cgi-bin/scripts/adult/image/spankwire.gif</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+  <item>
+<title>empflix</title>
+<link><?php echo $host; ?>/scripts/adult/php/empflix_main.php</link>
+<image>/usr/local/etc/www/cgi-bin/scripts/adult/image/empflix.gif</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+  <item>
+<title>alotporn</title>
+<link><?php echo $host; ?>/scripts/adult/php/alotporn_main.php</link>
+<image>/usr/local/etc/www/cgi-bin/scripts/adult/image/alotporn.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
 </channel>

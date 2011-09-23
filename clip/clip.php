@@ -335,6 +335,36 @@ columnCount=5
 </item>
 
 <item>
+<title>Das Wetter im Ersten</title>
+	<link>http://www.daserste.de/podcasts/mam_dyn~id,423~wetter.xml</link>
+	<location>http://www.daserste.de/podcasts/mam_dyn~id,423~wetter.xml</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/Wetter.jpg</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/Wetter.jpg" />
+	<annotation>Das Wetter im Ersten</annotation>
+    <mediaDisplay name="threePartsView" itemBackgroundColor="0:0:0" backgroundColor="0:0:0" sideLeftWidthPC="0" itemImageXPC="5" itemXPC="20" itemYPC="20" itemWidthPC="65" capWidthPC="70" unFocusFontColor="101:101:101" focusFontColor="255:255:255" idleImageWidthPC="10" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		<backgroundDisplay>
+			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+			image/mele/backgd.jpg
+			</image>
+		</backgroundDisplay>
+		<image  offsetXPC=0 offsetYPC=2.8 widthPC=100 heightPC=15.6>
+		image/mele/rss_title.jpg
+		</image>
+		<text  offsetXPC=40 offsetYPC=8 widthPC=35 heightPC=10 fontSize=20 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
+               Das Wetter im Ersten
+		</text>
+    </mediaDisplay>
+</item>
+
+<item>
 <title>ikiwi.at</title>
 	<link><?php echo $host; ?>/scripts/clip/php/ikiwi.php?query=1</link>
 	<location>http://www.ikiwi.at/</location>
