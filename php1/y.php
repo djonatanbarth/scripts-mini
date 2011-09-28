@@ -266,7 +266,7 @@ foreach($videos as $video) {
 	$id = $match[2];
 	$title = str_between($video,"<title type='text'>","</title>");
 	$descriere=str_between($video,"<content type='text'>","</content>");
-	$durata = sec2hms(str_between($video,"duration='","'");
+	$durata = sec2hms(str_between($video,"duration='","'"));
 	$data = str_between($video,"<updated>","</updated>");
 	$data = str_replace("T"," ",$data);
 	$data = str_replace("Z","",$data);

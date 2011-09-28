@@ -196,6 +196,13 @@ ret;
 </item>
 
 <item>
+<title>kinox.to</title>
+<link><?php echo $host; ?>/scripts/filme/php/kinox_main.php</link>
+<annotation>http://www.kinox.to</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>online-moviez.com</title>
 <link><?php echo $host; ?>/scripts/filme/php/online-moviez.php</link>
 <annotation>http://www.online-moviez.com</annotation>

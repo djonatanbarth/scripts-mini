@@ -3,15 +3,6 @@
 $host = "http://127.0.0.1/cgi-bin";
 ?>
 <rss version="2.0">
-<script>
-  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
-
-  storagePath             = getStoragePath("tmp");
-  storagePath_stream      = storagePath + "stream.dat";
-  storagePath_playlist    = storagePath + "playlist.dat";
-
-  error_info          = "";
-</script>
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
@@ -25,7 +16,7 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
-
+	
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -51,7 +42,7 @@ $host = "http://127.0.0.1/cgi-bin";
 	sliding="no"
 	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
-
+		
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
@@ -59,9 +50,13 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-  image/tv_radio.png
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(annotation); annotation;</script>
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=30>
+		image/movies.png
 		</image>
+
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -76,7 +71,7 @@ $host = "http://127.0.0.1/cgi-bin";
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx)
+					if(focus==idx) 
 					{
 					  location = getItemInfo(idx, "location");
 					  annotation = getItemInfo(idx, "annotation");
@@ -87,7 +82,7 @@ $host = "http://127.0.0.1/cgi-bin";
   				<script>
   					idx = getQueryItemIndex();
   					focus = getFocusItemIndex();
-  			    if(focus==idx) "16"; else "14";
+  			    if(focus==idx) "14"; else "14";
   				</script>
 				</fontSize>
 			  <backgroundColor>
@@ -107,7 +102,7 @@ $host = "http://127.0.0.1/cgi-bin";
 			</text>
 
 		</itemDisplay>
-
+		
 <onUserInput>
 <script>
 ret = "false";
@@ -138,9 +133,9 @@ if (userInput == "pagedown" || userInput == "pageup")
 ret;
 </script>
 </onUserInput>
-
+		
 	</mediaDisplay>
-
+	
 	<item_template>
 		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
@@ -155,93 +150,67 @@ ret;
 
 	</item_template>
 <channel>
-	<title>TV Live - new</title>
+	<title>kinox.to</title>
 	<menu>main menu</menu>
-	<item>
-	<title>AXN</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/axn",10);</onClick>
-	</item>
 
-	<item>
-	<title>AXN Black</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/axnblack",10);</onClick>
-	</item>
-
-	<item>
-	<title>Fox</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/fox",10);</onClick>
-	</item>
-	
-	<item>
-	<title>Fox Life</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/foxlife",10);</onClick>
-	</item>
-	
-	<item>
-	<title>FOX Movies</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/foxmovies",10);</onClick>
-	</item>
-
-	<item>
-	<title>FOX Crime</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/foxcrime",10);</onClick>
-	</item>
-	
-	<item>
-	<title>SyFy</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/syfy",10);</onClick>
-	</item>
-	
-   <item>
-    <title>France 24</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://stream1.france24.yacast.net/f24_liveen",10);</onClick>
+<?php
+function str_between($string, $start, $end){ 
+	$string = " ".$string; $ini = strpos($string,$start); 
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
+	return substr($string,$ini,$len); 
+}
+exec("rm -f /tmp/kinox.tmp");
+exec("/sbin/wget http://kinox.to -O /tmp/kinox.tmp");
+sleep(1);
+$h=file_get_contents("/tmp/kinox.tmp");
+$p=str_between($h,"var hash=[","]");
+$t1=explode(",",$p);
+$hash=$t1[count($t1)-1];
+$hash=trim(str_replace("'","",$hash));
+$l="http://kinox.to".$hash;
+$h=file_get_contents($l);
+if ($hash <> "") {
+  $link="http://kinox.to/";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, "http://kinox.to/");
+  curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+  curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+  $html = curl_exec($ch);
+  curl_close($ch);
+} else {
+  $html=$h;
+}
+$t1=explode('<div class="Opt leftOpt Headlne">',$html);
+for ($i=3;$i<6;$i++) {
+  $m1=$t1[$i];
+  $title=str_between($m1,"<h1>","</h1>");
+  $link = $host."/scripts/filme/php/kinox_cat.php?query=".$i.",".urlencode($title);
+  if ($title <> "") {
+  echo '
+  <item>
+  <title>'.$title.'</title>
+  <link>'.$link.'</link>
+  <annotation>'.$title.'</annotation>
+  <mediaDisplay name="threePartsView"/>
   </item>
-  
-   <item>
-    <title>Cielo</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp86825.live.edgefcs.net/live/cielo_std@17630",10);</onClick>
+  ';
+  }
+}
+$title="Alle Filme";
+$link = $host."/scripts/filme/php/kinox_a.php?query=".urlencode($title);
+  echo '
+  <item>
+  <title>'.$title.'</title>
+  <link>'.$link.'</link>
+  <annotation>'.$title.'</annotation>
+  <mediaDisplay name="threePartsView"/>
   </item>
-
-   <item>
-    <title>Sky Tg 24</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp49989.live.edgefcs.net:1935/live?videoId=53404915001&lineUpId=&pubId=1445083406&playerId=760707277001&affiliateId=/streamRM1@2564",10);</onClick>
-  </item>
-
-   <item>
-    <title>QVC</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp107861.live.edgefcs.net/live/QVC_Italy_Stream1200@34577",10);</onClick>
-  </item>
-
-   <item>
-    <title>Videolina</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://91.121.222.160/videolinalive/videolinalive.sdp",10);</onClick>
-  </item>
-
-   <item>
-    <title>Quararete TV</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://wowza1.top-ix.org/quartaretetv/quartareteweb",10);</onClick>
-  </item>
-
-   <item>
-    <title>NDR</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://ndr-fs-hh-hi-wmv.wm.llnwd.net/ndr_fs_hh_hi_wmv",10);</onClick>
-  </item>
-
-   <item>
-    <title>hr fernsehen</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://gffstream.fc.llnwd.net/gffstream/005/hr-fernsehen-1",10);</onClick>
-  </item>
-
-
-   <item>
-    <title>Video  BR-Mediathek</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp121359.live.edgefcs.net:1935/live/b7_bfssued_m@49987",10);</onClick>
-  </item>
-
-   <item>
-    <title>LCP</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://stream2.lcp.yacast.net/lcp_live/lcptnt",10);</onClick>
-  </item>
+  ';
+?>
 
 </channel>
 </rss>
