@@ -16,6 +16,7 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
+	
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -24,69 +25,55 @@ $host = "http://127.0.0.1/cgi-bin";
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="45"
+	itemWidthPC="50"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="45"
+	capWidthPC="50"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
-    itemGap="0"
+  itemGap="0"
 	bottomYPC="90"
 	backgroundColor="0:0:0"
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
 	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
-
+		
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 2 for download, 3 for download manager
-		</text>
+
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-		<text align="center" redraw="yes"
-          lines="8" fontSize=17
-		      offsetXPC=55 offsetYPC=58 widthPC=40 heightPC=30
-		      backgroundColor=0:0:0 foregroundColor=200:200:200>
-			<script>print(annotation); annotation;</script>
-		</text>
-  	<text  redraw="yes" align="center" offsetXPC="60" offsetYPC="52" widthPC="30" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(durata); durata;</script>
-		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=25 widthPC=30 heightPC=25>
-  <script>print(img); img;</script>
-		</image>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(titlu_link); titlu_link;</script>
+		  <script>print(annotation); annotation;</script>
 		</text>
-		<idleImage> image/POPUP_LOADING_01.png </idleImage>
-		<idleImage> image/POPUP_LOADING_02.png </idleImage>
-		<idleImage> image/POPUP_LOADING_03.png </idleImage>
-		<idleImage> image/POPUP_LOADING_04.png </idleImage>
-		<idleImage> image/POPUP_LOADING_05.png </idleImage>
-		<idleImage> image/POPUP_LOADING_06.png </idleImage>
-		<idleImage> image/POPUP_LOADING_07.png </idleImage>
-		<idleImage> image/POPUP_LOADING_08.png </idleImage>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+  /usr/local/etc/www/cgi-bin/scripts/tv/image/soccerclips.jpg
+		</image>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
 
 		<itemDisplay>
 			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx)
+					if(focus==idx) 
 					{
-                      img = getItemInfo(idx,"image");
+					  location = getItemInfo(idx, "location");
 					  annotation = getItemInfo(idx, "annotation");
-					  durata = getItemInfo(idx, "durata");
-					  pub = getItemInfo(idx, "pub");
-					  titlu = getItemInfo(idx, "title");
-					  titlu_link=getItemInfo(idx,"download");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -114,7 +101,7 @@ $host = "http://127.0.0.1/cgi-bin";
 			</text>
 
 		</itemDisplay>
-
+		
 <onUserInput>
 <script>
 ret = "false";
@@ -142,26 +129,12 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
-if (userInput == "two" || userInput == "2")
-	{
-     showIdle();
-     url="<?php echo $host; ?>" + "/scripts/tv/sport/sportgioco_link.php?file=" + getItemInfo(getFocusItemIndex(),"download");
-     movie=getUrl(url);
-     cancelIdle();
-	 topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie + ";name=" + getItemInfo(getFocusItemIndex(),"name");
-	 dlok = loadXMLFile(topUrl);
-	 "true";
-}
-if (userInput == "three" || userInput == "3")
-   {
-    jumpToLink("destination");
-    "true";
-}
 ret;
 </script>
 </onUserInput>
-
+		
 	</mediaDisplay>
+	
 	<item_template>
 		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
@@ -175,65 +148,65 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
-<destination>
-	<link>http://127.0.0.1/cgi-bin/scripts/util/level.php
-	</link>
-</destination>
+
 <channel>
-	<title>www.sportgioco.it</title>
+	<title>soccerclips.net</title>
 	<menu>main menu</menu>
 
 
 <?php
-
 function str_between($string, $start, $end){ 
 	$string = " ".$string; $ini = strpos($string,$start); 
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$html = file_get_contents("http://www.sportgioco.it/calcio/highlights.php");
-$image = "/usr/local/etc/www/cgi-bin/scripts/tv/image/sportgioco.jpg";
-$videos = explode('<tr>', $html);
+$html = file_get_contents("http://www.soccerclips.net/");
 
+$img = "/usr/local/etc/www/cgi-bin/scripts/tv/image/soccerclips.jpg";
+$videos = explode('<dd><a href="', $html);
 unset($videos[0]);
 $videos = array_values($videos);
+foreach($videos as $video) {
+    $t1 = explode('"', $video);
+    $link = "http://www.soccerclips.net".$t1[0];
 
+    $t3 = explode('>', $video);
+    $t4 = explode('<', $t3[1]);
+    $title = $t4[0];
+    if (!preg_match("/(Compilations)|(Freestyle)|(Commercials)|(Amateur)/",$title)) {
+    $link1 = $host."/scripts/tv/sport/soccerclips.php?query=1,".$link.",".urlencode($title);
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
+	}
+}
+$videos = explode('div class="sm00', $html);
+unset($videos[0]);
+$videos = array_values($videos);
 foreach($videos as $video) {
     $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
-    $link = $t2[0];
-    $durata = str_between($video,'<td class="tdLight3" style="text-align:center" width="15%">','</td>');
-    if ($durata == "") {
-    $durata = str_between($video,'<td class="tdDark3" style="text-align:center" width="15%">','</td>');
-    }
-    $title = str_between($video,'target="_blank">','<');
-    $descriere=$title;
-    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
-    //if (preg_match("/(youtube)|(sapo)|(dailymotion)|(dai.ly)|(vids.myspace.com)|(svtplay.se)/",$link)) {
-    echo '
-    <item>
-    <title>'.$title.'</title>
-    <onClick>
-    <script>
-    showIdle();
-    url="'.$host.'/scripts/tv/sport/sportgioco_link.php?file='.urlencode($link).'";
-    movie=getUrl(url);
-    cancelIdle();
-    playItemUrl(movie,10);
-    </script>
-    </onClick>
-    <download>'.$link.'</download>
-    <name>'.$name.'</name>
-    <annotation>'.$descriere.'</annotation>
-    <image>'.$image.'</image>
-    <durata>'.$durata.'</durata>
-    <media:thumbnail url="'.$image.'" />
-    </item>
-    ';
-    //}
+    $link = "http://www.soccerclips.net".$t2[0];
 
+    $t3 = explode('>', $t1[1]);
+    $t4 = explode('<', $t3[1]);
+    $title = $t4[0];
+
+		$link1 = $host."/scripts/tv/sport/soccerclips.php?query=1,".$link.",".urlencode($title);
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
 }
-
 
 ?>
 

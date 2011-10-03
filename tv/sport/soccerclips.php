@@ -1,11 +1,21 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
+$query = $_GET["query"];
+if($query) {
+   $queryArr = explode(',', $query);
+   $page = $queryArr[0];
+   $search = urldecode($queryArr[1]);
+   $tit = urldecode($queryArr[2]);
+}
 ?>
 <rss version="2.0">
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
+    storagePath             = getStoragePath("tmp");
+    storagePath_stream      = storagePath + "stream.dat";
+    storagePath_playlist    = storagePath + "playlist.dat";
 </onEnter>
 
 <onRefresh>
@@ -16,6 +26,7 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
+
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -32,23 +43,34 @@ $host = "http://127.0.0.1/cgi-bin";
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
-    itemGap="0"
+  itemGap="0"
 	bottomYPC="90"
 	backgroundColor="0:0:0"
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
 	sliding="no"
+	popupXPC = "40"
+  popupYPC = "55"
+  popupWidthPC = "22.3"
+  popupHeightPC = "5.5"
+  popupFontSize = "13"
+	popupBorderColor="28:35:51"
+	popupForegroundColor="255:255:255"
+ 	popupBackgroundColor="28:35:51"
+ 	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 2 for download, 3 for download manager
-		</text>
+
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    Press 2 for download, 3 for download manager
 		</text>
 		<text align="center" redraw="yes"
           lines="8" fontSize=17
@@ -57,14 +79,11 @@ $host = "http://127.0.0.1/cgi-bin";
 			<script>print(annotation); annotation;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="60" offsetYPC="52" widthPC="30" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(durata); durata;</script>
+		  <script>print(data); data;</script>
 		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=25 widthPC=30 heightPC=25>
   <script>print(img); img;</script>
 		</image>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(titlu_link); titlu_link;</script>
-		</text>
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
 		<idleImage> image/POPUP_LOADING_02.png </idleImage>
 		<idleImage> image/POPUP_LOADING_03.png </idleImage>
@@ -81,12 +100,9 @@ $host = "http://127.0.0.1/cgi-bin";
 					focus = getFocusItemIndex();
 					if(focus==idx)
 					{
-                      img = getItemInfo(idx,"image");
+					  data = getItemInfo(idx, "data");
 					  annotation = getItemInfo(idx, "annotation");
-					  durata = getItemInfo(idx, "durata");
-					  pub = getItemInfo(idx, "pub");
-					  titlu = getItemInfo(idx, "title");
-					  titlu_link=getItemInfo(idx,"download");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -142,16 +158,12 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
-if (userInput == "two" || userInput == "2")
+	if( userInput == "two")
 	{
-     showIdle();
-     url="<?php echo $host; ?>" + "/scripts/tv/sport/sportgioco_link.php?file=" + getItemInfo(getFocusItemIndex(),"download");
-     movie=getUrl(url);
-     cancelIdle();
-	 topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie + ";name=" + getItemInfo(getFocusItemIndex(),"name");
-	 dlok = loadXMLFile(topUrl);
-	 "true";
-}
+		topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + getItemInfo(getFocusItemIndex(),"download") + ";name=" + getItemInfo(getFocusItemIndex(),"name");
+		dlok = loadXMLFile(topUrl);
+		"true";
+	}
 if (userInput == "three" || userInput == "3")
    {
     jumpToLink("destination");
@@ -162,6 +174,7 @@ ret;
 </onUserInput>
 
 	</mediaDisplay>
+
 	<item_template>
 		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
@@ -173,69 +186,111 @@ ret;
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
-
 	</item_template>
 <destination>
 	<link>http://127.0.0.1/cgi-bin/scripts/util/level.php
 	</link>
 </destination>
 <channel>
-	<title>www.sportgioco.it</title>
+	<title><?php echo $tit; ?></title>
 	<menu>main menu</menu>
 
 
 <?php
+//http://www.soccerclips.net/videos/latest_goals/2
+$link=$search.$page;
+$html = file_get_contents($link);
+if($page > 1) { ?>
 
-function str_between($string, $start, $end){ 
-	$string = " ".$string; $ini = strpos($string,$start); 
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
-	return substr($string,$ini,$len); 
-}
-$html = file_get_contents("http://www.sportgioco.it/calcio/highlights.php");
-$image = "/usr/local/etc/www/cgi-bin/scripts/tv/image/sportgioco.jpg";
-$videos = explode('<tr>', $html);
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page-1).",".urlencode($search).",".urlencode($tit);
 
+?>
+<title>Previous Page</title>
+<link><?php echo $url;?></link>
+<annotation>Previous Page</annotation>
+<image>image/left.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+
+<?php } ?>
+<?php
+
+$videos = explode('<div class="idx_th">', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1 = explode('href="', $video);
-    $t2 = explode('"', $t1[1]);
-    $link = $t2[0];
-    $durata = str_between($video,'<td class="tdLight3" style="text-align:center" width="15%">','</td>');
-    if ($durata == "") {
-    $durata = str_between($video,'<td class="tdDark3" style="text-align:center" width="15%">','</td>');
-    }
-    $title = str_between($video,'target="_blank">','<');
-    $descriere=$title;
-    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
-    //if (preg_match("/(youtube)|(sapo)|(dailymotion)|(dai.ly)|(vids.myspace.com)|(svtplay.se)/",$link)) {
-    echo '
-    <item>
-    <title>'.$title.'</title>
+  $t1 = explode('href="', $video);
+  $t2 = explode('"',$t1[1]);
+  $link = "http://www.soccerclips.net".$t2[0];
+  $t3=explode(">",$t1[2]);
+  $t4=explode("<",$t3[1]);
+  $title=$t4[0];
+
+  $t5=explode('title="',$t1[2]);
+  $t6=explode('"',$t5[1]);
+  $annotation=$t6[0];
+
+  $t1 = explode('src="', $video);
+  $t2 = explode('"', $t1[1]);
+  $image = $t2[0];
+  
+  $t1=explode('<div class="idx_a">',$video);
+  $t2=explode('<',$t1[1]);
+  $data=$t2[0];
+
+  $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
+  $link = 'http://127.0.0.1/cgi-bin/scripts/tv/sport/soccerclips_link.php?file='.$link;
+	echo'
+	<item>
+	<title>'.$title.'</title>
     <onClick>
     <script>
     showIdle();
-    url="'.$host.'/scripts/tv/sport/sportgioco_link.php?file='.urlencode($link).'";
+    url="'.$link.'";
     movie=getUrl(url);
     cancelIdle();
-    playItemUrl(movie,10);
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/x-flv);
+    streamArray = pushBackStringArray(streamArray, "'.$title.'");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
     </script>
     </onClick>
     <download>'.$link.'</download>
     <name>'.$name.'</name>
-    <annotation>'.$descriere.'</annotation>
+    <annotation>'.$annotation.'</annotation>
+    <data>'.$data.'</data>
     <image>'.$image.'</image>
-    <durata>'.$durata.'</durata>
     <media:thumbnail url="'.$image.'" />
-    </item>
-    ';
-    //}
-
+    <mediaDisplay name="threePartsView"/>
+	</item>
+	';
 }
 
 
 ?>
+
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page+1).",".urlencode($search).",".urlencode($tit);
+?>
+<title>Next Page</title>
+<link><?php echo $url;?></link>
+<annotation>Next Page</annotation>
+<image>image/right.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
 
 </channel>
 </rss>

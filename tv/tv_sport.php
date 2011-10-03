@@ -274,12 +274,20 @@ columnCount=4
 <item>
 <title>www.footytube.com</title>
 <link><?php echo $host; ?>/scripts/tv/sport/footytube.php?query=0</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/sportgioco.jpg" />
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/footytube.png" />
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/footytube.png</image>
 <location>http://www.footytube.com</location>
 <annotation>footytube.com. Latest football highlights, clips and videos.</annotation>
 </item>
 
+<item>
+<title>soccerclips.net</title>
+<link><?php echo $host; ?>/scripts/tv/sport/soccerclips_main.php</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/soccerclips.jpg" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/soccerclips.jpg</image>
+<location>http://www.soccerclips.net</location>
+<annotation>Football videos, football news, forum and more. SoccerClips is a community of football fans.</annotation>
+</item>
 
 <item>
 <title>Bing</title>

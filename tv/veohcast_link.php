@@ -6,6 +6,7 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
+/*
 ///videochannel.php?n=9B728SYFYUSTVNOW1
 //http://veohcast.tv/videochannel.php?n=syfy
 //Referer: http://www.veohcast.tv/videolive1channel.php?n=908060CT
@@ -55,5 +56,13 @@ if ($rest == "/") {
 $server=substr($server, 0, -1);
 }
 $server=$server."/".$f;
+print $server;
+*/
+$link=urldecode($link);
+$link="http://www.veohcast.tv".str_replace("channelprivate","private",$link);
+$html=file_get_contents($link);
+$s=str_between($html,"streamer=","&");
+$f=str_between($html,"file=","&");
+$server=$s."/".$f;
 print $server;
 ?>

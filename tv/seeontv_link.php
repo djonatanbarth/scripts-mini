@@ -12,18 +12,9 @@ function str_between($string, $start, $end){
 //streamer=rtmp%3A%2F%2Flive00.seeon.tv%2Fredirect&file=hhzpgreq2jowut3.flv&autostart=true&plugins=http://static.seeon.tv/jwplayer/seeon-plugin.swf
 $html = file_get_contents($link);
 $server=mt_rand(1,30);
-$t1=explode('streamer=',$html);
-$t2=explode('"',$t1[1]);
-$link=urldecode($t2[0]);
-$link=str_replace("redirect&file=","edge/",$link);
-$link1=str_replace(".flv&autostart=true","",$link);
-$l=explode("&",$link1);
-$link1=$l[0];
-$host = "http://127.0.0.1/cgi-bin";
-if (strpos($link1,"live00") !== false) {
-$link=str_replace("rtmp://live00","rtmp://live".$server,$link1);
-} else {
-$link=str_replace("rtmp://live","rtmp://live".$server,$link1);
-}
+//$server="1";
+//rtmp://live3.seeon.tv/edge/ktc6f73bm5w2ny8
+$id=str_between($html,"&file=",".flv");
+$link="rtmp://live".$server.".seeon.tv/edge/".$id;
 print $link;
 ?>

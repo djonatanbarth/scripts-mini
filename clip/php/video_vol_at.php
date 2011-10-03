@@ -6,6 +6,9 @@ $host = "http://127.0.0.1/cgi-bin";
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
+    storagePath             = getStoragePath("tmp");
+    storagePath_stream      = storagePath + "stream.dat";
+    storagePath_playlist    = storagePath + "playlist.dat";
 </onEnter>
 
 <onRefresh>
@@ -25,11 +28,11 @@ $host = "http://127.0.0.1/cgi-bin";
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="50"
+	itemWidthPC="45"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="50"
+	capWidthPC="45"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -40,6 +43,15 @@ $host = "http://127.0.0.1/cgi-bin";
 	showDefaultInfo="no"
 	imageFocus=""
 	sliding="no"
+	popupXPC = "40"
+  popupYPC = "55"
+  popupWidthPC = "22.3"
+  popupHeightPC = "5.5"
+  popupFontSize = "13"
+	popupBorderColor="28:35:51"
+	popupForegroundColor="255:255:255"
+ 	popupBackgroundColor="28:35:51"
+ 	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -49,11 +61,18 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(annotation); annotation;</script>
+
+		<text align="center" redraw="yes"
+          lines="8" fontSize=17
+		      offsetXPC=55 offsetYPC=55 widthPC=40 heightPC=35
+		      backgroundColor=0:0:0 foregroundColor=200:200:200>
+			<script>print(annotation); annotation;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-  image/tv_radio.png
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    Press 2 for download, 3 for download manager
+		</text>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=30>
+		<script>print(img); img;</script>
 		</image>
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
 		<idleImage> image/POPUP_LOADING_02.png </idleImage>
@@ -71,7 +90,9 @@ $host = "http://127.0.0.1/cgi-bin";
 					focus = getFocusItemIndex();
 					if(focus==idx)
 					{
-					  annotation = getItemInfo(idx, "title");
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -127,6 +148,17 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
+	if( userInput == "two")
+	{
+		topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + getItemInfo(getFocusItemIndex(),"download") + ";name=" + getItemInfo(getFocusItemIndex(),"name");
+		dlok = loadXMLFile(topUrl);
+		"true";
+	}
+if (userInput == "three" || userInput == "3")
+   {
+    jumpToLink("destination");
+    "true";
+}
 ret;
 </script>
 </onUserInput>
@@ -144,123 +176,104 @@ ret;
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
-
 	</item_template>
-  <channel>
+<destination>
+	<link>http://127.0.0.1/cgi-bin/scripts/util/level.php
+	</link>
+</destination>
+<channel>
+	<title>video.vol.at</title>
+	<menu>main menu</menu>
 
-    <title>TV Live</title>
+
+<?php
+//http://video.vol.at/videos/index/lpage/1#videos_listing
+$page = $_GET["query"];
+
+$link="http://video.vol.at/videos/index/lpage/".$page."#videos_listing";
+$html = file_get_contents($link);
+if($page > 1) { ?>
 
 <item>
-<title>TV Live - Deutschland</title>
-<link><?php echo $host; ?>/scripts/tv/german_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page-1);
+
+?>
+<title>Previous Page</title>
+<link><?php echo $url;?></link>
+<annotation>Previous Page</annotation>
+<image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
 
+
+<?php } ?>
+<?php
+
+$videos = explode('div class="item"', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+
+foreach($videos as $video) {
+  $t1 = explode('title="', $video);
+  $t2 = explode('"',$t1[1]);
+  $title = $t2[0];
+  $title=str_replace("&quot;","",$title);
+
+  $t1 = explode('src="', $video);
+  $t2 = explode('"', $t1[1]);
+  $image = $t2[0];
+  $t3=explode("_",$image);
+  $link=str_replace("videos/","",$t3[0]);
+  $link=str_replace("thumbs/","",$link);
+  $link=$link.".mp4";
+
+  $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
+	echo'
+	<item>
+	<title>'.$title.'</title>
+    <onClick>
+    <script>
+    showIdle();
+    movie="'.$link.'";
+    cancelIdle();
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/x-flv);
+    streamArray = pushBackStringArray(streamArray, "'.$title.'");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+    </script>
+    </onClick>
+    <download>'.$link.'</download>
+    <name>'.$name.'</name>
+    <annotation>'.$title.'</annotation>
+    <image>'.$image.'</image>
+    <media:thumbnail url="'.$image.'" />
+    <mediaDisplay name="threePartsView"/>
+	</item>
+	';
+}
+
+
+?>
+
 <item>
-<title>TV Live - Music</title>
-<link><?php echo $host; ?>/scripts/tv/music_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page+1);
+?>
+<title>Next Page</title>
+<link><?php echo $url;?></link>
+<annotation>Next Page</annotation>
+<image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>TV Live - Sport</title>
-<link><?php echo $host; ?>/scripts/tv/tv_sport_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - New channels</title>
-<link><?php echo $host; ?>/scripts/tv/tv_new.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>veohcast.tv</title>
-<link><?php echo $host; ?>/scripts/tv/veohcast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Seeon TV</title>
-<link><?php echo $host; ?>/scripts/tv/seeontv.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Seeon TV - private channels</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/seeontv_p.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Justin.tv</title>
-<link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from veetle.com (only LQ) - popular</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/veetle_main.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from freedocast.com</title>
-<link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from livestation.com</title>
-<link><?php echo $host; ?>/scripts/tv/php/livestation.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>freeiptv</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/freeiptv.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>theStreamDB.com - XBMC LiveStreams</title>
-<link><?php echo $host; ?>/scripts/tv/php/theStreamDB_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - (from Darby_Crash)</title>
-<link><?php echo $host; ?>/scripts/tv/tv_diverse_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - ohlulz.com</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<!--
-<item>
-<title>mozhay TV (Russian) - press Audio to change channel</title>
-<link><?php echo $host; ?>/scripts/tv/mozhay.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
 </channel>
-</rss>                                                                                                                             
+</rss>

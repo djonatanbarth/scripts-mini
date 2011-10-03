@@ -363,7 +363,7 @@ columnCount=5
 		</text>
     </mediaDisplay>
 </item>
-
+<!--
 <item>
 <title>ikiwi.at</title>
 	<link><?php echo $host; ?>/scripts/clip/php/ikiwi.php?query=1</link>
@@ -372,16 +372,25 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/ikiwi.png" />
 	<annotation>Ziel von iKiwi ist es, die besten Videos des Internets auf einem Portal kostenlos anzubieten und durch innovative Funktionalitäten den Nutzern einen größtmöglichen Mehrwert und kreativen Spielraum zu bieten.</annotation>
 </item>
-<!--
-<item>
-<title>cooxt.de</title>
-	<link><?php echo $host; ?>/scripts/clip/php/cooxt_de.php?query=1</link>
-	<location>http://www.cooxt.de/</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/cooxt.gif</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/cooxt.gif" />
-	<annotation>COOXT - Wir bringen das Web zum Kochen</annotation>
-</item>
 -->
+<item>
+<title>vol.at</title>
+	<link><?php echo $host; ?>/scripts/clip/php/video_vol_at.php?query=1</link>
+	<location>http://www.vol.at/</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/video_vol_at.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/video_vol_at.png" />
+	<annotation>Aktuelle Nachrichten aus Vorarlberg, sterreich und der Welt: News, Sport Nachrichten, Wetter, Wirtschaft, Kultur, Stars, Veranstaltungen, Reise, Chat, uvm.</annotation>
+</item>
+
+<item>
+<title>businessworld.de</title>
+	<link><?php echo $host; ?>/scripts/clip/php/businessworld.php?query=1</link>
+	<location>http://www.businessworld.de/</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/businessworld.gif</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/businessworld.gif" />
+	<annotation>businessworld.de - Wirtschaftsinformationen und Kontakte per Video. Publizieren und recherchieren Sie zu Unternehmen, Produkten, Events, Jobs, Karriere, Ideen und Know-how.</annotation>
+</item>
+
 <item>
 <title>luegmol.ch</title>
 	<link><?php echo $host; ?>/scripts/clip/php/luegmol.php?query=1</link>
@@ -426,7 +435,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/deutschlandreporter.png" />
 	<annotation>GSD | Karl-Heinz Klevers in Wuppertal - Video - Wuppertal - News - Gesellschaft - News - Menschen:</annotation>
 </item>
-
+<!--
 <item>
 <title>uprom.tv</title>
 	<link><?php echo $host; ?>/scripts/clip/php/uprom.php</link>
@@ -435,7 +444,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/uprom.gif" />
 	<annotation>UProm.TV - Lade Deine Video Clips hoch und komm so ins Fernsehen! Mit UProm.TV hat jeder die Chance, mit seinen eigenen Videoclips ins TV zu kommen</annotation>
 </item>
-
+-->
 <item>
 <title>funnyordie.com</title>
 	<link><?php echo $host; ?>/scripts/clip/php/funnyordie_main.php</link>

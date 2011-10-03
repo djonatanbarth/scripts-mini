@@ -51,7 +51,7 @@
 		  <script>print(annotation); annotation;</script>
 		</text>
 		<image  redraw="yes" offsetXPC=61 offsetYPC=30 widthPC=30 heightPC=35>
-		<script>print(img); img;</script>
+  http://veohcast.tv/images/logo.png
 		</image>
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
 		<idleImage> image/POPUP_LOADING_02.png </idleImage>
@@ -191,40 +191,32 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$html=str_between($html,'<table width="100%">','<div class="headwrap"');
-$videos = explode('<td', $html);
+//$html=str_between($html,'<table width="100%">','<div class="headwrap"');
+$image="http://veohcast.tv/images/logo.png";
+$videos = explode('<td align="center">', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
     $t1 = explode('href="', $video);
-    $t2 = explode('=', $t1[2]);
-    $t3=explode('"',$t1[1]);
-    $t6=explode('"',$t2[1]);
-    $id=$t6[0];
-    $link = $t3[0];
-    $t4=explode(">",$t2[1]);
-    $t5=explode("<",$t4[1]);
-    $title=$t5[0];
-
-    $t1 = explode(' src="', $video);
     $t2 = explode('"', $t1[1]);
-    $image = $t2[0];
-    if (strpos($image,"Thumbnail.aspx") !==false) {
-      $image="image/tv_radio.png";
-    }
-    // + "/" + "'.$id.'"
+    $link=$t2[0];
+    ///channelprivate
+    $t3=explode('n=',$video);
+    $t4=explode('@',$t3[1]);
+    $title="Channel - ".$t4[0];
+    if (strpos($link,"channelprivate") !==false) {
     echo '
     <item>
     <title>'.$title.'</title>
     <onClick>
     <script>
     showIdle();
-    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/veohcast_link.php?file='.$link.'");
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/veohcast_link.php?file='.urlencode($link).'");
     url1=url;
     annotation=url1;
-    movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.veohcast.tv/veohcast.tv.swf," + url1;
+    movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-p%20http://www.veohcast.tv," + url1;
     cancelIdle();
     playItemURL(movie, 10);
     </script>
@@ -234,6 +226,7 @@ foreach($videos as $video) {
     <mediaDisplay name="threePartsView"/>
     </item>
     ';
+    }
 }
 
 ?>

@@ -29,7 +29,7 @@ $html = file_get_contents($l);
 if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 }
-$s="/youtube\.c|videa\.hu\/flvplayer|kiwi\.kz|sapo\.pt/i";
+$s="/youtube\.c|videa\.hu\/flvplayer|kiwi\.kz|sapo\.pt|dailymotion|dai\.ly|sporxtv\.com/i";
 for ($i=0;$i<count($links);$i++) {
   $cur_link=$links[$i];
   if (preg_match($s,$cur_link)) {
@@ -47,14 +47,47 @@ for ($i=0;$i<count($links);$i++) {
   } elseif (strpos($cur_link,'videa.hu') !==false){
       preg_match('/(v=)([A-Za-z0-9_]+)/', $cur_link, $m);
       $id=$m[2];
-      $cur_link="http://videa.hu/videok/sport/".$id;
-      $html = file_get_contents($cur_link);
-      $id=str_between($html,"flvplayer.swf?f=",".0&");
-      $link="http://videa.hu/static/video/".$id;
+      if ($id <> "") {
+         $cur_link="http://videa.hu/videok/sport/".$id;
+         $html = file_get_contents($cur_link);
+         $id=str_between($html,"flvplayer.swf?f=",".0&");
+         $link="http://videa.hu/static/video/".$id;
+      } else {
+         $html = file_get_contents($cur_link);
+         $id=str_between($html,"flvplayer.swf?f=",".0&");
+         $link="http://videa.hu/static/video/".$id;
+      }
   } elseif (strpos($cur_link,'videos.sapo.pt') !==false){
       $v_id = substr(strrchr($cur_link, "/"), 1);
       $link = "http://rd3.videos.sapo.pt/".$v_id."/mov/1" ;
-  }
+  } elseif (strpos($cur_link,'sporxtv.com') !==false) {
+      $html = file_get_contents($cur_link);
+      $link = str_between($html,"file: '","'");
+  } elseif ((strpos($cur_link, "dailymotion") !== false) || (strpos($cur_link, "dai.ly") !== false)){
+    $html = file_get_contents($cur_link);
+    $t1 = explode('sdURL', $html);
+    $sd=urldecode($t1[1]);
+    $t1=explode('"',$sd);
+    $sd=$t1[2];
+    $sd=str_replace("\\","",$sd);
+    $n=explode("?",$sd);
+    $nameSD=$n[0];
+    $nameSD=substr(strrchr($nameSD,"/"),1);
+    $t1 = explode('hqURL', $html);
+    $hd=urldecode($t1[1]);
+    $t1=explode('"',$hd);
+    $hd=$t1[2];
+    $hd=str_replace("\\","",$hd);
+    $n=explode("?",$hd);
+    $nameHD=$n[0];
+    $nameHD=substr(strrchr($nameHD,"/"),1);
+    if ($hd <> "") {
+    $link = $hd;
+    }
+    if (($sd <> "") && ($hd=="")) {
+    $link = $sd;
+    }
+}
 }
 }
 print $link;

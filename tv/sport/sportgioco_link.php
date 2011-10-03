@@ -6,7 +6,8 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $link = $_GET["file"];
-$html = file_get_contents($link);
+$link=urldecode($link);
+//$html = file_get_contents($link);
 if (strpos($link, "youtube") !== false) {
 $link=file_get_contents("http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=".$link);
 print $link;
@@ -72,6 +73,30 @@ print $link;
 if (strpos($link, "svtplay.se") !== false) {
    $html = file_get_contents($link);
    $link = str_between($html,'pathflv=','&');
+print $link;
+}
+if (strpos($link,'videa.hu') !==false){
+   preg_match('/(v=)([A-Za-z0-9_]+)/', $link, $m);
+   $id=$m[2];
+   if ($id <> "") {
+   $cur_link="http://videa.hu/videok/sport/".$id;
+   $html = file_get_contents($cur_link);
+   $id=str_between($html,"flvplayer.swf?f=",".0&");
+   $link1="http://videa.hu/static/video/".$id;
+   } else {
+   $html = file_get_contents($link);
+   $id=str_between($html,"flvplayer.swf?f=",".0&");
+   $link1="http://videa.hu/static/video/".$id;
+   }
+print $link1;
+}
+if (strpos($link,'sporxtv.com') !==false) {
+   $html = file_get_contents($link);
+   $link = str_between($html,"file: '","'");
+print $link;
+}
+if (strpos($link,'rutube') !==false) {
+   $link="http://127.0.0.1/cgi-bin/translate?stream,,".$link;
 print $link;
 }
 ?>
