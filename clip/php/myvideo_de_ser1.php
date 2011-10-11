@@ -225,6 +225,7 @@ foreach($videos as $video) {
   $t1 = explode("title='", $video);
   $t2 = explode("'",$t1[1]);
   $title = $t2[0];
+  $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
 
   $t1 = explode("src='", $video);
   $t2 = explode("'", $t1[1]);

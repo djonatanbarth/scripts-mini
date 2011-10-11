@@ -237,6 +237,13 @@ function getRewriteString($string) {
     $string    = preg_replace("/&amp;(.)(acute|cedil|circ|ring|tilde|uml|horn);/", "$1", $string);
     return $string;
 }
+function htmlkarakter($string)
+{
+   $string = str_replace(array("&lt;", "&gt;", '&amp;', '&#039;', '&quot;','&lt;', '&gt;'), array("<", ">",'&','\'','"','<','>'), htmlspecialchars_decode($string, ENT_NOQUOTES));
+
+       return $string;
+
+}
 $videos = explode('<div class="dmpi_video_preview', $html);
 
 unset($videos[0]);
@@ -256,8 +263,12 @@ foreach($videos as $video) {
     $title = $t2[0];
     if ($title == "") $title="Video...";
     $title = str_replace("&nbsp;","",$title);
+    $title=htmlkarakter($title);
     $title = str_replace("&amp;","&",$title);
+    //echo $title."<br>";
     $title = getRewriteString($title);
+    $title=htmlentities($title, ENT_QUOTES, "UTF-8");
+    $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
     $title=str_replace("\\",",",$title);
     /**
     $title = htmlentities($title);
@@ -294,6 +305,7 @@ foreach($videos as $video) {
     $descriere=$t2[0];
 	$descriere = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$descriere);
 	$descriere = str_replace("&nbsp;","",$descriere);
+	$descriere=html_entity_decode($descriere,ENT_QUOTES, "UTF-8");
 
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
 

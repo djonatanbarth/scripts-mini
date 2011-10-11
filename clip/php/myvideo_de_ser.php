@@ -171,6 +171,7 @@ foreach($videos as $video) {
 	$t2=explode(">",$t0[1]);
 	$t3=explode("<",$t2[1]);
     $title=$t3[0];
+    $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
 	$link = $host."/scripts/clip/php/myvideo_de_ser2.php?query=".$link.",".urlencode($title);
 	
 	echo '

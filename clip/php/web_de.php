@@ -254,9 +254,10 @@ foreach($videos as $video) {
   $title = $t2[0];
   $title = trim($title);
   $title = str_replace("&nbsp;","",$title);
-  $title = str_replace("&quot;","",$title);
-  $title = str_replace("&amp;","&",$title);
-  $title = getRewriteString($title);
+  $title = str_replace('&quot;',"",$title);
+  //$title = str_replace("&amp;","&",$title);
+  //$title = getRewriteString($title);
+  $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
   $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
 	echo'
 	<item>

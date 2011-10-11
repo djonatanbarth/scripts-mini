@@ -233,13 +233,15 @@ foreach($videos as $video) {
     $t1 = explode('title="', $video);
     $t2 = explode('"', $t1[2]);
     $title = str_replace("&nbsp;","",$t2[0]);
+    $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
+    /*
     $title = str_replace("&amp;","&",$title);
     $title = str_replace('"',"",$title);
     $title = getRewriteString1($title);
     $title = getRewriteString($title);
     $title = str_replace("&amp;","&",$title);
     $title=c($title);
-    
+    */
     $t1 = explode('title="', $video);
     $t2 = explode('"', $t1[1]);
     $description = str_replace("&nbsp;","",$t2[0]);

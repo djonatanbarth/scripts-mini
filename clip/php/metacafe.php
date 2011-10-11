@@ -1,12 +1,6 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
-$query = $_GET["query"];
-if($query) {
-   $queryArr = explode(',', $query);
-   $link = $queryArr[0];
-   $tit = urldecode($queryArr[1]);
-}
 ?>
 <rss version="2.0">
 <onEnter>
@@ -67,20 +61,17 @@ if($query) {
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="60" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 2 for download, 3 for download manager
-		</text>
-		<text align="justify" redraw="yes"
+
+		<text align="center" redraw="yes"
           lines="8" fontSize=17
-		      offsetXPC=55 offsetYPC=58 widthPC=40 heightPC=38
+		      offsetXPC=55 offsetYPC=55 widthPC=40 heightPC=35
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
 			<script>print(annotation); annotation;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="55" offsetYPC="52" widthPC="40" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(durata); durata;</script>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    Press 2 for download, 3 for download manager
 		</text>
-
-		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=24>
+		<image  redraw="yes" offsetXPC=60 offsetYPC=22.5 widthPC=30 heightPC=30>
 		<script>print(img); img;</script>
 		</image>
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
@@ -99,9 +90,9 @@ if($query) {
 					focus = getFocusItemIndex();
 					if(focus==idx)
 					{
-					  img = getItemInfo(idx,"image");
+					  location = getItemInfo(idx, "location");
 					  annotation = getItemInfo(idx, "annotation");
-					  durata = getItemInfo(idx, "durata");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -159,9 +150,13 @@ if (userInput == "pagedown" || userInput == "pageup")
 }
 	if( userInput == "two")
 	{
-		topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + getItemInfo(getFocusItemIndex(),"download") + ";name=" + getItemInfo(getFocusItemIndex(),"name");
-		dlok = loadXMLFile(topUrl);
-		"true";
+     showIdle();
+     url=getItemInfo(getFocusItemIndex(),"download");
+     movie=getUrl(url);
+     cancelIdle();
+	 topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie + ";name=" + getItemInfo(getFocusItemIndex(),"name");
+	 dlok = loadXMLFile(topUrl);
+	 "true";
 	}
 if (userInput == "three" || userInput == "3")
    {
@@ -191,7 +186,7 @@ ret;
 	</link>
 </destination>
 <channel>
-	<title><?php echo $tit; ?></title>
+	<title>www.metacafe.com</title>
 	<menu>main menu</menu>
 
 
@@ -201,39 +196,65 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
+$page = $_GET["query"];
+//http://www.metacafe.com/page-1/
+$link="http://www.metacafe.com/page-".$page."/";
 $html = file_get_contents($link);
-$html=str_between($html,"<div id='bodyFW'","Gästebuch:");
+if($page > 1) { ?>
 
-$videos = explode("<div class='slThumb vViews'>", $html);
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page-1);
+
+?>
+<title>Previous Page</title>
+<link><?php echo $url;?></link>
+<annotation>Previous Page</annotation>
+<image>image/left.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+
+<?php } ?>
+<?php
+
+$videos = explode('li id="i', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-  $t1 = explode("title='", $video);
-  $t2 = explode("'",$t1[1]);
-  $title = $t2[0];
-  $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
+  $t1 = explode('href="', $video);
+  $t2 = explode('"',$t1[1]);
+  $link = "http://www.metacafe.com".$t2[0];
 
-  $t1 = explode("src='", $video);
-  $t2 = explode("'", $t1[1]);
+  $t1 = explode('src="', $video);
+  $t2 = explode('"', $t1[1]);
   $image = $t2[0];
+  if (strpos($image,"gif") !==false) {
+   $image="/usr/local/etc/www/cgi-bin/scripts/clip/image/metacafe.png";
+  }
 
-  $link=str_replace("thumbs/","",$image);
-  $t1=explode("_",$link);
-  $link=$t1[0].".flv";
-  $descriere=str_between($video,"<div class='pChText'>","</div>");
-  $t1=explode("<span class='vViews'",$video);
-  $t2=explode(">",$t1[1]);
-  $t3=explode("<",$t2[1]);
-  $durata=trim($t3[0]);
-  $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
-	echo'
-	<item>
-	<title>'.$title.'</title>
+  $link = $host."/scripts/clip/php/metacafe_link.php?file=".$link;
+
+  $t1 = explode('title="', $video);
+  $t2 = explode('"', $t1[1]);
+  $title = $t2[0];
+  $title = str_replace("&nbsp;","",$title);
+  $title = str_replace('&quot;',"",$title);
+  $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
+  $data=trim(str_between($video,'<p class="ItemInfo">','</p>'));
+  $data = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$data);
+
+  $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
+    echo '
+    <item>
+    <title>'.$title.'</title>
     <onClick>
     <script>
     showIdle();
-    movie="'.$link.'";
+    url="'.$link.'";
+    movie=getUrl(url);
     cancelIdle();
     streamArray = null;
     streamArray = pushBackStringArray(streamArray, "");
@@ -249,18 +270,28 @@ foreach($videos as $video) {
     </onClick>
     <download>'.$link.'</download>
     <name>'.$name.'</name>
-    <annotation>'.$descriere.'</annotation>
-    <image>'.$image.'</image>
-    <durata>'.$durata.'</durata>
-    <media:thumbnail url="'.$image.'" />
-    <mediaDisplay name="threePartsView"/>
-	</item>
-	';
+  <image>'.$image.'</image>
+  <annotation>'.$data.'</annotation>
+  <media:thumbnail url="'.$image.'" />
+  <mediaDisplay name="threePartsView"/>
+  </item>
+  ';
 }
 
 
 ?>
 
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page+1);
+?>
+<title>Next Page</title>
+<link><?php echo $url;?></link>
+<annotation>Next Page</annotation>
+<image>image/right.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
 
 </channel>
 </rss>

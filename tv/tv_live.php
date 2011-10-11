@@ -179,13 +179,6 @@ ret;
 </item>
 
 <item>
-<title>veohcast.tv</title>
-<link><?php echo $host; ?>/scripts/tv/veohcast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
 <title>Seeon TV</title>
 <link><?php echo $host; ?>/scripts/tv/seeontv.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
@@ -228,8 +221,8 @@ ret;
 </item>
 
 <item>
-<title>freeiptv</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/freeiptv.rss</link>
+<title>TV Live from skyfrei.ch</title>
+<link><?php echo $host; ?>/scripts/tv/skyfrei.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -254,13 +247,12 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-<!--
+
 <item>
-<title>mozhay TV (Russian) - press Audio to change channel</title>
-<link><?php echo $host; ?>/scripts/tv/mozhay.php</link>
+<title>veohcast.tv</title>
+<link><?php echo $host; ?>/scripts/tv/veohcast.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
--->
 </channel>
 </rss>                                                                                                                             

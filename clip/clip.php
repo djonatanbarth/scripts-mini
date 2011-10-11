@@ -280,6 +280,15 @@ columnCount=5
 </item>
 
 <item>
+<title>Metacafe</title>
+	<link><?php echo $host; ?>/scripts/clip/php/metacafe.php?query=1</link>
+	<location>http://www.metacafe.com</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/metacafe.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/metacafe.png" />
+	<annotation>Metacafe - Best Videos & Funny Movies:</annotation>
+</item>
+
+<item>
 <title>Youtube</title>
 	<link>rss_file:///usr/local/etc/www/cgi-bin/scripts/clip/youtube/yt_index.rss</link>
 	<location>http://youtube.com</location>
@@ -383,7 +392,7 @@ columnCount=5
 </item>
 
 <item>
-<title>businessworld.de</title>
+<title>businessworld</title>
 	<link><?php echo $host; ?>/scripts/clip/php/businessworld.php?query=1</link>
 	<location>http://www.businessworld.de/</location>
 	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/businessworld.gif</image>

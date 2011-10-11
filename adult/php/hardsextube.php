@@ -203,7 +203,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -217,34 +217,32 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$videos = explode("<div id=", $html);
-
+//$videos = explode("<div id=", $html);
+$videos = explode('<li class="normal',$html);
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1 = explode('href="', $video);
-    $t2 = explode('"', $t1[1]);
+    $t1 = explode("href='", $video);
+    $t2 = explode("'", $t1[1]);
     $link = $t2[0];
     $link = $host."/scripts/adult/php/hardsextube_link.php?file=".$link;
 
-    $t1 = explode('src="', $video);
-    $t2 = explode('"', $t1[1]);
+    $t1 = explode("src='", $video);
+    $t2 = explode("'", $t1[1]);
     $image = $t2[0];
 
-    $t1 = explode('href="', $video);
-    $t2 = explode('">', $t1[2]);
-    $t3 = explode('</a>',$t2[1]);
-    $title = trim($t3[0]);
+    $t1=explode("title='",$video);
+    $t2=explode("'",$t1[1]);
+    $title=$t2[0];
     $title = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$title);
     if ($title=="") {
        $title = str_between($video,"<b>","</b>");
        $title = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$title);
     }
 
-    $data = trim(str_between($video,'<div style="float: left; width: 70px;">',"<"));
+    $data = trim(str_between($video,'"duration_text">',"<"));
     if ($data <> "") {
-    $data = "Durata: ".$data;
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
 
     echo '
@@ -292,7 +290,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
