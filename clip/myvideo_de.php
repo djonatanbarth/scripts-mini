@@ -133,8 +133,12 @@ if (userInput == "pagedown" || userInput == "pageup")
 ret;
 </script>
 </onUserInput>
-
 	</mediaDisplay>
+	<searchLink>
+	  <link>
+	    <script>"<?php echo $host."/scripts/clip/php/myvideo_de_s.php?query=1,"; ?>" + urlEncode(keyword) + "," + urlEncode(keyword);</script>
+	  </link>
+	</searchLink>
 	<item_template>
 		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
@@ -150,7 +154,7 @@ ret;
 	</item_template>
 <channel>
 <title>myVideo.de</title>
-<!--
+
 <item>
 <title>Search</title>
 <onClick>
@@ -161,7 +165,7 @@ ret;
   }
 </onClick>
 </item>
--->
+
 <?php
 $link="http://www.myvideo.de/Videos_A-Z?lpage=";
 $title="Videos A-Z";
@@ -172,12 +176,12 @@ echo '
 </item>
 ';
 ?>
-
+<!--
 <item>
 <title>Musik Videos</title>
 <link><?php echo $host; ?>/scripts/clip/php/myvideo_de_mus.php?query=1</link>
 </item>
-
+-->
 <item>
 <title>Alle Serien</title>
 <link><?php echo $host; ?>/scripts/clip/php/myvideo_de_ser.php</link>

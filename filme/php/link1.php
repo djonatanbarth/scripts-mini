@@ -689,9 +689,20 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   }
   $filelink = "http://embed.movshare.net/embed.php?v=".$id;
   $baza = file_get_contents($filelink);
+  $key=str_between($baza,'flashvars.filekey="','"');
+  if ($key <> "") {
+     $l="http://www.movshare.net/api/player.api.php?user=undefined&codes=undefined&key=";
+     $l=$l.urlencode($key)."&pass=undefined&file=".$id;
+     $b=file_get_contents($l);
+     $link=str_between($b,"url=","&");
+  } else {
   $link = str_between($baza,'file="','"');
   if ($link == "") {
     $link=str_between($baza,'name="src" value="','"');
+  }
+  if ($link == "") {
+    $link=str_between($baza,'src" value="','"');
+  }
   }
 } elseif (strpos($filelink, 'youtube') !== false){
   $link=youtube($filelink);
@@ -923,6 +934,10 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
 } elseif (strpos($filelink, 'uploadville.com') !== false) {
    //http://uploadville.com/z5g2on7obv7j
    $link=uploadville($filelink);
+} elseif (strpos($filelink, 'zurvid.com') !== false) {
+   //http://www.zurvid.com/embed.php?id=635
+  $h=file_get_contents($filelink);
+  $link=str_between($h,"file=","&");
 }
 print $link;
 ?>

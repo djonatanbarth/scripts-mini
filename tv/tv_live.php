@@ -221,13 +221,6 @@ ret;
 </item>
 
 <item>
-<title>TV Live from skyfrei.ch</title>
-<link><?php echo $host; ?>/scripts/tv/skyfrei.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
 <title>theStreamDB.com - XBMC LiveStreams</title>
 <link><?php echo $host; ?>/scripts/tv/php/theStreamDB_main.php</link>
 <media:thumbnail url="image/tv_radio.png" />
@@ -248,11 +241,5 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>veohcast.tv</title>
-<link><?php echo $host; ?>/scripts/tv/veohcast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
 </channel>
 </rss>                                                                                                                             
