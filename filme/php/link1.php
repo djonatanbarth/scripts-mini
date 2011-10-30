@@ -938,6 +938,17 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    //http://www.zurvid.com/embed.php?id=635
   $h=file_get_contents($filelink);
   $link=str_between($h,"file=","&");
+} elseif (strpos($filelink, 'flashx.tv') !== false) {
+   //http://flashx.tv/player/embed_player.php?vid=1394
+  $h=file_get_contents($filelink);
+  $link=str_between($h,"normal_video_file = '","'");
+} elseif (strpos($filelink, 'sharefiles4u.com') !== false) {
+   //http://www.sharefiles4u.com/cwfqw29ylesp/nrx-ausgewechselt.avi
+   //http://stage666.net/cgi-bin/dl.cgi/kylgrtsmovb2rbldug23w3o45jkdpr23gv4cxbsdjq/video.avi
+   $h = file_get_contents($filelink);
+   preg_match("/(\|)([a-z0-9]{42})\|/",$h,$m);
+   $hash=$m[2];
+   $link="http://www.sharefiles4u.com/cgi-bin/dl.cgi/".$hash."/video.avi";
 }
 print $link;
 ?>

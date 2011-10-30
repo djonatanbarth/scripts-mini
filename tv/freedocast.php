@@ -202,7 +202,7 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$baseurl="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,";
+$baseurl="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-p%20http://www.freedocast.com,";
 $videos = explode('<div class="channelimgcon">', $html);
 
 unset($videos[0]);

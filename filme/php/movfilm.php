@@ -216,7 +216,8 @@ $s=$s."|vimeo\.com|googleplayer\.swf|filebox\.ro\/get_video|vkontakte\.ru|megavi
 $s=$s."|divxstage\.net|divxstage\.eu|stream2k\.com\/playerjw\/vConfig|sockshare\.com|xvidstage\.com";
 $s=$s."|nolimitvideo\.com|stage666\.net\/|rapidload\.org|vidstream\.us|2gb-hosting\.com";
 $s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net|royalvids\.eu";
-$s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com/i";
+$s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com|zurvid\.com|flashx\.tv";
+$s=$s."|sharefiles4u\.com/i";
 for ($i=0;$i<count($links);$i++) {
   $cur_link=$links[$i];
   if (preg_match($s,$cur_link)) {

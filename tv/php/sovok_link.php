@@ -6,6 +6,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $link = $_GET["file"];
+$link="http://sovok.tv/api.php?channel=".$link;
 $html = file_get_contents($link);
 $link = str_between($html, 'url":"', '"');
 print $link;

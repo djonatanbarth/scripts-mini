@@ -3,6 +3,14 @@
 $host = "http://127.0.0.1/cgi-bin";
 ?>
 <rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  
+  error_info          = "";
+</script>
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
@@ -39,7 +47,7 @@ $host = "http://127.0.0.1/cgi-bin";
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
-	sliding="no"
+	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -48,9 +56,6 @@ $host = "http://127.0.0.1/cgi-bin";
 
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
-		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(annotation); annotation;</script>
 		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
   image/tv_radio.png
@@ -69,10 +74,6 @@ $host = "http://127.0.0.1/cgi-bin";
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx)
-					{
-					  annotation = getItemInfo(idx, "title");
-					}
 					getItemInfo(idx, "title");
 				</script>
 				<fontSize>
@@ -146,100 +147,43 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
-  <channel>
 
-    <title>TV Live</title>
 
-<item>
-<title>TV Live - Deutschland</title>
-<link><?php echo $host; ?>/scripts/tv/german_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
 
-<item>
-<title>TV Live - Music</title>
-<link><?php echo $host; ?>/scripts/tv/music_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
+<channel>
+	<title>TV Live from sovok.tv</title>
+	<menu>main menu</menu>
+<?php
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
+$html = file_get_contents("http://sovok.tv/api.php?get=list");
+$videos = explode('cid":"', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+$t1=explode('"',$video);
+$id=$t1[0];
+$title=str_between($video,'name":"','"');
 
-<item>
-<title>TV Live - Sport</title>
-<link><?php echo $host; ?>/scripts/tv/tv_sport_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - New channels</title>
-<link><?php echo $host; ?>/scripts/tv/tv_new.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Seeon TV</title>
-<link><?php echo $host; ?>/scripts/tv/seeontv.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Justin.tv</title>
-<link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from veetle.com (only LQ) - popular</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/veetle_main.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from freedocast.com</title>
-<link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from livestation.com</title>
-<link><?php echo $host; ?>/scripts/tv/php/livestation.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>theStreamDB.com - XBMC LiveStreams</title>
-<link><?php echo $host; ?>/scripts/tv/php/theStreamDB_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - (from Darby_Crash)</title>
-<link><?php echo $host; ?>/scripts/tv/tv_diverse_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - ohlulz.com</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from sovok.tv</title>
-<link><?php echo $host; ?>/scripts/tv/sovok.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
+    echo '
+    <item>
+    <title>'.$title.'</title>
+    <onClick>
+    <script>
+    showIdle();
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/php/sovok_link.php?file='.$id.'");
+    annotation=url;
+    cancelIdle();
+    playItemURL(url, 10);
+    </script>
+    </onClick>
+    </item>
+    ';
+}
+?>
 
 </channel>
-</rss>                                                                                                                             
+</rss>

@@ -68,6 +68,9 @@ $host = "http://127.0.0.1/cgi-bin";
 		<image  redraw="yes" offsetXPC=65 offsetYPC=22.5 widthPC=20 heightPC=20>
 		<script>print(img); img;</script>
 		</image>
+  	<text align="center" redraw="yes" offsetXPC="55" offsetYPC="45" widthPC="40" heightPC="5" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>print(flag); flag;</script>
+		</text>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -87,6 +90,7 @@ $host = "http://127.0.0.1/cgi-bin";
 					  location = getItemInfo(idx, "location");
 					  annotation = getItemInfo(idx, "annotation");
 					  img = getItemInfo(idx,"image");
+					  flag = getItemInfo(idx,"flag");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -251,13 +255,14 @@ foreach($videos as $video) {
   $image=$t2[0];
   if (preg_match("/flag|us|ger/i",$image)) break;
   }
-
+  $flag=substr(strrchr($image,"/"),1);
 	$link = 'http://127.0.0.1/cgi-bin/scripts/filme/php/movie2k.php?query='.$link.",".urlencode($title);
 	echo '
   <item>
     <link>'.$link.'</link>
     <title>'.$title.'</title>
     <annotation>'.$data.'</annotation>
+    <flag>'.$flag.'</flag>
     <image>'.$image.'</image>
     <media:thumbnail url="'.$image.'" />
     <mediaDisplay name="threePartsView"/>

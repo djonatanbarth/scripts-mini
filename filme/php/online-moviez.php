@@ -176,6 +176,7 @@ foreach($videos as $video) {
    $v1 = explode('src="', $video);
    $v2 = explode('"', $v1[1]);
    $image = $v2[0];
+   $image = "/usr/local/etc/www/cgi-bin/scripts/filme/image/nocover.jpg";
 
    $descriere = trim(str_between($video,"Kategorie:","</description>"));
    $descriere = str_replace("<br />",":",$descriere);

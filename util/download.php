@@ -30,6 +30,9 @@ $t3 = explode("K", $log);
 $t4 = substr($log, -25);
 $t5 = explode("%", $log);
 $end = substr($t5[0], -3);
+if (strpos($log_file,"saved") === true) {
+  $end = "100";
+}
 $t0 = $i+1;
 //pid
 $pd = "/tmp/".$t1[0].".pid";

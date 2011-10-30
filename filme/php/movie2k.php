@@ -5,7 +5,6 @@ if($query) {
    $queryArr = explode(',', $query);
    $link = $queryArr[0];
    $tit = urldecode($queryArr[1]);
-   $tit=str_replace("\\'","'",$tit);
 }
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -26,27 +25,19 @@ $descriere = str_replace("&nbsp;","",$descriere);
 $t1=explode('src="',$part);
 $t2=explode('"',$t1[1]);
 $image=$t2[0];
-
+$image = "/usr/local/etc/www/cgi-bin/scripts/filme/image/nocover.jpg";
 $t1=explode("IMDB Rating:",$part);
 $t2=explode(">",$t1[1]);
 $t3=explode("<",$t2[1]);
 $imdb = "IMDB Rating: ".$t3[0];
 
-if (strpos($part,"Length") !==false) {
 $t1=explode('Length:',$part);
-} else {
-$t1=explode('nge:',$part);
-}
 $t2=explode('|',$t1[1]);
 $durata=$t2[0];
 $durata = trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$durata));
 $durata="Length: ".str_replace("&nbsp;","",$durata);
 
-if (strpos($part,"Year") !==false) {
 $t1=explode("Year:",$part);
-} else {
-$t1=explode("Jahr:",$part);
-}
 $t2=explode("<",$t1[1]);
 $premiera = $t2[0];
 $premiera = "Year: ".trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e"," ",$premiera));
