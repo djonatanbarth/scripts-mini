@@ -457,7 +457,8 @@ function videobb($l) {
   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
   $page = curl_exec($ch);
   curl_close($ch);
-  preg_match_all('/\{"d":(false|true),"l":"([^"]+)","u":"([^"]+)"\}/i', $page, $st);
+  //preg_match_all('/\{"d":(false|true),"l":"([^"]+)","u":"([^"]+)"\}/i', $page, $st);
+  preg_match_all('/\{"d":(false|true),"l":"([^"]+)","u":"([^"]+)"/i', $page, $st);
   $stream = array();
   for ($i = 0; $i < count($st[0]); $i++) {
     $stream[$st[2][$i]] = array(($st[1][$i] == "true" ? true : false), base64_decode($st[3][$i]));

@@ -159,7 +159,14 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
-$html = file_get_contents("http://sovok.tv/api.php?get=list");
+ $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "http://sovok.tv/api.php?get=list");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  $html = curl_exec($ch);
+  curl_close($ch);
+
 $videos = explode('cid":"', $html);
 unset($videos[0]);
 $videos = array_values($videos);

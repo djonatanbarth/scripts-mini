@@ -25,7 +25,7 @@ $descriere = str_replace("&nbsp;","",$descriere);
 $t1=explode('src="',$part);
 $t2=explode('"',$t1[1]);
 $image=$t2[0];
-$image = "/usr/local/etc/www/cgi-bin/scripts/filme/image/nocover.jpg";
+//$image = "/usr/local/etc/www/cgi-bin/scripts/filme/image/nocover.jpg";
 $t1=explode("IMDB Rating:",$part);
 $t2=explode(">",$t1[1]);
 $t3=explode("<",$t2[1]);

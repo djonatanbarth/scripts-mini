@@ -177,14 +177,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>Seeon TV</title>
 <link><?php echo $host; ?>/scripts/tv/seeontv.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>Justin.tv</title>
 <link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>

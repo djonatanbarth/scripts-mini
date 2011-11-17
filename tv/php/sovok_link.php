@@ -7,7 +7,13 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $link="http://sovok.tv/api.php?channel=".$link;
-$html = file_get_contents($link);
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  $html = curl_exec($ch);
+  curl_close($ch);
 $link = str_between($html, 'url":"', '"');
 print $link;
 ?>
