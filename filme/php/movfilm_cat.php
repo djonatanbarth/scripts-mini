@@ -198,16 +198,19 @@ foreach($videos as $video) {
   $link = $v2[0];
 
 //  titlu
-  $title=str_between($video,"<h1>","</h1>");
+  $t1=explode(">",$v1[1]);
+  $t2=explode("<",$t1[1]);
+  $title=$t2[0];
+  //$title=str_between($video,"<h1>","</h1>");
 //  imagine  
   $v1 = explode('src="', $video);
-  $v2 = explode('"', $v1[1]);
+  $v2 = explode('"', $v1[2]);
   $image = $v2[0];  
 //  descriere  
   $descriere = $title;
 
 	if($link!="") {
-		$link = "http://127.0.0.1/cgi-bin/scripts/filme/php/movfilm.php?file=".$link.",".urlencode($title);
+		$link = "http://127.0.0.1/cgi-bin/scripts/filme/php/movfilm.php?file=".$link.",".urlencode($title).",".urlencode($image);
 		echo'
 		<item>
 		<title>'.$title.'</title>

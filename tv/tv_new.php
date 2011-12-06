@@ -157,40 +157,7 @@ ret;
 <channel>
 	<title>TV Live - new</title>
 	<menu>main menu</menu>
-	<item>
-	<title>AXN</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/axn",10);</onClick>
-	</item>
 
-	<item>
-	<title>AXN Black</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/axnblack",10);</onClick>
-	</item>
-
-	<item>
-	<title>Fox</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/fox",10);</onClick>
-	</item>
-	
-	<item>
-	<title>Fox Life</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/foxlife",10);</onClick>
-	</item>
-	
-	<item>
-	<title>FOX Movies</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/foxmovies",10);</onClick>
-	</item>
-
-	<item>
-	<title>FOX Crime</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/foxcrime",10);</onClick>
-	</item>
-	
-	<item>
-	<title>SyFy</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-p%20http://www.televisaofutebol.com,rtmp://live.myp2p.in/estadio54/syfy",10);</onClick>
-	</item>
 	
    <item>
     <title>France 24</title>

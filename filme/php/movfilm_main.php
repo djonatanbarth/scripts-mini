@@ -172,7 +172,7 @@ function str_between($string, $start, $end){
 $host = "http://127.0.0.1/cgi-bin";
 $html = file_get_contents("http://movfilm.net/");
 $t1=explode('<div id="uMenuDiv1"',$html);
-$t2=explode('</div>',$t1[2]);
+$t2=explode('</div>',$t1[1]);
 $html=$t2[0];
 //$html = str_between($html,'<div id="uMenuDiv1"','</div>');
 //echo $html;
@@ -181,13 +181,18 @@ unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
     ///news/sci_fi/1-0-22
+    //http://movfilm.net/news/aktuelle_filme/1-0-10
     $t0=explode('"',$video);
+    //echo $t0[0];
 	$t1 = explode('/',$t0[0]);
-	$c = "/".$t1[2]."/";
-    $p=$t1[3];
+	$c = "/".$t1[4]."/";
+    $p=$t1[5];
     $t1=explode("1-",$p);
     $cat="-".$t1[1];
-    $title=str_between($video,"<h1>","</h1>");
+    $t1=explode(">",$video);
+    $t2=explode("<",$t1[1]);
+    $title=$t2[0];
+    //$title=str_between($video,"<h1>","</h1>");
 	$link = $host."/scripts/filme/php/movfilm_cat.php?query=1,".$c.",".$cat.",".urlencode($title);
 	
 	echo '
