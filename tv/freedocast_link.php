@@ -76,5 +76,8 @@ if ($link1=="") {
  $link1=$s."/".$f;
  }
 }
+if (strlen($link1) < 3) {
+ $link1=str_between($html,"flashvars.Stream='","'");
+}
 print $link1;
 ?>

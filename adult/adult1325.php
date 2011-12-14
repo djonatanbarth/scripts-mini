@@ -173,13 +173,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/pornofanatic.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+<!--
 <item>
 <title>Tube8</title>
   <link><?php echo $host; ?>/scripts/adult/tube8.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/tube8.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>KeezMovies</title>
   <link><?php echo $host; ?>/scripts/adult/keezmovies.php</link>
@@ -320,14 +321,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/flytube.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>xhamster</title>
   <link><?php echo $host; ?>/scripts/adult/php/xhamster_main.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/xhamster.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>redtube</title>
   <link><?php echo $host; ?>/scripts/adult/php/redtube_main.php</link>

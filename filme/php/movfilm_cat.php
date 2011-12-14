@@ -4,9 +4,8 @@ $query = $_GET["query"];
 if($query) {
    $queryArr = explode(',', $query);
    $page = $queryArr[0];
-   $part1 = $queryArr[1];
-   $part2 = $queryArr[2];
-   $tit=urldecode($queryArr[3]);
+   $search = urldecode($queryArr[1]);
+   $tit=urldecode($queryArr[2]);
 }
 ?>
 <rss version="2.0">
@@ -166,16 +165,22 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-
-$link="http://movfilm.net/news".$part1.$page.$part2;
-
+//http://movfilm.net/news/aktuelle_filme/1-0-10
+//http://movfilm.net/news/1-0-10
+//http://movfilm.net/news/2-0-10
+if ($search == "http://movfilm.net/news/") {
+  $link=$search.$page."-0-10";
+} else {
+$link=$search."-".$page."-15";
+}
+//echo $link;
 $html = file_get_contents($link);
 if($page > 1) { ?>
 
 <item>
 <?php
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?query=".($page-1).",".$part1.",".$part2.",".urlencode($tit);
+$url = $sThisFile."?query=".($page-1).",".urlencode($search).",".urlencode($tit);
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
@@ -186,7 +191,7 @@ $url = $sThisFile."?query=".($page-1).",".$part1.",".$part2.",".urlencode($tit);
 
 <?php } ?>
 <?php
-$videos = explode('div class="eTitle"', $html);
+$videos = explode('div id="entry', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 
@@ -204,7 +209,7 @@ foreach($videos as $video) {
   //$title=str_between($video,"<h1>","</h1>");
 //  imagine  
   $v1 = explode('src="', $video);
-  $v2 = explode('"', $v1[2]);
+  $v2 = explode('"', $v1[1]);
   $image = $v2[0];  
 //  descriere  
   $descriere = $title;
@@ -228,7 +233,7 @@ foreach($videos as $video) {
 <item>
 <?php
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?query=".($page+1).",".$part1.",".$part2.",".urlencode($tit);
+$url = $sThisFile."?query=".($page+1).",".urlencode($search).",".urlencode($tit);
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>

@@ -234,7 +234,7 @@ foreach($videos as $video) {
     $link = $host."/scripts/adult/php/empflix_link.php?file=".$link;
 
     $t1 = explode('src="', $video);
-    $t2 = explode('"', $t1[1]);
+    $t2 = explode('"', $t1[2]);
     $image = $t2[0];
 
     $data = trim(str_between($video,'<p class="length">','</p'));

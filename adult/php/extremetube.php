@@ -216,7 +216,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -231,8 +231,8 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $v_id = str_between($html, '<ul class="video-tag-list">', '</ul>');
-
-$videos = explode('<li', $v_id);
+$v_id = $html;
+$videos = explode('<li id="obj', $v_id);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -254,7 +254,7 @@ $pos1 = stripos($link, 'source=');
 if ($pos1 === false) {
 
 		$link = $host."/scripts/adult/php/extremetube_link.php?file=".$link;
-    $data = "Durata: ".str_between($video,'"time-video absolute">','<');
+    $data = "Durata: ".str_between($video,'"absolute duration">','<');
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
 
     echo '
@@ -302,7 +302,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>

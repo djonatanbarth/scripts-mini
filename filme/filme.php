@@ -190,7 +190,7 @@ ret;
 
 <item>
 <title>movfilm.net</title>
-<link><?php echo $host; ?>/scripts/filme/php/movfilm_main.php</link>
+<link><?php echo $host."/scripts/filme/php/movfilm_cat.php?query=1,http://movfilm.net/news/,neue+Filme";?></link>
 <annotation>http://movfilm.net</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>

@@ -221,13 +221,18 @@ $s=$s."|dimshare|movdivx|sharevideo22|dr9000|altervideo|royalvids";
 $s=$s."|skyload|rapidvideo|uploadc|uploadville|zurvid|flashx";
 $s=$s."|sharefiles4u/i";
 //http://movfilm.net/publ/stream/movshare/mothman_die_ruckkehr/3-1-0-288
+//http://movfilm.net/publ/stream/movshare/in_time_deine_zeit_lauft_ab/3-1-0-386
 for ($i=0;$i<count($links);$i++) {
   $cur_link=$links[$i];
   if (preg_match($s,$cur_link)) {
     if ($cur_link <> $last_link) {
       if (!preg_match("/facebook|twitter|img\.youtube/",$cur_link)) {
         $link="http://127.0.0.1/cgi-bin/scripts/filme/php/filme1_link.php?file=".urlencode($cur_link).",".urlencode($tit);
+        //if (strpos($cur_link,"movfilm.net") === false) {
+        //$server = str_between($cur_link,"http://","/");
+        //} else {
         $server = str_between($cur_link,"http://movfilm.net/publ/stream/","/");
+        //}
         $last_link=$cur_link;
         $title=$server;
 

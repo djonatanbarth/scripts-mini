@@ -16,4 +16,9 @@ if($link=="") {
 	$link = urldecode($link);
 print $link;
 }
+if ($link == "") {
+$link=str_between($html,'video_url=','&');
+	$link = urldecode($link);
+print $link;
+}
 ?>
