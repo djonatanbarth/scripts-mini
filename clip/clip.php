@@ -408,7 +408,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/luegmol.png" />
 	<annotation>LUEGMOL.CH - Funny & Most Wonderfull Movies at LUEGMOL.CH:</annotation>
 </item>
-
+<!--
 <item>
 <title>livingzurich.tv</title>
 	<link><?php echo $host; ?>/scripts/clip/php/livingzurich.php?query=1</link>
@@ -417,7 +417,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/livingzurich.png" />
 	<annotation>LivingZurich.TV | Videos aus und über Zürich</annotation>
 </item>
-
+-->
 <item>
 <title>crovideos.com</title>
 	<link><?php echo $host; ?>/scripts/clip/php/crovideos.php?query=1</link>
@@ -426,7 +426,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/crovideos.png" />
 	<annotation>Videos Kroatien Video Musik MP3 Croatia Urlaub Reisen | CroVideos.com:</annotation>
 </item>
-
+<!--
 <item>
 <title>cliphost24.com</title>
 	<link><?php echo $host; ?>/scripts/clip/php/cliphost24.php?query=1</link>
@@ -435,7 +435,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/cliphost24.jpg" />
 	<annotation>Kostenloser Video Upload Service für Video Files bis 50 MB . Es können Video Dateien verschiedenen Formaten hochgeladen werden und optional können die Uploads in der TOP100 veröffentlicht werden.</annotation>
 </item>
-
+-->
 <item>
 <title>deutschlandreporter.de</title>
 	<link><?php echo $host; ?>/scripts/clip/php/deutschlandreporter.php</link>

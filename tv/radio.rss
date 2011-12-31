@@ -272,7 +272,7 @@ columnCount=5
     <image>../etc/translate/rss/image/menu/shoutcast.png</image>
     <mediaDisplay name="threePartsView"/>
   </item>
-  
+<!--  
   <item>
 		<link>http://127.0.0.1/cgi-bin/scripts/tv/php/deutschland.php</link>
     <title>Internet Radio Deutschland</title>
@@ -280,7 +280,7 @@ columnCount=5
     <image>http://www.surfmusik.de/logo1.gif</image>
     <mediaDisplay name="threePartsView"/>
   </item>
-
+-->
   <item>
 		<link>http://127.0.0.1/cgi-bin/scripts/tv/php/german.php</link>
     <title>German radio stations</title>

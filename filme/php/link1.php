@@ -802,8 +802,20 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $link=str_between($h,'param name="src" value="','"');
 } elseif (strpos($filelink, 'divxstage.eu') !== false) {
    //http://www.divxstage.eu/video/oisekelygcrnb
+   //http://www.divxstage.eu/api/player.api.php?key=78%2E96%2E189%2E71%2D0158d8005886f55b17aa976b4b596404&user=undefined&codes=undefined&pass=undefined&file=0nm6yadbatt77
    $h = file_get_contents($filelink);
+   $p1=str_between($h,'flashvars.filekey="','"');
+   $p2=str_between($h,'flashvars.file="','"');
+   if ($p1 == "") {
    $link=str_between($h,'param name="src" value="','"');
+   if ($link == "") {
+     $link=str_between($h,'addVariable("file","','"');
+   }
+   } else {
+     $l1="http://www.divxstage.eu/api/player.api.php?key=".urlencode($p1)."&user=undefined&codes=undefined&pass=undefined&file=".$p2;
+     $h = file_get_contents($l1);
+     $link=str_between($h,"url=","&");
+   }
 } elseif (strpos($filelink, 'stream2k.com/playerjw/vConfig') !== false) {
    $h = file_get_contents($filelink);
    $link=trim(str_between($h,'<file>','</file>'));

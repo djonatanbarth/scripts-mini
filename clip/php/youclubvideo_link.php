@@ -10,7 +10,10 @@ $link = str_replace(' ','%20',$link);
 $link = str_replace('[','%5B',$link);
 $link = str_replace(']','%5D',$link);
 $html = file_get_contents($link);
+$link=str_between($html,'mediaURL:"','"');
+/*
 preg_match("/(http\b.*?)(\.mp4)/i",$html,$matches);
 $link= $matches[0];
+*/
 print $link;
 ?>
