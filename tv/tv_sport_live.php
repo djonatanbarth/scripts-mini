@@ -159,10 +159,6 @@ ret;
 	<title>TV Live - Sport</title>
 	<menu>main menu</menu>
 
-    <item>
-    <title>ESPN2</title>
-    <onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-p%20http://www.mexcast.tv,rtmp://streamer.istreamlive.net/1_211_90_11/12552@hyqw",10);</onClick>
-    </item>
     
 	<item>
 	<title>Orange sport info (fr)</title>

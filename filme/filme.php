@@ -187,14 +187,14 @@ ret;
 <annotation>http://loads7.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>movfilm.net</title>
 <link><?php echo $host."/scripts/filme/php/movfilm_cat.php?query=1,http://movfilm.net/news/,neue+Filme";?></link>
 <annotation>http://movfilm.net</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>kinox.to</title>
 <link><?php echo $host; ?>/scripts/filme/php/kinox_main.php</link>
@@ -244,14 +244,14 @@ ret;
 <annotation>http://www.starmaxmovie.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>10starmovies.com</title>
 <link><?php echo $host; ?>/scripts/filme/php/10starmovies_main.php</link>
 <annotation>http://10starmovies.com/Tv-Shows/</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 
   <item>
     <title>online-moviez.com - Adult filme</title>
