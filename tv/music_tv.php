@@ -213,6 +213,23 @@ ret;
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www.rougetv.ch/JWPlayer/mediaplayer/player.swf%20-p%20http://www.rougetv.ch,rtmp://rtmp.infomaniak.ch/livecast/rougetv",10);</onClick>
   </item>
 
+	<item>
+	<title>Mooz HD</title>
+	<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/mediadirect.cgi?rtmpe://fms8.mediadirect.ro:1935/live3?id=6189013/moozhd", 10);</onClick>
+	<annotation>Mooz HD</annotation>
+	</item>
+
+	<item>
+	<title>Mooz Hits</title>
+	<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/mediadirect.cgi?rtmpe://fms8.mediadirect.ro:1935/live3?id=6189013/moozhits", 10);</onClick>
+	<annotation>Mooz Hits</annotation>
+	</item>
+
+	<item>
+	<title>Mooz RO</title>
+	<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/mediadirect.cgi?rtmpe://fms8.mediadirect.ro:1935/live3?id=6189013/moozro", 10);</onClick>
+	<annotation>Mooz RO</annotation>
+	</item>
    <item>
     <title>play.me</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp107974.live.edgefcs.net:80/live/beep-flash-live@34654",10);</onClick>

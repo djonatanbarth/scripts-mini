@@ -40,6 +40,7 @@ $host = "http://127.0.0.1/cgi-bin";
 	showDefaultInfo="no"
 	imageFocus=""
 	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">

@@ -23,9 +23,8 @@ if ($avb_vers <> $curr_vers) {
 ?>
 <rss version="2.0">
 <onEnter>
-  startitem = "middle";
+  showIdle();
   setRefreshTime(1);
-columnCount=3
 </onEnter>
 
 <onRefresh>
@@ -34,41 +33,48 @@ columnCount=3
   redrawDisplay();
 </onRefresh>
 
-	<mediaDisplay name=photoView 
-	    centerXPC=7
+	<mediaDisplay name=photoView
+	  centerXPC=17
 		centerYPC=25
 		centerHeightPC=60
-        columnCount=3
-	    rowCount=1
+		columnCount=4
+	  rowCount=3
 		menuBorderColor="55:55:55"
 		sideColorBottom="0:0:0"
 		sideColorTop="0:0:0"
-	    backgroundColor="0:0:0"
-		imageBorderColor="0:0:0"
+	  backgroundColor="0:0:0"
 		itemBackgroundColor="0:0:0"
 		itemGapXPC=0
-		itemGapYPC=1
-		sideTopHeightPC=22
-		bottomYPC=85
+		itemGapYPC=0
+		imageBorderColor="10:105:150"
+		imageBorderPC="0"
+		sideTopHeightPC=0
+		bottomYPC=0
 		sliding=yes
 		showHeader=no
 		showDefaultInfo=no
 		idleImageWidthPC="8" idleImageHeightPC="10" idleImageXPC="80" idleImageYPC="10">
-<!--
-  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>getPageInfo("pageTitle");</script>
-		</text>
-
-  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
-		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
-		</text>
--->
 		<text align="left" offsetXPC=5 offsetYPC=5 widthPC=75 heightPC=5 fontSize=15 backgroundColor=0:0:0 foregroundColor=120:120:120>
    <?php echo $info; ?>
 		</text>
-		<text align="center" redraw="yes" lines="4" offsetXPC=10 offsetYPC=85 widthPC=75 heightPC=15 fontSize=15 backgroundColor=0:0:0 foregroundColor=120:120:120>
-			<script>print(annotation); annotation;</script>
-		</text>		
+<!--
+<backgroundDisplay name=ims_guide_menu>
+                <image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+                        image/IMS_bg.fsp
+                </image>
+</backgroundDisplay>
+-->
+  	<text align="left" redraw="yes" useBackgroundSurface=yes offsetXPC="8" offsetYPC="15" widthPC="50" heightPC="8" fontSize="24" foregroundColor="100:200:255">
+		  <script>print(hed); hed;</script>
+		</text>
+  	<text align="center" redraw="yes" lines=" 2" useBackgroundSurface=yes offsetXPC="8" offsetYPC="85" widthPC="84" heightPC="12" fontSize="17" foregroundColor="200:200:200">
+		  <script>print(annotation); annotation;</script>
+		</text>
+  <image offsetXPC=0 offsetYPC=23 widthPC=100 heightPC=1>
+		../etc/translate/rss/image/gradient_line.bmp
+	</image>
+
+
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -82,65 +88,49 @@ columnCount=3
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx) 
+					if(focus==idx)
 					{
+					  hed = getItemInfo(idx, "title");
 					  annotation = getItemInfo(idx, "annotation");
+					  getItemInfo(idx, "focus");
 					}
-					getItemInfo(idx, "image");
+					else
+					{
+					getItemInfo(idx, "unfocus");
+					}
 				</script>
 			 <offsetXPC>
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 0; else 15;
+			    if(focus==idx) 7.5; else 15;
 			   </script>
 			 </offsetXPC>
 			 <offsetYPC>
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 0; else 8;
+			    if(focus==idx) 0; else 10;
 			   </script>
 			 </offsetYPC>
 			 <widthPC>
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 100; else 70;
+			    if(focus==idx) 85; else 70;
 			   </script>
 			 </widthPC>
 			 <heightPC>
 			   <script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-			    if(focus==idx) 60; else 42;
+			    if(focus==idx) 80; else 70;
 			   </script>
 			 </heightPC>
 			</image>
-			
-			<text align="center" lines="3" offsetXPC=0 offsetYPC=65 widthPC=100 heightPC=35 backgroundColor=-1:-1:-1>
-				<script>
-					idx = getQueryItemIndex();
-					getItemInfo(idx, "title");
-				</script>
-				<fontSize>
-  				<script>
-  					idx = getQueryItemIndex();
-  					focus = getFocusItemIndex();
-  			    if(focus==idx) "22"; else "18";
-  				</script>
-				</fontSize>
-			  <foregroundColor>
-  				<script>
-  					idx = getQueryItemIndex();
-  					focus = getFocusItemIndex();
-  			    if(focus==idx) "255:255:255"; else "75:75:75";
-  				</script>
-			  </foregroundColor>
-			</text>
 
 		</itemDisplay>
-		
+
   <onUserInput>
     <script>
       ret = "false";
@@ -149,6 +139,7 @@ columnCount=3
 
       print("*** majorContext=",majorContext);
       print("*** userInput=",userInput);
+
       if(userInput == "one" || userInput == "1")
       {
         if(itemCount &gt;= 1)
@@ -221,19 +212,27 @@ columnCount=3
           redrawDisplay();
         }
       }
+      if(userInput == "zero" || userInput == "0")
+      {
+        if(itemCount &gt;= 10)
+        {
+          setFocusItemIndex(9);
+          redrawDisplay();
+        }
+      }
       else if (userInput == "pagedown" || userInput == "pageup" || userInput == "PD" || userInput == "PG")
       {
         itemSize = getPageInfo("itemCount");
         idx = Integer(getFocusItemIndex());
         if (userInput == "pagedown")
         {
-          idx -= -10;
+          idx -= -4;
           if(idx &gt;= itemSize)
             idx = itemSize-1;
         }
         else
         {
-          idx -= 10;
+          idx -= 4;
           if(idx &lt; 0)
             idx = 0;
         }
@@ -246,24 +245,10 @@ columnCount=3
       ret;
     </script>
   </onUserInput>
-		
+
 	</mediaDisplay>
-	
-	<item_template>
-		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
-        <idleImage>image/POPUP_LOADING_01.png</idleImage>
-        <idleImage>image/POPUP_LOADING_02.png</idleImage>
-        <idleImage>image/POPUP_LOADING_03.png</idleImage>
-        <idleImage>image/POPUP_LOADING_04.png</idleImage>
-        <idleImage>image/POPUP_LOADING_05.png</idleImage>
-        <idleImage>image/POPUP_LOADING_06.png</idleImage>
-        <idleImage>image/POPUP_LOADING_07.png</idleImage>
-        <idleImage>image/POPUP_LOADING_08.png</idleImage>
-		</mediaDisplay>
-		<link>
-		  <script>getItemInfo(getQueryItemIndex(), "location");</script>
-		</link>
-	</item_template>
+
+
 <adultlink>
 <mediaDisplay name="photoView"/>
 <link>
@@ -280,77 +265,146 @@ columnCount=3
 <link>http://127.0.0.1/cgi-bin/scripts/mini1.php</link>
 <mediaDisplay name="photoView"/>
 </destination>
-  <channel>
+<channel>
     <title>HDD Links</title>
-  <item>
-    <link><?php echo $host; ?>/scripts/trailer/trailer.php</link>
-    <title>Movie &amp; games trailers</title>
-    <annotation>Last movie and game trailers</annotation>
-    <image>image/trailerb.png</image>
-    <mediaDisplay name="photoView"/>
-  </item>
 
-  <item>
-    <link><?php echo $host; ?>/scripts/filme/filme.php</link>
-    <title>Movies &amp; Series</title>
-    <annotation>Movies, TV Series</annotation>
-    <image>/usr/local/etc/www/cgi-bin/scripts/filme/image/movies.png</image>
-    <mediaDisplay name="threePartsView"/>
-  </item>
+<!-- 1 -->
+<item>
+<title>Movies &amp; Series</title>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/filme/filme.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/filme_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/filme_unfocus.png</unfocus>
+<annotation>Watch movies and TV Series online.</annotation>
+</item>
 
-  <item>
-    <link><?php echo $host; ?>/scripts/filme/desene.php</link>
-    <title>Kids...</title>
-    <annotation>Cartoons...</annotation>
-    <image>/usr/local/etc/www/cgi-bin/scripts/filme/image/desene.png</image>
-    <mediaDisplay name="threePartsView"/>
-  </item>
-  
-  <item>
-    <link><?php echo $host; ?>/scripts/clip/clip.php</link>
-    <title>Video clips</title>
-    <annotation>Vimeo, youtube, dailymotion, podcast and other stuff...</annotation>
-    <image>image/videoclip.png</image>
-    <mediaDisplay name="photoView"/>
-  </item>
-
+<!-- 2 -->
 <item>
 <title>TV Live</title>
-<link><?php echo $host; ?>/scripts/tv/tv_live.php</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/tvlive.png" />
-<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/tvlive.png</image>
-<location></location>
-<annotation>Live Tv</annotation>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/tv/tv_live.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/livetv_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/livetv_unfocus.png</unfocus>
+<annotation>TV stations around the world, news, music or sport.</annotation>
 </item>
 
-<item>
-<title>Radio On Line</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/radio.rss</link>
-<media:thumbnail url="../etc/translate/rss/image/radio_online.jpg" />
-<image>../etc/translate/rss/image/radio_online.jpg</image>
-<location></location>
-<annotation>Internet radio....</annotation>
-<mediaDisplay name="photoView" />
-</item>
+<!-- 3 -->
 
+
+<!-- 4 - new line -->
+
+
+<!-- 5 -->
 <item>
 <title>OneHD</title>
-<link><?php echo $host; ?>/scripts/tv/prahovahd.php</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
-<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png</image>
-<location>http://live.1hd.ro/</location>
-<annotation>One HD - prima televiziune online HD - o alternativa la televiziunea clasica, promoveaza emisiuni culturale, de divertisment, business, turism, experimentale, disponibile atat live cat si on-demand (VOD).</annotation>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/tv/prahovahd.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/onehd_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/onehd_unfocus.png</unfocus>
+<annotation>One HD - the first online HD television - an alternative to traditional television, promotes cultural programs, entertainment...</annotation>
 </item>
+
+<!-- 6 -->
+<item>
+<title>Radio OnLine</title>
+<onClick>
+<script>
+showIdle();
+"/usr/local/etc/www/cgi-bin/scripts/tv/radio.rss";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/radio_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/radio_unfocus.png</unfocus>
+<annotation>Radio stations around the world, shoutcast radio....</annotation>
+</item>
+
+<!-- 7 - new line -->
+<item>
+<title>For Kids.....</title>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/filme/desene.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/desene_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/desene_unfocus.png</unfocus>
+<annotation>Just for kids, cartoons, movies trailers</annotation>
+</item>
+
+<!-- 8 -->
+<item>
+<title>Metafeeds</title>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/user/users.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/user_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/user_unfocus.png</unfocus>
+<annotation>Metafeeds is a community RSS portal for the Playon!HD and other realtek based media players.</annotation>
+</item>
+
+<!-- 9 -->
+
+<!-- 10 - new line -->
+<item>
+<title>Video clips and TV recordings</title>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/clip/clip.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/videoclip_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/videoclip_unfocus.png</unfocus>
+<annotation>Funny clips, music or TV shows.</annotation>
+</item>
+
+<!-- 11 -->
+<item>
+<title>Movies or games trailers</title>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/trailer/trailer.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/trailer_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/trailer_unfocus.png</unfocus>
+<annotation>See what movies or new games have appeared.</annotation>
+</item>
+
+<!-- 12 -->
 
 <item>
 <title>Sport</title>
-<link><?php echo $host; ?>/scripts/tv/tv_sport.php</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/sport.jpg" />
-<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/sport.jpg</image>
-<location></location>
-<annotation>Sport</annotation>
-<mediaDisplay name="photoView"/>
+<onClick>
+<script>
+showIdle();
+"<?php echo $host; ?>/scripts/tv/tv_sport.php";
+</script>
+</onClick>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/sport_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/sport_unfocus.png</unfocus>
+<annotation>Sporting events. Football and not only ...</annotation>
 </item>
+
+<!-- 13 - new line -->
+
 <?php
 $f="/usr/local/etc/xLive/repoman/05_08_2011.txt";
 if (file_exists($f)) {
@@ -359,7 +413,8 @@ echo '
 <title>repoman xLive</title>
 <link>/usr/local/etc/xLive/repoman/repoman.rss</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/php1/xlive.png" />
-<image>/usr/local/etc/www/cgi-bin/scripts/php1/xlive.png</image>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/xlive_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/xlive_unfocus.png</unfocus>
 <location></location>
 <annotation>repoman xLive</annotation>
 <mediaDisplay name="photoView"/>
@@ -383,7 +438,8 @@ if (ret == "Confirm")    {
 </script>
 </onClick>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/php1/xlive.png" />
-<image>/usr/local/etc/www/cgi-bin/scripts/php1/xlive.png</image>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/xlive_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/xlive_unfocus.png</unfocus>
 <location></location>
 <annotation>repoman xLive</annotation>
 <mediaDisplay name="photoView"/>
@@ -391,6 +447,7 @@ if (ret == "Confirm")    {
 ';
 }
 ?>
+<!-- 14 -->
 <?php
 exec ("pidof lighttpd",$out);
 if ($out[0] <> "") {
@@ -401,7 +458,8 @@ echo '
 <title>xVoD</title>
 <link>http://127.0.0.1:82/xVoD/php/index.php</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/php1/xvod.jpg" />
-<image>/usr/local/etc/www/cgi-bin/scripts/php1/xvod.jpg</image>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/xvod_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/xvod_unfocus.png</unfocus>
 <location></location>
 <annotation>Xtreamering xVod</annotation>
 <mediaDisplay name="photoView"/>
@@ -425,7 +483,8 @@ if (ret == "Confirm")    {
 </script>
 </onClick>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/php1/xvod.jpg" />
-<image>/usr/local/etc/www/cgi-bin/scripts/php1/xvod.jpg</image>
+<focus>/usr/local/etc/www/cgi-bin/scripts/image/xvod_focus.png</focus>
+<unfocus>/usr/local/etc/www/cgi-bin/scripts/image/xvod_unfocus.png</unfocus>
 <location></location>
 <annotation>Xtreamering xVod</annotation>
 <mediaDisplay name="photoView"/>
@@ -434,17 +493,13 @@ if (ret == "Confirm")    {
 }
 }
 ?>
+
+<!-- 15 -->
   <item>
-    <link><?php echo $host; ?>/scripts/user/users.php</link>
-    <title>Metafeeds</title>
-    <annotation>Metafeeds is a community RSS portal for the Playon!HD and other realtek based media players.</annotation>
-    <image>image/users.png</image>
-    <mediaDisplay name="threePartsView"/>
-  </item>
-  <item>
-    <title>Adult channel</title>
-    <annotation>Only for 18++.</annotation>
-    <image>image/adult.png</image>
+    <title>Adult channel.</title>
+    <annotation>Only for 18++. Requires password!</annotation>
+    <focus>/usr/local/etc/www/cgi-bin/scripts/image/adult_focus.png</focus>
+    <unfocus>/usr/local/etc/www/cgi-bin/scripts/image/adult_unfocus.png</unfocus>
     <onClick>
     <script>
     optionsPath="/usr/local/etc/dvdplayer/adult.dat";
@@ -489,15 +544,6 @@ if (ret == "Confirm")    {
     </onClick>
     <mediaDisplay name="photoView"/>
   </item>
-<!--
-  <item>
-    <link><?php echo $host; ?>/scripts/util/system.php</link>
-    <title>Utilitare player</title>
-    <annotation>Pornire-Oprire sever FTP, redenumire fişiere si alte unelte utile.</annotation>
-    <image>image/system.png</image>
-    <mediaDisplay name="threePartsView"/>
-  </item>
--->
 </channel>
 
 </rss>

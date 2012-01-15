@@ -112,6 +112,44 @@ function get_unpack2($k,$char_rep,$pos_link,$h) {
   }
   return $r;
 }
+function cv4($s) {
+  $g=ord("g");
+  $c=ord($s);
+  if ($c < 58) {   //91
+    $c=$s;
+  } elseif (($c>57) && ($c<123)) { //2gb
+    $c=$c-$g + 16;
+  } elseif ($c> 122) {
+    $c=$c - 123 + 36;
+
+  }
+return $c;
+}
+function get_unpack4($k,$char_rep,$pos_link,$h) {
+  $g=ord("g");
+  $f=explode("return p}",$h);
+  $e=explode("'.split",$f[$k]);
+  $t=$e[0];
+  $a=explode(";",$t);
+  //print_r($a); //for debug only
+  $w=explode("|",$a[$char_rep]); //char list for replace
+  //print_r ($w);
+  $t1=explode("'",$a[$pos_link]); // where is final link
+  $fl= $t1[3];
+  $fl=str_replace("10",chr(123),$fl);
+  $fl=str_replace("11",chr(124),$fl);
+  $fl=str_replace("12",chr(125),$fl);
+  $fl=str_replace("13",chr(126),$fl);
+  $fl=str_replace("14",chr(127),$fl);
+  $fl=str_replace("15",chr(128),$fl);
+  $r="";
+  for ($i=0;$i<strlen($fl)-1;$i++) {
+    $m=$w[cv4($fl[$i])];
+    if ($m=="") $m=$fl[$i];
+    $r=$r.$m;
+  }
+  return $r;
+}
 function s2g($string) {
 $ch = curl_init($string);
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
@@ -953,6 +991,8 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   $link=str_between($h,"file=","&");
 } elseif (strpos($filelink, 'flashx.tv') !== false) {
    //http://flashx.tv/player/embed_player.php?vid=1394
+   //http://flashx.tv/player/embed_player2.php?vid=2638
+   $filelink=str_replace("embed_player.php","embed_player2.php",$filelink);
   $h=file_get_contents($filelink);
   $link=str_between($h,"normal_video_file = '","'");
 } elseif (strpos($filelink, 'sharefiles4u.com') !== false) {
@@ -962,6 +1002,9 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    preg_match("/(\|)([a-z0-9]{42})\|/",$h,$m);
    $hash=$m[2];
    $link="http://www.sharefiles4u.com/cgi-bin/dl.cgi/".$hash."/video.avi";
+} elseif (strpos($filelink, 'ufliq.com') !== false) {
+  $h = file_get_contents($filelink);
+  $link=get_unpack4(1,14,6,$h);
 }
 print $link;
 ?>
