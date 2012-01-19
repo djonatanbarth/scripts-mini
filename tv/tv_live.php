@@ -180,6 +180,13 @@ ret;
 </item>
 
 <item>
+<title>tvsector High Definition Tv</title>
+<link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>TV Live - New channels</title>
 <link><?php echo $host; ?>/scripts/tv/tv_new.php</link>
 <media:thumbnail url="image/tv_radio.png" />

@@ -23,6 +23,7 @@ if ($avb_vers <> $curr_vers) {
 ?>
 <rss version="2.0">
 <onEnter>
+  SetScreenSaverStatus("no");
   showIdle();
   setRefreshTime(1);
 </onEnter>
