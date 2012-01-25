@@ -157,13 +157,15 @@ if($query) {
    $queryArr = explode(',', $query);
    $page = $queryArr[0];
    $search = $queryArr[1];
+   $tip = $queryArr[2];
 }
+if ($tip=="") $tip="popular";
 echo "<title>".$search."</title>";
 //http://veetle.com/index.php/listing/index/movies/popular/18
 //http://veetle.com/index.php/listing/index/sports/newest/0
 $host = "http://127.0.0.1/cgi-bin";
 $page1=($page-1)*9;
-$link="http://veetle.com/index.php/listing/index/".$search."/popular/".$page1;
+$link="http://veetle.com/index.php/listing/index/".$search."/".$tip."/".$page1;
 $html = file_get_contents($link);
 if($page > 1) { ?>
 
@@ -172,12 +174,12 @@ if($page > 1) { ?>
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
 $url = $sThisFile."?query=".($page-1).",";
 if($search) { 
-  $url = $url.$search; 
+  $url = $url.$search.",".$tip;
 }
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -231,8 +233,9 @@ foreach($videos as $video) {
     $image = $t2[0];
 
     $t1 = explode('title="', $video);
-    $t2 = explode('"', $t1[2]);
+    $t2 = explode('"', $t1[1]);
     $title = str_replace("&nbsp;","",$t2[0]);
+    //$title=htmlentities($title, ENT_QUOTES, "UTF-8");
     $title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
     /*
     $title = str_replace("&amp;","&",$title);
@@ -242,6 +245,7 @@ foreach($videos as $video) {
     $title = str_replace("&amp;","&",$title);
     $title=c($title);
     */
+    
     $t1 = explode('title="', $video);
     $t2 = explode('"', $t1[1]);
     $description = str_replace("&nbsp;","",$t2[0]);
@@ -274,12 +278,12 @@ foreach($videos as $video) {
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
 $url = $sThisFile."?query=".($page+1).",";
 if($search) { 
-  $url = $url.$search; 
+  $url = $url.$search.",".$tip;
 }
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>

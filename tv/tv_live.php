@@ -173,14 +173,7 @@ ret;
 </item>
 
 <item>
-<title>HD TV</title>
-<link><?php echo $host; ?>/scripts/tv/hd_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>tvsector High Definition Tv</title>
+<title>High Definition Tv</title>
 <link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
@@ -220,7 +213,7 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>TV Live from livestation.com</title>
 <link><?php echo $host; ?>/scripts/tv/php/livestation.php</link>
@@ -234,21 +227,21 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>TV Live - (from Darby_Crash)</title>
 <link><?php echo $host; ?>/scripts/tv/tv_diverse_live.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>TV Live - ohlulz.com</title>
 <link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>TV Live from sovok.tv</title>
 <link><?php echo $host; ?>/scripts/tv/sovok.php</link>
@@ -256,12 +249,6 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>vtc.com.vn</title>
-<link><?php echo $host; ?>/scripts/tv/vtc.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
 
 </channel>
 </rss>                                                                                                                             

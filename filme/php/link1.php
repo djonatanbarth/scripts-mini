@@ -748,7 +748,8 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
 } elseif (strpos($filelink, 'flvz.com') !== false){
   $link=flvz($filelink);
 } elseif (strpos($filelink, 'rapidmov.net') !== false){
-  $link=rapidmov($filelink);
+  $h = file_get_contents($filelink);
+  $link=get_unpack4(1,16,4,$h);
 } elseif (strpos($filelink, 'putlocker.com') !== false){
   $link=putlocker($filelink);
 } elseif (strpos($filelink, 'sockshare.com') !== false){
@@ -1004,7 +1005,10 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $link="http://www.sharefiles4u.com/cgi-bin/dl.cgi/".$hash."/video.avi";
 } elseif (strpos($filelink, 'ufliq.com') !== false) {
   $h = file_get_contents($filelink);
-  $link=get_unpack4(1,14,6,$h);
+  $link=str_between($h,"url: '","'");
+  if ($link == "") {
+    $link=get_unpack4(1,14,6,$h);
+  }
 }
 print $link;
 ?>
