@@ -146,9 +146,28 @@ ret;
 
 	</item_template>
 <channel>
-	<title>PornTV - pornofanatic.com</title>
+	<title>PornTV</title>
 	<menu>main menu</menu>
+<!-- Adult -->
+<item>
+<title>Redlight HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990101.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z990101.stream",10);</onClick>
+</item>
 
+<item>
+<title>HustlerTV HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990102.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z990102.stream",10);</onClick>
+</item>
+
+<item>
+<title>Penthouse HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990103.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z990103.stream",10);</onClick>
+</item>
+
+<item>
+<title>Penthouse 2 HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990104.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z990104.stream",10);</onClick>
+</item>
 
 <?php
 function str_between($string, $start, $end){

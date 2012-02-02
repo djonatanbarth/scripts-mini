@@ -156,12 +156,52 @@ ret;
 	</item_template>
 
 <channel>
-	<title>High Definition Tv</title>
+	<title>High Definition TV</title>
 	<menu>main menu</menu>
+
+<item>
+<title>Eurosport HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010601.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010601.stream",10);</onClick>
+</item>
+
+<item>
+<title>Eurosport 2 HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010301.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010301.stream",10);</onClick>
+</item>
+
+<item>
+<title>Discovery HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050208.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050208.stream",10);</onClick>
+</item>	
+
+<item>
+<title>Nat Geo WILD HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050204.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050204.stream",10);</onClick>
+</item>	
+
+<item>
+<title>Discovery Showcase HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050002.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050002.stream",10);</onClick>
+</item>
 	
 <item>
 <title>Animal Planet HD</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050001.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050001.stream",10);</onClick>
+</item>	
+
+<item>
+<title>Nat Geo HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050203.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050203.stream",10);</onClick>
+</item>	
+
+<item>
+<title>History HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050003.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050003.stream",10);</onClick>
+</item>
+
+<item>
+<title>Bio HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020204.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020204.stream",10);</onClick>
 </item>	
 
 <item>
@@ -174,11 +214,20 @@ ret;
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050222.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050222.stream",10);</onClick>
 </item>
 
+<item>
+<title>MTV Live HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010001.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010001.stream",10);</onClick>
+</item>
 
 <item>
-<title>Bio HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020204.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020204.stream",10);</onClick>
-</item>	
+<title>HBO HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010402.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010402.stream",10);</onClick>
+</item>
+
+<item>
+<title>HBO 2 HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010701.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010701.stream",10);</onClick>
+</item>
 
 <item>
 <title>Comedy Central HD</title>
@@ -216,16 +265,6 @@ ret;
 </item>	
 
 <item>
-<title>Discovery HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050208.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050208.stream",10);</onClick>
-</item>	
-
-<item>
-<title>Discovery Showcase HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050002.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050002.stream",10);</onClick>
-</item>
-
-<item>
 <title>Disney XD HD</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020101.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020101.stream",10);</onClick>
 </item>
@@ -233,36 +272,6 @@ ret;
 <item>
 <title>Nickelodeon HD</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050007.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050007.stream",10);</onClick>
-</item>
-
-<item>
-<title>Eurosport HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010601.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010601.stream",10);</onClick>
-</item>
-
-<item>
-<title>Eurosport 2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010301.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010301.stream",10);</onClick>
-</item>
-
-<item>
-<title>ESPN America HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050201.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050201.stream",10);</onClick>
-</item>
-
-<item>
-<title>HBO HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010402.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010402.stream",10);</onClick>
-</item>
-
-<item>
-<title>HBO 2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010701.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010701.stream",10);</onClick>
-</item>
-
-<item>
-<title>History HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050003.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050003.stream",10);</onClick>
 </item>
 
 <item>
@@ -276,34 +285,24 @@ ret;
 </item>
 
 <item>
-<title>Kabel 1 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010103.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010103.stream",10);</onClick>
-</item>
-
-<item>
 <title>MGM HD</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020401.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020401.stream",10);</onClick>
 </item>
 
+<!-- Germany -->
 <item>
-<title>MTV Live HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010001.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010001.stream",10);</onClick>
+<title>Sport1 HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z130103.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z130103.stream",10);</onClick>
 </item>
 
 <item>
-<title>Nat Geo HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050203.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050203.stream",10);</onClick>
-</item>	
-
-<item>
-<title>Nat Geo WILD HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050204.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050204.stream",10);</onClick>
-</item>	
-
-<!-- Germany -->
-<item>
 <title>Das Erste HD</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030402.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030402.stream",10);</onClick>
+</item>
+
+<item>
+<title>ZDF HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030401.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030401.stream",10);</onClick>
 </item>
 
 <item>
@@ -315,7 +314,6 @@ ret;
 <title>PRO7 HD</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010102.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010102.stream",10);</onClick>
 </item>
-
 
 <item>
 <title>RTL HD</title>
@@ -342,11 +340,6 @@ ret;
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010104.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010104.stream",10);</onClick>
 </item>
 
-<item>
-<title>Sport1 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z130103.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z130103.stream",10);</onClick>
-</item>
-
 <!-- item>
 <title>Vox HD</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030102.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030102.stream",10);</onClick>
@@ -357,21 +350,16 @@ ret;
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050220.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050220.stream",10);</onClick>
 </item>
 
-<item>
-<title>ZDF HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030401.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030401.stream",10);</onClick>
-</item>
-
 <!-- France -->
-<item>
-<title>FT1 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010107.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010107.stream",10);</onClick>
-</item>	
-
 <item>
 <title>France 24</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050213.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050213.stream",10);</onClick>
 </item>
+
+<item>
+<title>FT1 HD</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010107.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010107.stream",10);</onClick>
+</item>	
 
 <item>
 <title>France 2 HD</title>
@@ -388,22 +376,11 @@ ret;
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050218.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050218.stream",10);</onClick>
 </item>
 
-
 <!-- Italy -->
 <item>
-<title>Italia 1</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010502.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010502.stream",10);</onClick>
-</item>	
-
-<item>
-<title>Fox</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050210.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050210.stream",10);</onClick>
-</item>	
-
-<item>
-<title>Fox Crime</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050209.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050209.stream",10);</onClick>
-</item>	
+<title>Rai News</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050217.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050217.stream",10);</onClick>
+</item>
 
 <item>
 <title>Rai 1</title>
@@ -416,19 +393,28 @@ ret;
 </item>
 
 <item>
+<title>Italia 1</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010502.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010502.stream",10);</onClick>
+</item>	
+
+<item>
+<title>Canale 5</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010501.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010501.stream",10);</onClick>
+</item>	
+
+<item>
 <title>Rai Movie</title>
 <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050216.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050216.stream",10);</onClick>
 </item>
 
 <item>
-<title>Rai News</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050217.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050217.stream",10);</onClick>
-</item>
-
+<title>Fox</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050210.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050210.stream",10);</onClick>
+</item>	
 
 <item>
-<title>Canale 5</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010501.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010501.stream",10);</onClick>
+<title>Fox Crime</title>
+<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050209.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050209.stream",10);</onClick>
 </item>	
 
 <!-- Rusia -->

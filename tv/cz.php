@@ -3,6 +3,15 @@
 $host = "http://127.0.0.1/cgi-bin";
 ?>
 <rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+  
+  error_info          = "";
+</script>
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
@@ -50,20 +59,17 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(annotation); annotation;</script>
-		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
   image/tv_radio.png
 		</image>
-		<idleImage> image/POPUP_LOADING_01.png </idleImage>
-		<idleImage> image/POPUP_LOADING_02.png </idleImage>
-		<idleImage> image/POPUP_LOADING_03.png </idleImage>
-		<idleImage> image/POPUP_LOADING_04.png </idleImage>
-		<idleImage> image/POPUP_LOADING_05.png </idleImage>
-		<idleImage> image/POPUP_LOADING_06.png </idleImage>
-		<idleImage> image/POPUP_LOADING_07.png </idleImage>
-		<idleImage> image/POPUP_LOADING_08.png </idleImage>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
 
 		<itemDisplay>
 			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
@@ -72,7 +78,8 @@ $host = "http://127.0.0.1/cgi-bin";
 					focus = getFocusItemIndex();
 					if(focus==idx)
 					{
-					  annotation = getItemInfo(idx, "title");
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -147,115 +154,113 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
-  <channel>
 
-    <title>TV Live</title>
-
+<channel>
+	<title>Czech &amp; Slovak TV</title>
+	<menu>main menu</menu>
 <item>
-<title>TV Live - Deutschland</title>
-<link><?php echo $host; ?>/scripts/tv/german_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>Markiza</title>
+<onClick>playItemURL("http://88.212.35.223:2002",10);</onClick>
 </item>
 
 <item>
-<title>Czech &amp; Slovak TV</title>
-<link><?php echo $host; ?>/scripts/tv/cz.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>STV1</title>
+<onClick>playItemURL("http://88.212.35.222:2001",10);</onClick>
 </item>
 
 <item>
-<title>TV Live - Music</title>
-<link><?php echo $host; ?>/scripts/tv/music_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>STV2</title>
+<onClick>playItemURL("http://88.212.35.223:2001",10);</onClick>
 </item>
 
 <item>
-<title>TV Live - Sport</title>
-<link><?php echo $host; ?>/scripts/tv/tv_sport_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>Joj</title>
+<onClick>playItemURL("http://88.212.35.226:2002",10);</onClick>
 </item>
 
 <item>
-<title>High Definition Tv</title>
-<link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>Joj plus</title>
+<onClick>playItemURL("http://88.212.35.228:2002",10);</onClick>
 </item>
 
 <item>
-<title>TV Live - New channels</title>
-<link><?php echo $host; ?>/scripts/tv/tv_new.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<!--
-<item>
-<title>Seeon TV</title>
-<link><?php echo $host; ?>/scripts/tv/seeontv.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
-<item>
-<title>Justin.tv</title>
-<link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>Doma TV</title>
+<onClick>playItemURL("http://88.212.35.227:2002",10);</onClick>
 </item>
 
 <item>
-<title>TV Live from veetle.com (only LQ) - popular</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/veetle_main.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>TA3</title>
+<onClick>playItemURL("http://88.212.35.224:2002",10);</onClick>
 </item>
 
 <item>
-<title>TV Live from freedocast.com</title>
-<link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<!--
-<item>
-<title>TV Live from livestation.com</title>
-<link><?php echo $host; ?>/scripts/tv/php/livestation.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>Nova 2</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/nova2",10);</onClick>
 </item>
 
 <item>
-<title>theStreamDB.com - XBMC LiveStreams</title>
-<link><?php echo $host; ?>/scripts/tv/php/theStreamDB_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
-<item>
-<title>TV Live - (from Darby_Crash)</title>
-<link><?php echo $host; ?>/scripts/tv/tv_diverse_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<!--
-<item>
-<title>TV Live - ohlulz.com</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
-<item>
-<title>TV Live from sovok.tv</title>
-<link><?php echo $host; ?>/scripts/tv/sovok.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
+<title>Cinema</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/cinema",10);</onClick>
 </item>
 
+<item>
+<title>Prima</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/prima",10);</onClick>
+</item>
 
+<item>
+<title>Prima Love</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/primalove",10);</onClick>
+</item>
+
+<item>
+<title>Prima Cool</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/primacool",10);</onClick>
+</item>
+
+<item>
+<title>CT 1</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/ct1",10);</onClick>
+</item>
+
+<item>
+<title>CT 2</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/ct2",10);</onClick>
+</item>
+
+<item>
+<title>CT4 Sport</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/ct4sportd",10);</onClick>
+</item>
+
+<item>
+<title>CT24</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/ct24",10);</onClick>
+</item>
+
+<item>
+<title>Barrandov</title>
+<onClick>playItemURL("http://tv5.sychrovnet.cz:7999/c/barrandov",10);</onClick>
+</item>
+
+    <item>
+    <title>Ocko</title>
+    <onClick>playItemUrl("http://tv5.sychrovnet.cz:7999/c/ocko",10);</onClick>
+    </item>
+
+    <item>
+    <title>Musicbox</title>
+    <onClick>playItemUrl("http://88.212.35.225:2002",10);</onClick>
+    </item>
+
+    <item>
+    <title>Musiq 1</title>
+    <onClick>playItemUrl("http://88.212.35.225:2001",10);</onClick>
+    </item>
+
+    <item>
+    <title>TV FUN1</title>
+    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://portal.satplus.cz/TV_FUN1",10);</onClick>
+    </item>
 </channel>
-</rss>                                                                                                                             
+</rss>

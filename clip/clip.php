@@ -271,15 +271,6 @@ columnCount=5
 </item>	
 
 <item>
-<title>Dailymotion</title>
-	<link><?php echo $host; ?>/scripts/clip/dm.php</link>
-	<location>http://www.dailymotion.com</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png" />
-	<annotation>Dailymotion is about finding new ways to see, share and engage your world through the power of online video. You can find - or upload - videos about your interests and hobbies, eyewitness accounts of recent news and distant places, and everything else from the strange to the spectacular.</annotation>
-</item>
-
-<item>
 <title>Metacafe</title>
 	<link><?php echo $host; ?>/scripts/clip/php/metacafe.php?query=1</link>
 	<location>http://www.metacafe.com</location>
@@ -470,6 +461,15 @@ columnCount=5
 	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png</image>
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png" />
 	<annotation>YouClubVideo was started as an idea to bring together a wide variety of clubbing experiences and people from all the countries of the world that have in common the same feelings, sounds and sences of club music.</annotation>
+</item>
+
+<item>
+<title>Dailymotion</title>
+	<link><?php echo $host; ?>/scripts/clip/dm.php</link>
+	<location>http://www.dailymotion.com</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png" />
+	<annotation>Dailymotion is about finding new ways to see, share and engage your world through the power of online video. You can find - or upload - videos about your interests and hobbies, eyewitness accounts of recent news and distant places, and everything else from the strange to the spectacular.</annotation>
 </item>
 
 <item>

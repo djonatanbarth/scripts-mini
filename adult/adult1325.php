@@ -168,9 +168,9 @@ $host = "http://127.0.0.1/cgi-bin";
 </item>
 -->
 <item>
-<title>pornofanatic</title>
+<title>Porn TV</title>
   <link><?php echo $host; ?>/scripts/adult/php/pornofanatic.php</link>
-<image>/usr/local/etc/www/cgi-bin/scripts/adult/image/pornofanatic.jpg</image>
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/tvlive.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
 <!--

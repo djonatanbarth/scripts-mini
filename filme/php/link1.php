@@ -1009,6 +1009,19 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   if ($link == "") {
     $link=get_unpack4(1,14,6,$h);
   }
+} elseif (strpos($filelink, 'stagero.eu') !== false) {
+   //http://www.stagero.eu/api/player.api.php?codes=1&key=78%2E96%2E189%2E71%2D43400f4737713449ec249d9baf1e16f9&pass=undefined&user=undefined&file=pq34kgvq7gn26
+   $h = file_get_contents($filelink);
+   $p1=str_between($h,'flashvars.filekey="','"');
+   $p2=str_between($h,'flashvars.file="','"');
+   $l1="http://www.stagero.eu/api/player.api.php?codes=1&key=".urlencode($p1)."&pass=undefined&user=undefined&file=".$p2;
+   $h = file_get_contents($l1);
+   $link=str_between($h,"url=","&");
+} elseif (strpos($filelink, 'mixturevideo.com') !== false) {
+  $h = file_get_contents($filelink);
+  $p1=str_between($h,"file=","&");
+  $p2=str_between($h,"streamer=",'"');
+  $link=$p2."&file=".$p1;
 }
 print $link;
 ?>
