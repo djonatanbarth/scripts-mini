@@ -158,7 +158,7 @@ ret;
 
 	</item_template>
 <channel>
-	<title>TV Live - rtmpGui</title>
+	<title>TV Live - wilmaa</title>
 	<menu>main menu</menu>
 ';
 function str_between($string, $start, $end){
@@ -166,31 +166,6 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
-function html_to_utf8 ($data)
-    {
-    return preg_replace("/\\&\\#([0-9]{3,10})\\;/e", '_html_to_utf8("\\1")', $data);
-    }
-
-function _html_to_utf8 ($data)
-    {
-    if ($data > 127)
-        {
-        $i = 5;
-        while (($i--) > 0)
-            {
-            if ($data != ($a = $data % ($p = pow(64, $i))))
-                {
-                $ret = chr(base_convert(str_pad(str_repeat(1, $i + 1), 8, "0"), 2, 10) + (($data - $a) / $p));
-                for ($i; $i > 0; $i--)
-                    $ret .= chr(128 + ((($data % pow(64, $i)) - ($data % ($p = pow(64, $i - 1)))) / $p));
-                break;
-                }
-            }
-        }
-        else
-        $ret = "&#$data;";
-    return $ret;
-    }
 $link="http://apps.ohlulz.com/rtmpgui/list.xml";
 //$html=file_get_contents("H:/BB Skin V2/new/channels.xml");
 $baseurl="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,";
@@ -200,13 +175,12 @@ $videos=explode("<stream>",$html);
 //$videos=explode("<item>",$html);
 unset($videos[0]);
 $videos = array_values($videos);
-$n=0;
+
 foreach($videos as $video) {
 $opt="";
 $title=str_between($video,"<title>","</title>");
 $title=trim(str_replace("'","",$title));
-//$title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
-$title=html_to_utf8($title);
+$title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
 $swf=trim(str_between($video,'<swfUrl>','</swfUrl>'));
 $link=trim(str_between($video,"<link>","</link>"));
 $page=trim(str_between($video,"<pageUrl>","</pageUrl>"));
@@ -227,9 +201,8 @@ $adv = trim(str_between($video,"<advanced>","</advanced>"));
           $opt=$opt."%20".str_replace(" ","%20",$adv);
         }
       }
-if (($title <> "") && (strpos($link,"<") === false) && !preg_match("/filmon|wilmaa|ustream|tvsector/i",$opt)) {
-$n++;
-if ($n > 5) {
+
+if (($title <> "") && (strpos($link,"<") === false) && preg_match("/wilmaa/i",$opt)) {
     echo '
     <item>
     <title>'.$title.'</title>
@@ -245,7 +218,6 @@ if ($n > 5) {
     <annotation>'.$link.' - '.$playpath.'</annotation>
     </item>
     ';
-}
 }
 }
 ?>

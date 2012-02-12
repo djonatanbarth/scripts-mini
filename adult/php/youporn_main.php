@@ -164,7 +164,10 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $link="http://www.youporn.com/categories";
-$html = file_get_contents($link);
+$h = file_get_contents($link);
+$t1=explode('<li class="categories">',$h);
+$h2=$t1[1];
+$html = str_between($h2,"<ul>","</ul>");
 $videos = explode('<li>', $html);
 unset($videos[0]);
 $videos = array_values($videos);
@@ -175,7 +178,7 @@ foreach($videos as $video) {
     $t2=explode(">",$t[1]);
     $t3=explode("<",$t2[1]);
   	$title=$t3[0];
-
+    if ($title == "") $title="New";
   	$link=$host."/scripts/adult/php/youporn.php?query=1,".$link;
   	echo '
   	<item>

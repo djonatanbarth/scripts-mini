@@ -192,14 +192,28 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-<!--
+
 <item>
-<title>Seeon TV</title>
-<link><?php echo $host; ?>/scripts/tv/seeontv.php?query=1,</link>
+<title>TV Live - rtmpGui - wilmaa</title>
+<link><?php echo $host; ?>/scripts/tv/wilmaa.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
+<item>
+<title>TV Live - rtmpGui - tvsector</title>
+<link><?php echo $host; ?>/scripts/tv/tvsector1.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>TV Live - rtmpGui - other</title>
+<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
 <item>
 <title>Justin.tv</title>
 <link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>

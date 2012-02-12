@@ -331,7 +331,7 @@
 		input = currentUserInput();
 		print("**** input=",input);
 		ret = "false";
-    if (input == "display" || userInput == "DISPLAY")
+    if (input == "display" || input == "DISPLAY")
 		{
 		  first_appearance = -1;
 		  show_info = 1 - show_info;
@@ -340,20 +340,20 @@
 		  refresh_time = 10;
 		}
 		else
-    if (input == "enter" || userInput == "ENTR")
+    if (input == "enter" || input == "ENTR")
 		{
 	    postMessage("video_play");
       stream_status = 1;
       ret = "true";
 		}
 		else 
-		if (input == "one" || userInput == "1" || input == "zero" || userInput == "0")
+		if (input == "one" || input == "1" || input == "zero" || input == "0")
 		      {
         postMessage("video_pause");
         stream_status = 2;
         ret = "true";
       }
-else if (input == "right" || input == "left")
+else if (input == "right" || input == "left" || input == "R" || input == "L")
 {
 	status = getPlaybackStatus();
 	playStatus = getStringArrayAt(status, 3);

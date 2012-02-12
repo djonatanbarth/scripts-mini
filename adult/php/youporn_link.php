@@ -7,7 +7,8 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
-$link = str_between($html, "encodeURIComponent('", "'");
+//http://www.youporn.com/oldStreamURL/57272
+$link = "http://www.youporn.com".str_between($html, "encodeURIComponent('", "'");
 $html = file_get_contents($link);
 $link1 = str_between($html, "<location>", "</location>");
 $link1=str_replace("&amp;","&",$link1);

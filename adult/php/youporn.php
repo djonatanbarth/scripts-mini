@@ -216,7 +216,7 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$videos = explode('img id="thumb', $html);
+$videos = explode('li class="videoBox"', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -225,7 +225,7 @@ foreach($videos as $video) {
     $t1=explode('href="',$video);
     $t2 = explode('"', $t1[1]);
     $link = "http://www.youporn.com".$t2[0];
-    $t3=explode(">",$t1[1]);
+    $t3=explode(">",$t1[2]);
     $t4=explode("<",$t3[1]);
     $title=$t4[0];
     $link = $host."/scripts/adult/php/youporn_link.php?file=".$link;
@@ -234,7 +234,7 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
 
-    $data = trim(str_between($video,'<h2>','</h2>'));
+    $data = trim(str_between($video,'"duration">','<'));
     $data = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$data);
 
     $data = "Duration: ".$data;

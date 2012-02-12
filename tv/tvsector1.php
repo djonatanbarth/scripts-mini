@@ -158,7 +158,7 @@ ret;
 
 	</item_template>
 <channel>
-	<title>TV Live - rtmpGui</title>
+	<title>TV Live - tvsector</title>
 	<menu>main menu</menu>
 ';
 function str_between($string, $start, $end){
@@ -227,7 +227,7 @@ $adv = trim(str_between($video,"<advanced>","</advanced>"));
           $opt=$opt."%20".str_replace(" ","%20",$adv);
         }
       }
-if (($title <> "") && (strpos($link,"<") === false) && !preg_match("/filmon|wilmaa|ustream|tvsector/i",$opt)) {
+if (($title <> "") && (strpos($link,"<") === false) && preg_match("/tvsector/i",$opt)) {
 $n++;
 if ($n > 5) {
     echo '
