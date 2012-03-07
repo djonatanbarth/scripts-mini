@@ -238,12 +238,6 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>www.starmaxmovie.com</title>
-<link><?php echo $host; ?>/scripts/filme/php/starmaxmovie_main.php</link>
-<annotation>http://www.starmaxmovie.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
 <!--
 <item>
 <title>10starmovies.com</title>

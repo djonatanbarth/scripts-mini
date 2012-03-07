@@ -220,6 +220,7 @@ $id=str_between($h,'"id" value="','"');
 $fname=str_between($h,'"fname" value="','"');
 $post="ipcount_val=".$ipcount_val."&op=download2&usr_login=&id=".$id."&fname=".$fname."&referer=&method_free=Slow+access";
 //ipcount_val=10&op=download2&usr_login=&id=a2baprw26l3m&fname=np-prophezeiung-xvid.avi&referer=&method_free=Slow+access
+//ipcount_val=10&op=download2&usr_login=&id=pia0ng8rrzqk&fname=om-die.geschichte.vom.goldenen.taler-xvid.avi&referer=&method_free=Slow+access
 curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
 curl_setopt($ch, CURLOPT_REFERER, $string);
 curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
@@ -621,6 +622,7 @@ function megavideo($string) {
 //***************Here we start**************************************
 $filelink=str_prep($filelink);
 if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==false)) {
+  if (strpos($filelink,"embed") === false) {
   $fname=substr(strrchr($filelink,"/"),1);
   $fname=str_replace(".html","",$fname);
   $t=explode("/",$filelink);
@@ -643,6 +645,15 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   } else {
     $link=vix(1,12,9,$h,$fname);
   }
+  } else {
+    $h = file_get_contents($filelink);
+    $fname="";
+  if (strpos($h,"DivXBrowserPlugin") === false) {
+     $link=get_unpack(1,11,5,$h);
+  } else {
+    $link=vix(1,12,9,$h,$fname);
+  }
+  }
 } elseif (strpos($filelink,"vidbux") !==false) {
   if (strpos($filelink,"embed") === false) {
     $t=explode("/",$filelink);
@@ -651,6 +662,28 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   }
   $h = file_get_contents($filelink);
   $link=get_unpack(1,8,4,$h);
+  if ($link == "") {
+  $x1=explode("<body",$h);
+  $x2=explode('href="',$x1[1]);
+  $x3=explode('"',$x2[1]);
+  $fname=substr(strrchr($x3[0],"/"),1);
+  $fn=str_replace(".html","",$fname);
+  $k=1;
+  $char_rep=12;
+  $pos_link=9;
+  $f=explode("return p}",$h);
+  $e=explode("'.split",$f[$k]);
+  $ls=$e[0];
+  preg_match("/(\|)((s|w)\d{2})\|/",$ls,$m);
+  $server=$m[2];
+  preg_match("/(\|)([a-z0-9]{39})\|/",$ls,$m);
+  $hash=$m[2];
+  preg_match("/(\|)(182|384|364)\|/",$ls,$m);
+  $port=$m[2];
+  preg_match("/(\|)(vidbux)\|/",$ls,$m);
+  $serv_name=$m[2];
+  $link="http://".$server.".".$serv_name.".com:".$port."/d/".$hash."/".$fn;
+  }
 } elseif (strpos($filelink,'movreel') !==false) {
   preg_match('/movreel\.com\/(embed\/)?+([\w\-]+)/', $filelink, $m);
   $id=$m[2];
@@ -871,7 +904,18 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $h = file_get_contents($filelink);
    preg_match("/(\|)([a-z0-9]{42})\|/",$h,$m);
    $hash=$m[2];
-   $link="http://xvidstage.com/cgi-bin/dl.cgi/".$hash."/video.avi";
+   if ($hash <> "") {
+      $link="http://xvidstage.com/cgi-bin/dl.cgi/".$hash."/video.avi";
+   } else {
+   if (strpos($filelink,"embed") !== false) {
+    $h = file_get_contents($filelink);
+   } else {
+    $id = substr(strrchr($filelink, "/"), 1);
+    $filelink = "http://xvidstage.com/embed-".$id.".html";
+    $h = file_get_contents($filelink);
+    }
+      $link=get_unpack4(2,9,5,$h);
+   }
 } elseif (strpos($filelink, 'nolimitvideo.com') !== false) {
    //http://www.nolimitvideo.com/embed/17ea366031f87f3aa009/new-kids-turbo
    $h = file_get_contents($filelink);
@@ -887,9 +931,12 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $link=rapidload($filelink);
 } elseif (strpos($filelink, 'vidstream.us') !== false) {
    $h=file_get_contents($filelink);
+   $link=str_between($h,"'file', '","'");
+   if ($link =="") {
    $l=str_between($h,'settingsFile: "','&');
    $h=file_get_contents($l);
    $link=str_between($h,'videoPath value="','"');
+   }
 } elseif (strpos($filelink, '2gb-hosting.com') !== false) {
    $link=s2g($filelink);
 } elseif (strpos($filelink, 'dimshare.com') !== false) {
@@ -1017,6 +1064,35 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
 } elseif (strpos($filelink, 'ovfile.com') !== false) {
   $h = file_get_contents($filelink);
   $link=get_unpack4(2,12,5,$h);
+  if (strpos($link,"http") === false) {
+  $link=get_unpack4(2,16,5,$h);
+  }
+} elseif (strpos($filelink, 'filebox.com') !==false) {
+  //http://www.filebox.com/embed-mxw6nxj1blfs-970x543.html
+  //http://www.filebox.com/mxw6nxj1blfs
+  if (strpos($filelink,"embed") === false) {
+    $id=substr(strrchr($filelink,"/"),1);
+    $filelink="http://www.filebox.com/embed-".$id."-970x543.html";
+  }
+  $h=file_get_contents($filelink);
+  $link=str_between($h,"{url: '","'");
+} elseif (strpos($filelink,"glumbouploads.com") !== false) {
+  $h=file_get_contents($filelink);
+  $id=str_between($h,'"id" value="','"');
+  $fname=str_between($h,'"fname" value="','"');
+  $referer=str_between($h,'"referer" value="','"');
+  $post="op=download1&usr_login=&id=".$id."&fname".$fname."&referer=".urlencode($referer)."&method_free=Slow+Download";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $filelink);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  //curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Linux; U; Android 0.5; en-us) AppleWebKit/522+ (KHTML, like Gecko) Safari/419.3');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt ($ch, CURLOPT_POST, 1);
+  curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+  $h = curl_exec($ch);
+  curl_close($ch);
+  $link=get_unpack4(2,11,5,$h);
 }
 print $link;
 ?>

@@ -55,7 +55,9 @@ echo '
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    2= Add to favorite
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
@@ -138,6 +140,15 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
+else if (userInput == "two" || userInput == "2")
+{
+ showIdle();
+ url="http://127.0.0.1/cgi-bin/scripts/tv/php/ohlulz_add.php?mod=add*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1");
+ dummy=getUrl(url);
+ cancelIdle();
+ redrawDisplay();
+ ret="true";
+}
 ret;
 </script>
 </onUserInput>
@@ -202,11 +213,17 @@ unset($videos[0]);
 $videos = array_values($videos);
 $n=0;
 foreach($videos as $video) {
+$video=str_replace("<![CDATA[","",$video);
+$video=str_replace("]]>","",$video);
 $opt="";
 $title=str_between($video,"<title>","</title>");
 $title=trim(str_replace("'","",$title));
+//$title = str_replace("&amp;","&",$title);
 //$title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
 $title=html_to_utf8($title);
+//$title=html_entity_decode($title,ENT_QUOTES, "UTF-8");
+//$title=htmlentities($title, ENT_QUOTES, "UTF-8");
+//$title=htmlspecialchars_decode($title, ENT_NOQUOTES);
 $swf=trim(str_between($video,'<swfUrl>','</swfUrl>'));
 $link=trim(str_between($video,"<link>","</link>"));
 $page=trim(str_between($video,"<pageUrl>","</pageUrl>"));
@@ -229,7 +246,21 @@ $adv = trim(str_between($video,"<advanced>","</advanced>"));
       }
 if (($title <> "") && (strpos($link,"<") === false) && !preg_match("/filmon|wilmaa|ustream|tvsector/i",$opt)) {
 $n++;
-if ($n > 5) {
+$link1=urlencode($baseurl.$opt.",".$link);
+//echo $title."<br>";
+$title = urlencode($title);
+$title = str_replace("+"," ",$title);
+$title = str_replace("%2B","+",$title);
+$title = str_replace("%28","(",$title);
+$title = str_replace("%29",")",$title);
+$title = str_replace("%26","&",$title);
+$title = str_replace("%3B",";",$title);
+$title = str_replace("%2F","/",$title);
+$title = str_replace("%23","#",$title);
+$title = str_replace("%5B","[",$title);
+$title = str_replace("%5D","]",$title);
+//if ($n > 0) {
+if (strpos($title,"%") === false) {
     echo '
     <item>
     <title>'.$title.'</title>
@@ -243,6 +274,8 @@ if ($n > 5) {
     </script>
     </onClick>
     <annotation>'.$link.' - '.$playpath.'</annotation>
+    <link1>'.$link1.'</link1>
+    <title1>'.urlencode($title).'</title1>
     </item>
     ';
 }

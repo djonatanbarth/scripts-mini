@@ -39,14 +39,15 @@ $host = "http://127.0.0.1/cgi-bin";
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
-	sliding="no"
-	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    3 = Remove from favorite. Reload page after!
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
@@ -73,6 +74,7 @@ $host = "http://127.0.0.1/cgi-bin";
 					if(focus==idx)
 					{
 					  annotation = getItemInfo(idx, "title");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -126,7 +128,16 @@ if (userInput == "pagedown" || userInput == "pageup")
   setFocusItemIndex(idx);
 	setItemFocus(0);
   redrawDisplay();
-  "true";
+  ret="true";
+}
+else if (userInput == "three" || userInput == "3")
+{
+ showIdle();
+ url="http://127.0.0.1/cgi-bin/scripts/tv/php/ohlulz_add.php?mod=delete*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1") + "*" + "<?php echo $img; ?>";
+ dummy=getUrl(url);
+ cancelIdle();
+ redrawDisplay();
+ ret="true";
 }
 ret;
 </script>
@@ -149,133 +160,44 @@ ret;
 	</item_template>
   <channel>
 
-    <title>TV Live</title>
+    <title>TV Live - rtmpGui - favorite</title>
 
-<item>
-<title>TV Live - Deutschland</title>
-<link><?php echo $host; ?>/scripts/tv/german_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Czech &amp; Slovak TV</title>
-<link><?php echo $host; ?>/scripts/tv/cz.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - Music</title>
-<link><?php echo $host; ?>/scripts/tv/music_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - Sport</title>
-<link><?php echo $host; ?>/scripts/tv/tv_sport_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>High Definition Tv</title>
-<link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - New channels</title>
-<link><?php echo $host; ?>/scripts/tv/tv_new.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - rtmpGui - wilmaa</title>
-<link><?php echo $host; ?>/scripts/tv/wilmaa.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - rtmpGui - tvsector</title>
-<link><?php echo $host; ?>/scripts/tv/tvsector1.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - rtmpGui - other</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - rtmpGui - favorite list</title>
-<link><?php echo $host; ?>/scripts/tv/php/ohlulz_fav.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Justin.tv</title>
-<link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from veetle.com (only LQ) - popular</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/veetle_main.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from freedocast.com</title>
-<link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<!--
-<item>
-<title>TV Live from livestation.com</title>
-<link><?php echo $host; ?>/scripts/tv/php/livestation.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>theStreamDB.com - XBMC LiveStreams</title>
-<link><?php echo $host; ?>/scripts/tv/php/theStreamDB_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
-<item>
-<title>TV Live - (from Darby_Crash)</title>
-<link><?php echo $host; ?>/scripts/tv/tv_diverse_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<!--
-<item>
-<title>TV Live - ohlulz.com</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
-<item>
-<title>TV Live from sovok.tv</title>
-<link><?php echo $host; ?>/scripts/tv/sovok.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
+<?php
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
+if (file_exists("/usr/local/etc/ohlulz.dat")) {
+$html=file_get_contents("/usr/local/etc/ohlulz.dat");
+$videos=explode("<item>",$html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+  $l=urldecode(str_between($video,"<link>","</link>"));
+  $l=str_replace(" ","%20",$l);
+  $t=urldecode(str_between($video,"<title>","</title>"));
+    echo '
+    <item>
+    <title>'.$t.'</title>
+    <link1>'.urlencode($l).'</link1>
+    <title1>'.urlencode($t).'</title1>
+    <onClick>
+    <script>
+    showIdle();
+    movie="'.$l.'";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <annotation>'.$t.'</annotation>
+    <image>'.$image.'</image>
+    <media:thumbnail url="'.$image.'" />
+    </item>
+    ';
+}
+}
+?>
 
 
 </channel>
