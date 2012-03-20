@@ -251,7 +251,9 @@ $s=$s."|divxstage\.net|divxstage\.eu|stream2k\.com\/playerjw\/vConfig|sockshare\
 $s=$s."|nolimitvideo\.com|stage666\.net\/|rapidload\.org|vidstream\.us|2gb-hosting\.com";
 $s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net|royalvids\.eu";
 $s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com|zurvid\.com|flashx\.tv|ufliq\.com|ovfile\.com";
-$s=$s."|sharefiles4u\.com|filebox\.com|glumbouploads\.com/i";
+$s=$s."|sharefiles4u\.com|filebox\.com|glumbouploads\.com|ginbig\.com|divxbase\.com|allmyvideos\.net";
+$s=$s."|gorillavid\.in|streamcloud\.eu|zalaa\.com|vreer\.com|zixshare\.com|veervid\.com|uploadboost\.com";
+$s=$s."|ufliq\.com/i";
 if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 }
@@ -357,10 +359,5 @@ for ($i=0;$i<count($links);$i++) {
 }
 }
 ?>
-<item>
-<title>Set megavideo premium account</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/filme/php/megavideo.rss</link>
-<mediaDisplay name="onePartView" />
-</item>
 </channel>
 </rss>

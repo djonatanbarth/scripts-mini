@@ -10,10 +10,11 @@ $link = str_replace(' ','%20',$link);
 $link = str_replace('[','%5B',$link);
 $link = str_replace(']','%5D',$link);
 $html = file_get_contents($link);
-$link=str_between($html,'mediaURL:"','"');
-/*
-preg_match("/(http\b.*?)(\.mp4)/i",$html,$matches);
+//$link=str_between($html,'mediaURL:"','"');
+//$html='a href="http://video.ycv-servers.com/media/video/4000/217578.mp4" style="';
+preg_match("/(http)(.*)(\.mp4)+/i",$html,$matches);
+//print_r ($matches);
 $link= $matches[0];
-*/
+
 print $link;
 ?>

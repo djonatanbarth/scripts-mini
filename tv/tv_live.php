@@ -222,6 +222,13 @@ ret;
 </item>
 
 <item>
+<title>FilmOn</title>
+<link><?php echo $host; ?>/scripts/tv/php/filmon.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>Justin.tv</title>
 <link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
 <media:thumbnail url="image/tv_radio.png" />

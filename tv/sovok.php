@@ -53,13 +53,14 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="60" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    Press audio to change audio (russian + english)
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-  image/tv_radio.png
-		</image>
+
+
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
 		<idleImage> image/POPUP_LOADING_02.png </idleImage>
 		<idleImage> image/POPUP_LOADING_03.png </idleImage>
@@ -74,6 +75,10 @@ $host = "http://127.0.0.1/cgi-bin";
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  annotation = getItemInfo(idx, "annotation");
+					}
 					getItemInfo(idx, "title");
 				</script>
 				<fontSize>
@@ -159,22 +164,55 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
- $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, "http://sovok.tv/api.php?get=list");
+$filename = "/usr/local/etc/dvdplayer/sovok.txt";
+if (file_exists($filename)) {
+  $handle = fopen($filename, "r");
+  $c = fread($handle, filesize($filename));
+  fclose($handle);
+  $a=explode("|",$c);
+  $a1=str_replace("?","@",$a[0]);
+  $user=urlencode($a1);
+  $pass=trim($a[1]);
+  $cookie="D://cookie.txt";
+  $cookie="/tmp/cookie.txt";
+  $l= "http://sovok.tv/api/xml/logout";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
+  $l="http://sovok.tv/api/xml/login?login=".$user."&pass=".$pass;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
+  $l="http://sovok.tv/api/xml/channel_list";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
 
-$videos = explode('cid":"', $html);
+$videos = explode('<item>', $html);
+$n=0;
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-$t1=explode('"',$video);
-$id=$t1[0];
-$title=str_between($video,'name":"','"');
-
+  $title=str_between($video,'<name>','</name>');
+  $id=str_between($video,"<id>","</id>");
+  if ($id <> "") {
     echo '
     <item>
     <title>'.$title.'</title>
@@ -187,8 +225,38 @@ $title=str_between($video,'name":"','"');
     playItemURL(url, 10);
     </script>
     </onClick>
+    <annotation></annotation>
     </item>
     ';
+    $n++;
+  }
+}
+} else {
+$link = "/usr/local/etc/www/cgi-bin/scripts/tv/php/sovok.rss";
+$description="Please logon on sovok.tv";
+
+	  echo '
+	  <item>
+	  <title>Logare</title>
+	  <link>'.$link.'</link>
+	  <annotation>'.$description.'</annotation>
+	  <mediaDisplay name="onePartView" />
+	  </item>
+	  ';
+}
+if (($n == 0) &&  (file_exists($filename))) {
+$link = "/usr/local/etc/www/cgi-bin/scripts/tv/php/sovok.rss";
+//$description="Pentru a accesa acest site trebuie să aveţi un cont pe sovok.tv. Completaţi userul şi parola în acest formular şi apoi apăsaţi Return, Return după care accesaţi din nou această pagină.";
+$description="Please logon on sovok.tv";
+
+	  echo '
+	  <item>
+	  <title>Logare</title>
+	  <link>'.$link.'</link>
+	  <annotation>'.$description.'</annotation>
+	  <mediaDisplay name="onePartView" />
+	  </item>
+	  ';
 }
 ?>
 
