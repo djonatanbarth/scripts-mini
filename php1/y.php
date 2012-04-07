@@ -153,7 +153,9 @@ if (userInput == "pagedown" || userInput == "pageup")
 }
 	if( userInput == "two")
 	{
-		topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + getItemInfo(getFocusItemIndex(),"download") + ";name=" + getItemInfo(getFocusItemIndex(),"name");
+        movie=getItemInfo(getFocusItemIndex(),"download");
+        movie1=getUrl(movie);
+        topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie1 + ";name=" + getItemInfo(getFocusItemIndex(),"name");
 		dlok = loadXMLFile(topUrl);
 		"true";
 	}
@@ -192,38 +194,16 @@ function str_between($string, $start, $end){
 }
   function sec2hms ($sec, $padHours = false)
   {
-
-    // start with a blank string
     $hms = "";
-
-    // do the hours first: there are 3600 seconds in an hour, so if we divide
-    // the total number of seconds by 3600 and throw away the remainder, we're
-    // left with the number of hours in those seconds
     $hours = intval(intval($sec) / 3600);
-
-    // add hours to $hms (with a leading 0 if asked for)
     $hms .= ($padHours)
           ? str_pad($hours, 2, "0", STR_PAD_LEFT). ":"
           : $hours. ":";
-
-    // dividing the total seconds by 60 will give us the number of minutes
-    // in total, but we're interested in *minutes past the hour* and to get
-    // this, we have to divide by 60 again and then use the remainder
     $minutes = intval(($sec / 60) % 60);
-
-    // add minutes to $hms (with a leading 0 if needed)
     $hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
-
-    // seconds past the minute are found by dividing the total number of seconds
-    // by 60 and using the remainder
     $seconds = intval($sec % 60);
-
-    // add seconds to $hms (with a leading 0 if needed)
     $hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
-
-    // done!
     return $hms;
-
   }
 
 $pg=25*($page-1) +1;
@@ -249,7 +229,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/left.jpg</image>
@@ -266,7 +246,7 @@ foreach($videos as $video) {
 	$id = $match[2];
 	$title = str_between($video,"<title type='text'>","</title>");
 	$descriere=str_between($video,"<content type='text'>","</content>");
-	$durata = sec2hms(str_between($video,"duration='","'"));
+    $durata = sec2hms(str_between($video,"duration='","'"));
 	$data = str_between($video,"<updated>","</updated>");
 	$data = str_replace("T"," ",$data);
 	$data = str_replace("Z","",$data);
@@ -285,7 +265,7 @@ foreach($videos as $video) {
     url="'.$link.'";
     movie=getUrl(url);
     cancelIdle();
-    playItemUrl(movie,10);
+    playItemUrl(movie,10,1048576);
     </onClick>
     <download>'.$link.'</download>
     <name>'.$name.'</name>
@@ -308,7 +288,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/right.jpg</image>

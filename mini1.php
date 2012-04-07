@@ -304,6 +304,7 @@ showIdle();
 
 
 <!-- 5 -->
+<!--
 <item>
 <title>OneHD</title>
 <onClick>
@@ -316,7 +317,7 @@ showIdle();
 <unfocus>/usr/local/etc/www/cgi-bin/scripts/image/onehd_unfocus.png</unfocus>
 <annotation>One HD - the first online HD television - an alternative to traditional television, promotes cultural programs, entertainment...</annotation>
 </item>
-
+-->
 <!-- 6 -->
 <item>
 <title>Radio OnLine</title>

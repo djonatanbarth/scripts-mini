@@ -225,6 +225,27 @@ ret;
 </item>
 
 <item>
+<title>moovie.cc (in lb. maghiara)</title>
+<link><?php echo $host; ?>/scripts/filme/php/moovie.php?query=1,</link>
+<annotation>http://www.moovie.cc</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>onlinefilmletoltes.eu (in lb. maghiara)</title>
+<link><?php echo $host; ?>/scripts/filme/php/onlinefilmletoltes_main.php</link>
+<annotation>http://onlinefilmletoltes.eu</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>onlinewebfilmek (in lb. maghiara)</title>
+<link><?php echo $host; ?>/scripts/filme/php/onlinewebfilmek.php?file=http://onlinewebfilmek.blogspot.com</link>
+<annotation>http://onlinewebfilmek.blogspot.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>TinyMKV smallrip movie and series releases</title>
 <link><?php echo $host; ?>/scripts/filme/php/tinymkv_main.php</link>
 <annotation>http://www.tinymkv.com</annotation>

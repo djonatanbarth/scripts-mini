@@ -4,8 +4,13 @@ error_reporting(0);
 $filelink = $_GET["file"];
 $t1=explode(",",$filelink);
 $filelink = urldecode($t1[0]);
+//echo $filelink;
 $filelink = str_replace("*",",",$filelink);
 $filelink = str_replace("@","&",$filelink); //seriale.subtitrate.info
+  if (strpos($filelink,"adf.ly") !== false) {
+    $t1=explode("http",$filelink);
+    $filelink="http".$t1[2];
+  }
 $pg = urldecode($t1[1]);
 if ($pg == "") {
    $pg_title = "Link";
@@ -253,7 +258,7 @@ $s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net
 $s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com|zurvid\.com|flashx\.tv|ufliq\.com|ovfile\.com";
 $s=$s."|sharefiles4u\.com|filebox\.com|glumbouploads\.com|ginbig\.com|divxbase\.com|allmyvideos\.net";
 $s=$s."|gorillavid\.in|streamcloud\.eu|zalaa\.com|vreer\.com|zixshare\.com|veervid\.com|uploadboost\.com";
-$s=$s."|ufliq\.com/i";
+$s=$s."|ufliq\.com|muchshare\.net/i";
 if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 }
@@ -262,6 +267,10 @@ for ($i=0;$i<count($links);$i++) {
   if (preg_match($s,$cur_link)) {
     if ($cur_link <> $last_link) {
       if (!preg_match("/facebook|twitter|img\.youtube/",$cur_link)) {
+        if (strpos($cur_link,"adf.ly") !== false) {
+          $t1=explode("http",$cur_link);
+          $cur_link="http".$t1[2];
+        }
         $link="http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file=".urlencode($cur_link);
         $server = str_between($cur_link,"http://","/");
         $last_link=$cur_link;

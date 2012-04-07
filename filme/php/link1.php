@@ -4,8 +4,20 @@ error_reporting(0);
 $filelink = $_GET["file"];
 $filelink=urldecode($filelink);
 if (strpos($filelink,"adf.ly") !==false) {
+  $t1=explode("http",$filelink);
+  $filelink1="http".$t1[2];
+  if ($filelink1 == "") {
   $h1=file_get_contents($filelink);
   $filelink=str_between($h1,"var url = '","'");
+  } else {
+  $filelink=$filelink1;
+  }
+}
+if (strpos($filelink,"moovie.cc") !== false) {
+ $a = @get_headers($filelink);
+ $l=$a[10];
+ $a1=explode("Location:",$l);
+$filelink=trim($a1[1]);
 }
 function str_between($string, $start, $end){
 	$string = " ".$string; $ini = strpos($string,$start);
@@ -981,6 +993,15 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   //http://www.ufliq.com/embed-021l07r13j3a.html#
   $h=file_get_contents($filelink);
   $link=str_between($h,"url: '","'");
+} elseif (strpos($filelink,"muchshare.net") !==false) {
+  //http://muchshare.net/kmtllns0vdzk
+  //http://muchshare.net/embed-kmtllns0vdzk.html
+  if (strpos($filelink,"embed") === false) {
+    $t1=explode("/",$filelink);
+    $filelink = "http://muchshare.net/embed-".$t1[3].".html";
+  }
+  $h=file_get_contents($filelink);
+  $link=unpack_DivXBrowserPlugin(1,$h);
 }
 print $link;
 ?>

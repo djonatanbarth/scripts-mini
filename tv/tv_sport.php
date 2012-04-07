@@ -262,14 +262,6 @@ columnCount=4
 
     <title>Sport</title>
 
-<item>
-<title>sportgioco.it</title>
-<link><?php echo $host; ?>/scripts/tv/sport/sportgioco.php</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/sportgioco.jpg" />
-<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/sportgioco.jpg</image>
-<location>http://www.sportgioco.it/calcio/highlights.php</location>
-<annotation>Notizie sportive, informazioni, highlights video e tabelle comparative delle squadre di calcio. Tutti i calendari dei campionati di calcio con le quote dei bookmakers ed aggiornamenti sugli incontri di calcio</annotation>
-</item>
 
 <item>
 <title>www.footytube.com</title>

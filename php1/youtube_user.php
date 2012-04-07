@@ -152,7 +152,9 @@ if (userInput == "pagedown" || userInput == "pageup")
 }
 	if( userInput == "two")
 	{
-		topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + getItemInfo(getFocusItemIndex(),"download") + ";name=" + getItemInfo(getFocusItemIndex(),"name");
+        movie=getItemInfo(getFocusItemIndex(),"download");
+        movie1=getUrl(movie);
+        topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie1 + ";name=" + getItemInfo(getFocusItemIndex(),"name");
 		dlok = loadXMLFile(topUrl);
 		"true";
 	}
@@ -189,6 +191,19 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
+  function sec2hms ($sec, $padHours = false)
+  {
+    $hms = "";
+    $hours = intval(intval($sec) / 3600);
+    $hms .= ($padHours)
+          ? str_pad($hours, 2, "0", STR_PAD_LEFT). ":"
+          : $hours. ":";
+    $minutes = intval(($sec / 60) % 60);
+    $hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
+    $seconds = intval($sec % 60);
+    $hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
+    return $hms;
+  }
 $query = $_GET["query"];
 if($query) {
    $queryArr = explode(',', $query);
@@ -222,7 +237,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/left.jpg</image>
@@ -230,19 +245,6 @@ if($search) {
 </item>
 <?php } ?>
 <?php
-  function sec2hms ($sec, $padHours = false)
-  {
-    $hms = "";
-    $hours = intval(intval($sec) / 3600);
-    $hms .= ($padHours)
-          ? str_pad($hours, 2, "0", STR_PAD_LEFT). ":"
-          : $hours. ":";
-    $minutes = intval(($sec / 60) % 60);
-    $hms .= str_pad($minutes, 2, "0", STR_PAD_LEFT). ":";
-    $seconds = intval($sec % 60);
-    $hms .= str_pad($seconds, 2, "0", STR_PAD_LEFT);
-    return $hms;
-  }
 $videos = explode('<entry>', $html);
 unset($videos[0]);
 $videos = array_values($videos);
@@ -250,7 +252,7 @@ foreach($videos as $video) {
 	$id = str_between($video,"<id>http://gdata.youtube.com/feeds/api/videos/","</id>");
 	$title = str_between($video,"<title type='text'>","</title>");
 	$descriere=str_between($video,"<content type='text'>","</content>");
-	$durata = sec2hms(str_between($video,"duration='","'"));
+    $durata = sec2hms(str_between($video,"duration='","'"));
 	$data = str_between($video,"<updated>","</updated>");
 	$data = str_replace("T"," ",$data);
 	$data = str_replace("Z","",$data);
@@ -269,7 +271,7 @@ foreach($videos as $video) {
     url="'.$link.'";
     movie=getUrl(url);
     cancelIdle();
-    playItemUrl(movie,10);
+    playItemUrl(movie,10,1048576);
     </onClick>
     <download>'.$link.'</download>
     <name>'.$name.'</name>
@@ -292,7 +294,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/right.jpg</image>
