@@ -6,19 +6,24 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
-$link = $_GET["file"];
+$id = $_GET["file"];
+$link="http://www.livehd.tv/epg/epg.php";
 $html = file_get_contents($link);
-$videos = explode('<tr>', $html);
+$t1=explode('table class="text3"',$html);
+$html=$t1[$id];
+if ($id > 0) {
+$videos = explode('text=', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-  $t1=explode('size="2">',$video);
-  $t2=explode('<',$t1[1]);
-  $ora=$t2[0];
-  $t1=explode('size="2">',$video);
-  $t2=explode('<',$t1[2]);
-  $emisiune=$t2[0];
+  $t1=explode(' ',$video);
+  $ora=trim($t1[0]);
+  $t1=explode(' ',$video);
+  $t2=explode('"',$t1[1]);
+  $emisiune=trim($t2[0]);
+  $emisiune=str_replace("&nbsp;","",$emisiune);
 print($ora." ".$emisiune."\n\r");
+}
 }
 ?>
 

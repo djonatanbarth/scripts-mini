@@ -2,6 +2,15 @@
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 error_reporting(0);
 $host = "http://127.0.0.1/cgi-bin";
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
+$l="http://www.livehd.tv";
+$h=file_get_contents($l);
+$token=str_between($h,"token':'","'");
+$url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T%20".$token."%20-l%202%20-a%20live%20-W%20http://www.livehd.tv/player/player.swf%20-p%20http://www.livehd.tv";
 ?>
 <rss version="2.0">
 <onEnter>
@@ -52,14 +61,16 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
 		<text align="left" redraw="yes"
-          lines="12" fontSize=15
-		      offsetXPC=40 offsetYPC=40 widthPC=55 heightPC=48
+          lines="20" fontSize=15
+		      offsetXPC=40 offsetYPC=25 widthPC=60 heightPC=75
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
 			<script>print(annotation); annotation;</script>
 		</text>
+		<!--
 		<image  redraw="yes" offsetXPC=52 offsetYPC=20 widthPC=25 heightPC=25>
   /usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png
 		</image>
+		-->
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -135,50 +146,110 @@ $host = "http://127.0.0.1/cgi-bin";
 
 	</item_template>
 <channel>
-	<title>OneHD (Time is GMT+2)</title>
+	<title>OneHD</title>
 	<menu>main menu</menu>
 
 <item>
-<title>OneHD - Live! Concert</title>
-<location>http://live.1hd.ro/displaygrila2.php</location>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/swiss.cgi?rtmp://93.114.43.3:1935/live/onehd", 10);</onClick>
+<title>OneHD - Live! Mix</title>
+<location>0</location>
+<onClick>
+<script>
+url1="<?php echo $url; ?>" + "%20-y%20onehd,rtmpe://93.114.43.3:1935/live";
+playItemURL(url1, 10);
+</script>
+</onClick>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
 </item>
 
 <item>
 <title>OneHD - Live! Jazz</title>
-<location>http://live.1hd.ro/displaygrila2j.php</location>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/swiss.cgi?rtmp://93.114.43.3:1935/live/jazz", 10);</onClick>
+<location>1</location>
+<onClick>
+<script>
+url1="<?php echo $url; ?>" + "%20-y%20jazz,rtmpe://93.114.43.3:1935/live";
+playItemURL(url1, 10);
+</script>
+</onClick>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
 </item>
 
 <item>
 <title>OneHD - Live! Classics</title>
-<location>http://live.1hd.ro/displaygrila2c.php</location>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/swiss.cgi?rtmp://93.114.43.3:1935/live/classics", 10);</onClick>
+<location>2</location>
+<onClick>
+<script>
+url1="<?php echo $url; ?>" + "%20-y%20classics,rtmpe://93.114.43.3:1935/live";
+playItemURL(url1, 10);
+</script>
+</onClick>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
 </item>
 
-<item>
-<title>OneHD - Live! Dance</title>
-<location>http://live.1hd.ro/displaygrila2d.php</location>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/swiss.cgi?rtmp://93.114.43.3:1935/live/dance", 10);</onClick>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
-</item>
 
 <item>
 <title>OneHD - Live! Rock</title>
-<location>http://live.1hd.ro/displaygrila2r.php</location>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/swiss.cgi?rtmp://93.114.43.3:1935/live/rock", 10);</onClick>
+<location>3</location>
+<onClick>
+<script>
+url1="<?php echo $url; ?>" + "%20-y%20rock,rtmpe://93.114.43.3:1935/live";
+playItemURL(url1, 10);
+</script>
+</onClick>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
 </item>
 
 <item>
 <title>OneHD - Live! Pop</title>
-<location>http://live.1hd.ro/displaygrila2p.php</location>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/swiss.cgi?rtmp://93.114.43.3:1935/live/pop", 10);</onClick>
+<location>4</location>
+<onClick>
+<script>
+url1="<?php echo $url; ?>" + "%20-y%20pop,rtmpe://93.114.43.3:1935/live";
+playItemURL(url1, 10);
+</script>
+</onClick>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
 </item>
 
+<item>
+<title>OneHD - Live! Dance</title>
+<location>5</location>
+<onClick>
+<script>
+url1="<?php echo $url; ?>" + "%20-y%20dance,rtmpe://93.114.43.3:1935/live";
+playItemURL(url1, 10);
+</script>
+</onClick>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
+</item>
+
+<!--
+<item>
+<title>Divertisment</title>
+<location></location>
+<link><?php echo $host; ?>/scripts/tv/php/prahova.php?cat=Divertisment</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
+</item>
+
+<item>
+<title>Documentare</title>
+<location></location>
+<link><?php echo $host; ?>/scripts/tv/php/prahova.php?cat=Documentare</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
+</item>
+
+<item>
+<title>Emisiuni</title>
+<location></location>
+<link><?php echo $host; ?>/scripts/tv/php/prahova.php?cat=Emisiuni</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
+</item>
+
+<item>
+<title>Business</title>
+<location></location>
+<link><?php echo $host; ?>/scripts/tv/php/prahova.php?cat=Business</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/onehd.png" />
+</item>
+-->
 </channel>
 </rss>

@@ -215,7 +215,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/left.jpg</image>
@@ -236,7 +236,7 @@ function getRewriteString($string) {
     $string    = preg_replace("/&amp;(.)(acute|cedil|circ|ring|tilde|uml|horn);/", "$1", $string);
     return $string;
 }
-$videos = explode('<div class="dmpi_video_preview', $html);
+$videos = explode('dmpi_video_preview', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -253,18 +253,21 @@ foreach($videos as $video) {
     $t1 = explode('title="', $video);
     $t2 = explode('"', $t1[1]);
     $title = $t2[0];
+    $t1=explode("dmco_simplelink video_title id",$video);
+    $t2=explode(">",$t1[1]);
+    $t3=explode("<",$t2[1]);
+    $title=trim($t3[0]);
     if ($title == "") $title="Video...";
     $title = str_replace("&nbsp;","",$title);
     $title = str_replace("&amp;","&",$title);
     $title = getRewriteString($title);
-    $title=str_replace("\\",",",$title);
     $t1=explode('class="duration">',$video);
     $t2=explode('<',$t1[1]);
-    $durata = "Duration:".$t2[0];
+    $durata = "Durata:".$t2[0];
 
     $t1=explode('class="dmco_date">',$video);
     $t2=explode('<',$t1[1]);
-    $pub="Date:".$t2[0];
+    $pub="Data:".$t2[0];
 
     $t1=explode('class="dmpi_video_description foreground">',$video);
     $t2=explode('</div>',$t1[1]);
@@ -308,7 +311,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <durata></durata>
 <pub></pub>
 <image>image/right.jpg</image>

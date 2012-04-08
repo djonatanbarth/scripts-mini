@@ -179,7 +179,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -189,7 +189,7 @@ if($search) {
 
 <?php
 
-$videos = explode('<div class="dmpi_user_item', $html);
+$videos = explode('dmpi_user_item', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -203,10 +203,15 @@ foreach($videos as $video) {
     $t2 = explode('?', $t1[1]);
     $image = $t2[0];
 
-    $t1 = explode(' title="', $video);
+    $t1 = explode('title="', $video);
     $t2 = explode('"', $t1[1]);
-    $title = $t2[0];
-
+    $title = trim($t2[0]);
+    if ($title == "") {
+    $t1=explode("dmco_simplelink video_title id",$video);
+    $t2=explode(">",$t1[1]);
+    $t3=explode("<",$t2[1]);
+    $title=trim($t3[0]);
+    }
 		$link=$host."/scripts/clip/php/dm.php?query=,".$link.",".urlencode($title);
 
     echo '
@@ -230,7 +235,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
