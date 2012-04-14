@@ -1002,6 +1002,16 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   }
   $h=file_get_contents($filelink);
   $link=unpack_DivXBrowserPlugin(1,$h);
+} elseif (strpos($filelink,'nowvideo.eu') !==false) {
+  //http://www.nowvideo.eu/video/t88lo38nphkhu
+  //http://embed.nowvideo.eu/embed.php?v=t88lo38nphkhu
+  $h = file_get_contents($filelink);
+  $f = str_between($h,'flashvars.file="','"');
+  $k = str_between($h,'flashvars.filekey="','"');
+  $l="http://www.nowvideo.eu/api/player.api.php?key=".urlencode($k)."&codes=1&pass=undefined&file=".$f."&user=undefined";
+  //$l=str_replace("&","&amp;",$l);
+  $h=file_get_contents($l);
+  $link=str_between($h,"url=","&");
 }
 print $link;
 ?>

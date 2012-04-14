@@ -56,9 +56,9 @@ echo '
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2= Add to favorite
+    2= add to favorite
 		</text>
-  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+  	<text redraw="yes" offsetXPC="76" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -203,10 +203,20 @@ function _html_to_utf8 ($data)
     return $ret;
     }
 $link="http://apps.ohlulz.com/rtmpgui/list.xml";
+//$html=file_get_contents($link);
+$process = curl_init($link);
+curl_setopt($process, CURLOPT_HTTPGET, 1);
+curl_setopt($process, CURLOPT_RETURNTRANSFER,1);
+curl_setopt($process,CURLOPT_CONNECTTIMEOUT,20);
+$html = curl_exec($process);
+curl_close($process);
+if (strpos($html,"<stream>") === false) {
+  $link="http://hdforall.googlecode.com/files/3-11-2012.xml";
+  $html=file_get_contents($link);
+}
 //$html=file_get_contents("H:/BB Skin V2/new/channels.xml");
 $baseurl="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,";
-$html=file_get_contents($link);
-//echo $html;
+
 $videos=explode("<stream>",$html);
 //$videos=explode("<item>",$html);
 unset($videos[0]);

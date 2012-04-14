@@ -7,9 +7,10 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
-$l="http://www.livehd.tv";
+$l="http://www.livehd.tv/live.php";
 $h=file_get_contents($l);
 $token=str_between($h,"token':'","'");
+if ( $token == "" ); $token="6c69766568642e747620657374652063656c206d616920746172652121";
 $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T%20".$token."%20-l%202%20-a%20live%20-W%20http://www.livehd.tv/player/player.swf%20-p%20http://www.livehd.tv";
 ?>
 <rss version="2.0">
@@ -35,11 +36,11 @@ $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="30"
+	itemWidthPC="20"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="30"
+	capWidthPC="20"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -62,7 +63,7 @@ $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T
 		</text>
 		<text align="left" redraw="yes"
           lines="20" fontSize=15
-		      offsetXPC=40 offsetYPC=25 widthPC=60 heightPC=75
+		      offsetXPC=30 offsetYPC=25 widthPC=70 heightPC=75
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
 			<script>print(annotation); annotation;</script>
 		</text>
@@ -146,7 +147,7 @@ $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T
 
 	</item_template>
 <channel>
-	<title>OneHD</title>
+	<title>OneHD (time is GMT+2)</title>
 	<menu>main menu</menu>
 
 <item>
@@ -154,7 +155,7 @@ $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T
 <location>0</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20onehd,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20onehdhd,rtmpe://93.114.43.3:1935/live";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -166,7 +167,7 @@ playItemURL(url1, 10);
 <location>1</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20jazz,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20jazzhd,rtmpe://93.114.43.3:1935/live";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -178,7 +179,7 @@ playItemURL(url1, 10);
 <location>2</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20classics,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20classicshd,rtmpe://93.114.43.3:1935/live";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -191,7 +192,7 @@ playItemURL(url1, 10);
 <location>3</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20rock,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20rockhd,rtmpe://93.114.43.3:1935/live";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -203,7 +204,7 @@ playItemURL(url1, 10);
 <location>4</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20pop,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20pophd,rtmpe://93.114.43.3:1935/live";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -215,7 +216,7 @@ playItemURL(url1, 10);
 <location>5</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20dance,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20dancehd,rtmpe://93.114.43.3:1935/live";
 playItemURL(url1, 10);
 </script>
 </onClick>

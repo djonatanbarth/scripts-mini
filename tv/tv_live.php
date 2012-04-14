@@ -187,13 +187,6 @@ ret;
 </item>
 
 <item>
-<title>TV Live - New channels</title>
-<link><?php echo $host; ?>/scripts/tv/tv_new.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
 <title>TV Live - rtmpGui - wilmaa</title>
 <link><?php echo $host; ?>/scripts/tv/wilmaa.php</link>
 <media:thumbnail url="image/tv_radio.png" />
@@ -260,6 +253,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
+
+<item>
+<title>TV Live from freeiptv.be</title>
+<link><?php echo $host; ?>/scripts/tv/php/freeiptv.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
 <!--
 <item>
 <title>TV Live from livestation.com</title>
@@ -276,7 +277,7 @@ ret;
 </item>
 -->
 <item>
-<title>TV Live - (from Darby_Crash)</title>
+<title>TV Live - other</title>
 <link><?php echo $host; ?>/scripts/tv/tv_diverse_live.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>

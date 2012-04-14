@@ -13,6 +13,10 @@ $swf=str_between($h,'swfobject.embedSWF("','"');
 if ($swf == "") {
 $swf=str_between($h,"new SWFObject('","'");
 }
+///static/swf/live_site_player.swf
+if (strpos($swf,"http") === false) {
+$swf="http://www.justin.tv".$swf;
+}
 $h=file_get_contents($link2);
 $token=trim(str_between($h,"<token>","</token>"));
 //$token=str_replace('\\\\','',$token);
@@ -21,6 +25,7 @@ $token=str_replace('"','\\"',$token);
 $app=str_between($h,"<play>","</play>");
 $con=str_between($h,"<connect>","</connect>");
 $exec = '"'.$con."/".$app.'" --jtv "'.$token.'" --swfUrl "'.$swf.'"';
+//echo $exec;
 /*
 $exec1="/usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -V -v -r ".$exec;
 $fp = fopen('/tmp/justin.tmp', 'w');

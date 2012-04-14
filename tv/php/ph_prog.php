@@ -16,13 +16,13 @@ $videos = explode('text=', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-  $t1=explode(' ',$video);
-  $ora=trim($t1[0]);
-  $t1=explode(' ',$video);
-  $t2=explode('"',$t1[1]);
-  $emisiune=trim($t2[0]);
-  $emisiune=str_replace("&nbsp;","",$emisiune);
-print($ora." ".$emisiune."\n\r");
+  $t1=explode('/',$video);
+  $ora = trim(substr($t1[0],0,5));
+  $ora=str_replace('&nbsp;','',$ora);
+   $emisiune=trim(substr($t1[0],5,-1));
+   $emisiune=str_replace('&nbsp;','',$emisiune);
+   $emisiune=str_replace('"','',$emisiune);
+print($ora."   ".$emisiune."\n");
 }
 }
 ?>
