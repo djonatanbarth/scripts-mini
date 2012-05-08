@@ -185,41 +185,7 @@ ret;
 	<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://static.tv-tube.net/net.tv-tube/players/jwflashplayer/player.swf%20-p%20http://www.tv-tube.net/tvchannels/watch/862/quartarete-4,rtmp://wowza1.top-ix.org/quartaretetv/quartareteweb",10);</onClick>
 	</item>
 
-	<item>
-	<title>DolceSport</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/mediadirect.cgi?rtmpe://fms8.mediadirect.ro:1935/live3?id=6189013/dolcesport", 10);</onClick>
-	<annotation>DolceSport</annotation>
-	</item>
 
-	<item>
-	<title>DolceSport 2</title>
-	<onClick>playItemURL("http://127.0.0.1/cgi-bin/scripts/util/mediadirect.cgi?rtmpe://fms8.mediadirect.ro:1935/live3?id=6189013/dolcesport2", 10);</onClick>
-	<annotation>DolceSport 2</annotation>
-	</item>
-<?php
-
-$s="http://index.mediadirect.ro/getUrl?publisher=2";
-$h = file_get_contents($s);
-$t1=explode('server=',$h);
-$t2=explode('&',$t1[1]);
-$serv=$t2[0];
-if ($serv == "") {
-  $serv="fms1.mediadirect.ro";
-}
-$baseurl="rtmpe://fms1.mediadirect.ro:80/";
-$baseurl=str_replace("fms1.mediadirect.ro",$serv,$baseurl);
-$baseurl="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,".$baseurl;
-$title="Dolce Sport HD";
-$id="dolcesporthd";
-$link=$baseurl."live3?id=10668839&publisher=2/".$id;
-echo '
-  <item>
-  <title>'.$title.'</title>
-  <onClick>playItemURL("'.$link.'",10);</onClick>
-  <annotation>'.$title.'</annotation>
-  </item>
-  ';
-?>
 
 </channel>
 </rss>

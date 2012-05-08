@@ -181,12 +181,6 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>loads7.com</title>
-<link><?php echo $host; ?>/scripts/filme/php/loads7_main.php</link>
-<annotation>http://loads7.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
 <!--
 <item>
 <title>movfilm.net</title>
@@ -230,14 +224,14 @@ ret;
 <annotation>http://www.moovie.cc</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>onlinefilmletoltes.eu (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/onlinefilmletoltes_main.php</link>
 <annotation>http://onlinefilmletoltes.eu</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>onlinewebfilmek (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/onlinewebfilmek.php?file=http://onlinewebfilmek.blogspot.com</link>
@@ -245,12 +239,6 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>TinyMKV smallrip movie and series releases</title>
-<link><?php echo $host; ?>/scripts/filme/php/tinymkv_main.php</link>
-<annotation>http://www.tinymkv.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
 
 <item>
 <title>www.archive.org - Movies and Films</title>
@@ -315,11 +303,6 @@ ret;
     <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>mega-stream.to</title>
-<link><?php echo $host; ?>/scripts/filme/php/mega-stream.php</link>
-<annotation>http://www.mega-stream.to</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
+
 </channel>
 </rss>

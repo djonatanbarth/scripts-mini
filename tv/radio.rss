@@ -312,13 +312,6 @@ columnCount=5
     <mediaDisplay name="threePartsView"/>
   </item>
    
-  <item>
-		<link>rss_file://../etc/translate/rss/etc-playlists-radio-skyfm.rss</link>
-    <title>SKY.fm</title>
-    <annotation>Now Serving the Best Free Internet Radio to 33,823 Fans</annotation>
-    <image>../etc/translate/rss/image/menu/skyfm.png</image>
-    <mediaDisplay name="photoView"/>
-  </item>
   
 </channel>
 

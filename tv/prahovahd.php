@@ -12,6 +12,9 @@ $h=file_get_contents($l);
 $token=str_between($h,"token':'","'");
 if ( $token == "" ); $token="6c69766568642e747620657374652063656c206d616920746172652121";
 $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T%20".$token."%20-l%202%20-a%20live%20-W%20http://www.livehd.tv/player/player.swf%20-p%20http://www.livehd.tv";
+$l="http://www.livehd.tv/rtmp/flash-mbr.php";
+$h=file_get_contents($l);
+$rtmp=str_between($h,"streamer>","<");
 ?>
 <rss version="2.0">
 <onEnter>
@@ -147,7 +150,7 @@ $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T
 
 	</item_template>
 <channel>
-	<title>OneHD (time is GMT+2)</title>
+	<title>OneHD (time is GMT +2)</title>
 	<menu>main menu</menu>
 
 <item>
@@ -155,7 +158,7 @@ $url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-T
 <location>0</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20onehdhd,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20onehdhd,<?php echo $rtmp?>";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -167,7 +170,7 @@ playItemURL(url1, 10);
 <location>1</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20jazzhd,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20jazzhd,<?php echo $rtmp?>";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -179,7 +182,7 @@ playItemURL(url1, 10);
 <location>2</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20classicshd,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20classicshd,<?php echo $rtmp?>";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -192,7 +195,7 @@ playItemURL(url1, 10);
 <location>3</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20rockhd,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20rockhd,<?php echo $rtmp?>";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -204,7 +207,7 @@ playItemURL(url1, 10);
 <location>4</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20pophd,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20pophd,<?php echo $rtmp?>";
 playItemURL(url1, 10);
 </script>
 </onClick>
@@ -216,7 +219,7 @@ playItemURL(url1, 10);
 <location>5</location>
 <onClick>
 <script>
-url1="<?php echo $url; ?>" + "%20-y%20dancehd,rtmpe://93.114.43.3:1935/live";
+url1="<?php echo $url; ?>" + "%20-y%20dancehd,<?php echo $rtmp?>";
 playItemURL(url1, 10);
 </script>
 </onClick>

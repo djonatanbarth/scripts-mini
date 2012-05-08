@@ -45,7 +45,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Apăsaţi 2 pentru download, 3 pentru Download Manager
+    Press 2 for download, 3 for Download Manager
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -239,7 +239,8 @@ function c($title) {
      return $title;
 }
 $image = "/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png";
-$videos = explode('<div class="media_element_pic">', $html);
+$html=str_between($html,'id="media_results"','</ul>');
+$videos = explode('<li', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 
@@ -252,16 +253,19 @@ foreach($videos as $video) {
     $t2=explode('"',$t1[1]);
     $image=$t2[0];
 **/
-    $t1 = explode('"a_white">', $video);
-    $t2 = explode('<', $t1[2]);
-    $title = $t2[0];
+    //$t1 = explode('"a_white">', $video);
+    //$t2 = explode('<', $t1[2]);
+    //$title = $t2[0];
+    $t1=explode('alt="',$video);
+    $t2=explode('"',$t1[1]);
+    $title=$t2[0];
     $title = c(htmlentities($title));
     $title=trim($title);
     $descriere=$title;
     
-    $t1=explode('<div class="video_time">',$video);
-    $t2=explode('</div>',$t1[1]);
-    $durata = "Durata:".preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$t2[0]);
+    $t1=explode('class="time opacity8">',$video);
+    $t2=explode('</span',$t1[1]);
+    $durata = "Durata:".trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$t2[0]));
 
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
     echo '

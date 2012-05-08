@@ -14,12 +14,16 @@ $host = "http://127.0.0.1/cgi-bin";
 </script>
 <onEnter>
   startitem = "middle";
+  server = "s6";
   setRefreshTime(1);
 </onEnter>
-
+<onExit>
+setRefreshTime(-1);
+</onExit>
 <onRefresh>
-  setRefreshTime(-1);
-  itemCount = getPageInfo("itemCount");
+    itemCount = getPageInfo("itemCount");
+    setRefreshTime(-1);
+    redrawdisplay();
 </onRefresh>
 
 <mediaDisplay name="threePartsView"
@@ -55,13 +59,18 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text redraw="yes" align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"Press 2 to change server. Server curent: " + server;</script>
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
   image/tv_radio.png
 		</image>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"Press 2 to change server. Server curent: " + server;</script>
+		</text>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -112,7 +121,6 @@ $host = "http://127.0.0.1/cgi-bin";
 <script>
 ret = "false";
 userInput = currentUserInput();
-
 if (userInput == "pagedown" || userInput == "pageup")
 {
   idx = Integer(getFocusItemIndex());
@@ -134,6 +142,19 @@ if (userInput == "pagedown" || userInput == "pageup")
 	setItemFocus(0);
   redrawDisplay();
   "true";
+}
+else if (userInput == "two" || userInput == "2")
+{
+		if (server == "s7")
+           server = "s6";
+		else if (server == "s6")
+           server = "s5";
+		else if (server == "s5")
+          server = "s99";
+        else
+		 server = "s6";
+  redrawDisplay();
+  ret = "true";
 }
 ret;
 </script>
@@ -161,293 +182,558 @@ ret;
 
 <item>
 <title>Eurosport HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010601.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010601.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010601.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010601.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Eurosport 2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010301.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010301.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010301.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010301.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Discovery HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050208.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050208.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050208.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050208.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Nat Geo WILD HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050204.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050204.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050204.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050204.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Discovery Showcase HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050002.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050002.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050002.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050002.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 	
 <item>
 <title>Animal Planet HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050001.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050001.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050001.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050001.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Nat Geo HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050203.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050203.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050203.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050203.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>History HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050003.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050003.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050003.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050003.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Bio HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020204.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020204.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020204.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z020204.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>BBC HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010201.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010201.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010201.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010201.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>CCTV News</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050222.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050222.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050222.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050222.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>MTV Live HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010001.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010001.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010001.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010001.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>HBO HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010402.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010402.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010402.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010402.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>HBO 2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010701.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010701.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010701.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010701.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Comedy Central HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020503.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020503.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020503.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z020503.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Cinema Comedy HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050205.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050205.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050205.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050205.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Cinema Hits HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050211.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050211.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050211.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050211.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Cinema Max HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050206.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050206.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050206.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050206.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Cinemax HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050221.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050221.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050221.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050221.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Cinemamax 2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010401.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010401.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010401.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010401.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Sky Cinema 1 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050207.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050207.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050207.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050207.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Disney XD HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020101.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020101.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020101.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z020101.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Nickelodeon HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050007.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050007.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050007.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050007.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>ITV2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020102.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020102.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020102.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z020102.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>ITV3 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020103.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020103.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020103.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z020103.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>MGM HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020401.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z020401.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z020401.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z020401.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <!-- Germany -->
 <item>
 <title>Sport1 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z130103.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z130103.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z130103.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z130103.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Das Erste HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030402.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030402.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030402.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z030402.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>ZDF HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030401.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030401.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030401.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z030401.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>N24 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050008.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050008.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050008.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050008.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>PRO7 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010102.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010102.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010102.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010102.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>RTL HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030101.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030101.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030101.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z030101.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <!-- item>
 <title>RTL2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030104.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030104.stream",10);</onClick>
+<onClick><script>movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030104.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z030104.stream";</script></onClick>
 </item -->
 
 <item>
 <title>RTL2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050219.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050219.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050219.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050219.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Sat1 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010101.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010101.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010101.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010101.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>SIXX HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010104.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010104.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010104.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010104.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <!-- item>
 <title>Vox HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030102.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z030102.stream",10);</onClick>
+<onClick><script>movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z030102.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z030102.stream";</script></onClick>
 </item -->
 
 <item>
 <title>Vox HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050220.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050220.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050220.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050220.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <!-- France -->
 <item>
 <title>France 24</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050213.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050213.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050213.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050213.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>FT1 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010107.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010107.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010107.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010107.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>France 2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010105.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010105.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010105.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010105.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>M6 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010106.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010106.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010106.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010106.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Arte HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050218.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050218.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050218.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050218.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <!-- Italy -->
 <item>
 <title>Rai News</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050217.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050217.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050217.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050217.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Rai 1</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050214.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050214.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050214.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050214.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Rai 2</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050215.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050215.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050215.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050215.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Italia 1</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010502.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010502.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010502.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010502.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Canale 5</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010501.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z010501.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z010501.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z010501.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Rai Movie</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050216.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050216.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050216.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050216.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>
 
 <item>
 <title>Fox</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050210.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050210.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050210.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050210.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Fox Crime</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050209.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z050209.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z050209.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z050209.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <!-- Rusia -->
 <item>
 <title>CTC</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040003.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z040003.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040003.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z040003.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>THT</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040004.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z040004.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040004.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z040004.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>HTB</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040001.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z040001.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040001.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z040001.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <item>
 <title>Channel One</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040002.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z040002.stream",10);</onClick>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z040002.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z040002.stream";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
 </item>	
 
 <!-- Adult -->
 <!--
 <item>
 <title>Penthouse HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990103.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z990103.stream",10);</onClick>
+<onClick><script>movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990103.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z990103.stream";</script></onClick>
 </item>
 
 <item>
 <title>Penthouse 2 HD</title>
-<onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990104.stream%20-p%20http://tvsector.com/,rtmp://s7.webport.tv/live/z990104.stream",10);</onClick>
+<onClick><script>movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://tvsector.com/mediaplayer/player.swf%20-y%20z990104.stream%20-p%20http://tvsector.com/,rtmp://" + server + ".webport.tv/live/z990104.stream";</script></onClick>
 </item>
 -->
 </channel>

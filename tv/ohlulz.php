@@ -56,7 +56,7 @@ echo '
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2= add to favorite
+    2= Add to favorite
 		</text>
   	<text redraw="yes" offsetXPC="76" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -210,7 +210,9 @@ curl_setopt($process, CURLOPT_RETURNTRANSFER,1);
 curl_setopt($process,CURLOPT_CONNECTTIMEOUT,20);
 $html = curl_exec($process);
 curl_close($process);
-if (strpos($html,"<stream>") === false) {
+$videos=explode("<stream>",$html);
+//if (strpos($html,"<stream>") === false) {
+if (count($videos) < 500) {
   $link="http://hdforall.googlecode.com/files/3-11-2012.xml";
   $html=file_get_contents($link);
 }

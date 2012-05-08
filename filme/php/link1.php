@@ -362,6 +362,7 @@ function putlocker($string) {
      $t3=explode('"',$t2[1]);
      $hash=$t3[0];
      $post="hash=".$hash."&confirm=Close+Ad+and+Watch+as+Free+User";
+     $post="fuck_you=".$hash."&confirm=Close+Ad+and+Watch+as+Free+User";
      //hash=fe41ab2306be4d45&confirm=Close+Ad+and+Watch+as+Free+User
      $ch = curl_init();
      curl_setopt($ch, CURLOPT_URL, $string);
@@ -402,12 +403,30 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   $h=file_get_contents($filelink);
   $link=unpack_DivXBrowserPlugin(1,$h);
 } elseif (strpos($filelink,"vidbux") !==false) {
+  /*
   if (strpos($filelink,"embed") === false) {
     $t=explode("/",$filelink);
     $id= $t[3];
     $filelink=$t[0]."/".$t[1]."/".$t[2]."/"."embed-".$id."-width-653-height-362.html";
   }
-  $h = file_get_contents($filelink);
+  echo $filelink;
+  */
+  //op=download1&usr_login=&id=9e889zt1l1ba&fname=Rush.Hour.3.2007i.flv&referer=&method_free=Continue+to+Video
+  $ch = curl_init($filelink);
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, $filelink);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+  $h = curl_exec($ch);
+  $id=str_between($h,'"id" type="hidden" value="','"');
+  $fname=str_between($h,'"fname" type="hidden" value="','"');
+  $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=&method_free=Continue+to+Video";
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_REFERER, $string);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+  curl_setopt ($ch, CURLOPT_POST, 1);
+  curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+  $h = curl_exec($ch);
+  curl_close($ch);
   $link=unpack_DivXBrowserPlugin(1,$h);
 } elseif (strpos($filelink,'movreel') !==false) {
   preg_match('/movreel\.com\/(embed\/)?+([\w\-]+)/', $filelink, $m);
@@ -938,6 +957,11 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
 } elseif (strpos($filelink,"vreer.com") !==false) {
    //http://vreer.com/q1kqxyhutswf
    //op=download1&usr_login=&id=q1kqxyhutswf&fname=_Dark.Tide.2012.HDRiP.AC3-5.1.XviD-SiC.avi&referer=http%3A%2F%2Fwww.movie2k.to%2FDark-Tide-watch-movie-1235718.html&hash=iqjrsjrwkl5ie4h2w35cp7znbuemna3r&method_free=Free+Download
+   //http://vreer.com/embed-uwh8s53ma7ae-728x481.html
+   if (strpos($filelink,"embed") !==false) {
+     $id=str_between($filelink,"embed-","-");
+     $filelink= "http://vreer.com/".$id;
+   }
    $string = $filelink;
    $ch = curl_init($string);
    curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);

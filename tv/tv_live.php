@@ -187,6 +187,13 @@ ret;
 </item>
 
 <item>
+<title>High Definition TV (alternativ)</title>
+<link>/usr/local/etc/www/cgi-bin/scripts/tv/HDTV.rss</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>TV Live - rtmpGui - wilmaa</title>
 <link><?php echo $host; ?>/scripts/tv/wilmaa.php</link>
 <media:thumbnail url="image/tv_radio.png" />
@@ -213,12 +220,7 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>TV Live - RTMP Portugalia</title>
-<link><?php echo $host; ?>/scripts/tv/rtmp_bat.php?file=http://hdforall.googlecode.com/files/rtmp_port.txt,RTMP+Portugalia</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
+
 <item>
 <title>TV Live - rtmpGui - favorite list</title>
 <link><?php echo $host; ?>/scripts/tv/php/ohlulz_fav.php</link>
@@ -250,13 +252,6 @@ ret;
 <item>
 <title>TV Live from freedocast.com</title>
 <link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from freeiptv.be</title>
-<link><?php echo $host; ?>/scripts/tv/php/freeiptv.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>

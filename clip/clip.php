@@ -261,14 +261,7 @@ columnCount=5
 
 <channel>
 <title>Video Clips</title>
-<item>
-<title>Vimeo</title>
-	<link><?php echo $host; ?>/scripts/clip/php/vimeo_cat.php</link>
-	<location>http://vimeo.com/</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/vimeo.jpg</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/vimeo.jpg" />
-	<annotation>Vimeo is a respectful community of creative people who are passionate about sharing the videos they make. We provide the best tools and highest quality video in the universe.</annotation>
-</item>	
+
 
 <item>
 <title>Metacafe</title>
@@ -315,7 +308,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/web_de.gif" />
 	<annotation>Lustige Videos, gratis Nachrichten-Videos, Promi-Videos, Game-Trailer und Kino-Trailer - WEB.DE Video Community - WEB.DE Video</annotation>
 </item>
-
+<!--
 <item>
     <title>ARD.de</title>
     <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,ARD</link>
@@ -324,7 +317,7 @@ columnCount=5
     <annotation>ARD.de ist der zentrale Einstieg in die gesamte Internet-Welt der ARD - zu allen Sendern und Sendungen, zu allen Radio-, Fernseh- und Online-Angeboten.</annotation>
     <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/ard.jpg" />
 </item>
-
+-->
 <item>
 <title>ZDF Mediathek</title>
 	<link><?php echo $host; ?>/scripts/clip/zdf_main.php</link>
@@ -390,7 +383,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/businessworld.gif" />
 	<annotation>businessworld.de - Wirtschaftsinformationen und Kontakte per Video. Publizieren und recherchieren Sie zu Unternehmen, Produkten, Events, Jobs, Karriere, Ideen und Know-how.</annotation>
 </item>
-
+<!--
 <item>
 <title>luegmol.ch</title>
 	<link><?php echo $host; ?>/scripts/clip/php/luegmol.php?query=1</link>
@@ -399,6 +392,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/luegmol.png" />
 	<annotation>LUEGMOL.CH - Funny & Most Wonderfull Movies at LUEGMOL.CH:</annotation>
 </item>
+-->
 <!--
 <item>
 <title>livingzurich.tv</title>
@@ -545,7 +539,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/podcastalley.gif" />
 	<annotation>Podcast Alley is the podcast lovers portal. Featuring the best Podcast Directory and the Top 10 podcasts, as voted on by the listeners.</annotation>
 </item>
-
+<!--
 <item>
 <title>gaskrank.tv</title>
 	<link><?php echo $host; ?>/scripts/clip/php/gaskrank.php?query=1</link>
@@ -554,5 +548,6 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/gaskrank.jpg" />
 	<annotation>Gaskrank TV kostenloses Motorrad Video Portal für Motorrad Videos</annotation>
 </item>
+-->
 </channel>
 </rss>
