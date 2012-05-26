@@ -212,26 +212,26 @@ ret;
 </item>
 -->
 <item>
-<title>www.filmekmagyarul.com</title>
-<link><?php echo $host; ?>/scripts/filme/php/filmekmagyarul_main.php</link>
-<annotation>http://www.filmekmagyarul.com/videos</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
 <title>moovie.cc (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/moovie.php?query=1,</link>
 <annotation>http://www.moovie.cc</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-<!--
+
+<item>
+<title>megaweb.ucoz.com (in lb. maghiara)</title>
+<link><?php echo $host; ?>/scripts/filme/php/megaweb.php?query=1,</link>
+<annotation>http://megaweb.ucoz.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
 <item>
 <title>onlinefilmletoltes.eu (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/onlinefilmletoltes_main.php</link>
 <annotation>http://onlinefilmletoltes.eu</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 <item>
 <title>onlinewebfilmek (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/onlinewebfilmek.php?file=http://onlinewebfilmek.blogspot.com</link>

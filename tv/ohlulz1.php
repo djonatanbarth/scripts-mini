@@ -169,7 +169,7 @@ ret;
 
 	</item_template>
 <channel>
-	<title>TV Live - rtmpGui</title>
+	<title>TV Live - rtmpGui (live list)</title>
 	<menu>main menu</menu>
 ';
 function str_between($string, $start, $end){
@@ -202,7 +202,6 @@ function _html_to_utf8 ($data)
         $ret = "&#$data;";
     return $ret;
     }
-/*
 $link="http://apps.ohlulz.com/rtmpgui/list.xml";
 //$html=file_get_contents($link);
 $process = curl_init($link);
@@ -212,12 +211,13 @@ curl_setopt($process,CURLOPT_CONNECTTIMEOUT,20);
 $html = curl_exec($process);
 curl_close($process);
 $videos=explode("<stream>",$html);
-*/
 //if (strpos($html,"<stream>") === false) {
-//if (count($videos) < 500) {
+/*
+if (count($videos) < 500) {
   $link="http://hdforall.googlecode.com/files/3-11-2012.xml";
   $html=file_get_contents($link);
-//}
+}
+*/
 //$html=file_get_contents("H:/BB Skin V2/new/channels.xml");
 $baseurl="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,";
 

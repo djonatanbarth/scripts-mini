@@ -180,15 +180,8 @@ ret;
 </item>
 
 <item>
-<title>High Definition Tv</title>
+<title>High Definition Tv (paid only!)</title>
 <link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>High Definition TV (alternativ)</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/HDTV.rss</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -200,16 +193,17 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
+
 <item>
-<title>TV Live - rtmpGui - tvsector</title>
-<link><?php echo $host; ?>/scripts/tv/tvsector1.php</link>
+<title>TV Live - rtmpGui - other - backup list</title>
+<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
 
 <item>
-<title>TV Live - rtmpGui - other</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
+<title>TV Live - rtmpGui - other - live list</title>
+<link><?php echo $host; ?>/scripts/tv/ohlulz1.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>

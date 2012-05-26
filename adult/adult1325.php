@@ -167,12 +167,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>image/adult.png</image>
 </item>
 -->
+<!--
 <item>
 <title>Porn TV</title>
   <link><?php echo $host; ?>/scripts/adult/php/pornofanatic.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/tv/image/tvlive.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>Tube8</title>
@@ -181,13 +183,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>KeezMovies</title>
   <link><?php echo $host; ?>/scripts/adult/keezmovies.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/KeezMovies.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>extremetube</title>
   <link><?php echo $host; ?>/scripts/adult/php/extremetube.php?query=1,http://www.extremetube.com/videos?page=</link>
@@ -259,13 +262,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>snizzshare</title>
   <link><?php echo $host; ?>/scripts/adult/snizzshare.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/snizzshare.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>hardsextube</title>
   <link><?php echo $host; ?>/scripts/adult/php/hardsextube_main.php</link>
@@ -279,14 +283,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/pornomovies.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>sexbot</title>
   <link><?php echo $host; ?>/scripts/adult/sexbot.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/sexbot.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>myjizztube</title>
   <link><?php echo $host; ?>/scripts/adult/myjizztube.php</link>
@@ -308,13 +312,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>home-tube</title>
   <link><?php echo $host; ?>/scripts/adult/php/home-video-tube.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/home-video-tube.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>flytube</title>
   <link><?php echo $host; ?>/scripts/adult/flytube.php</link>
@@ -397,13 +402,14 @@ French Maid TV
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
   <item>
 <title>Youporn</title>
 <link><?php echo $host; ?>/scripts/adult/php/youporn_main.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/youporn.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
   <item>
 <title>Spankwire</title>
 <link><?php echo $host; ?>/scripts/adult/php/spankwire_main.php</link>

@@ -218,9 +218,13 @@ foreach($videos as $video) {
   $t2 = explode("'", $t1[1]);
   $image = $t2[0];
 
-  $link=str_replace("thumbs/","",$image);
-  $t1=explode("_",$link);
-  $link=$t1[0].".flv";
+    $t3=explode("_",$image);
+    $link=$t3[0].".mp4";
+    $link=str_replace("/thumbs","",$link);
+    $link=str_replace("/web","",$link);
+    $link=str_replace("img","is",$link);
+    $t1=explode("/",$link);
+    $link="http://".$t1[2]."/de/".$t1[4]."/".$t1[5]."/".$t1[6];
   $descriere=str_between($video,"<div class='pChText'>","</div>");
   $t1=explode("<span class='vViews'",$video);
   $t2=explode(">",$t1[1]);

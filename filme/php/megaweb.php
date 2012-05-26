@@ -1,6 +1,5 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
-<?php echo "<?xml version='1.0' encoding='UTF8' ?>";
-?>
+<?php echo "<?xml version='1.0' encoding='UTF8' ?>"; ?>
 <rss version="2.0">
 <onEnter>
   startitem = "middle";
@@ -24,11 +23,11 @@
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="40"
+	itemWidthPC="45"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="40"
+	capWidthPC="45"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -39,7 +38,7 @@
 	showDefaultInfo="no"
 	imageFocus=""
 	sliding="no"
-	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+    idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 		
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -50,13 +49,13 @@
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
 
-		<text align="justify" redraw="yes"
-          lines="10" fontSize=17
-		      offsetXPC=50 offsetYPC=60 widthPC=45 heightPC=42
+		<text align="center" redraw="yes"
+          lines="1" fontSize=17
+		      offsetXPC=52 offsetYPC=75 widthPC=40 heightPC=8
 		      backgroundColor=0:0:0 foregroundColor=200:200:200>
 			<script>print(annotation); annotation;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=50 offsetYPC=22.5 widthPC=25 heightPC=35>
+		<image  redraw="yes" offsetXPC=56 offsetYPC=22.5 widthPC=35 heightPC=40>
 		<script>print(img); img;</script>
 		</image>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
@@ -130,10 +129,9 @@ if (userInput == "pagedown" || userInput == "pageup")
   print("new idx: "+idx);
   setFocusItemIndex(idx);
 	setItemFocus(0);
-
+  redrawDisplay();
   "true";
 }
-redrawDisplay();
 ret;
 </script>
 </onUserInput>
@@ -151,42 +149,37 @@ ret;
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
-
 	</item_template>
-
 <channel>
-	<title>onlinewebfilmek</title>
+	<title>megaweb.ucoz.com</title>
 	<menu>main menu</menu>
-
-
 <?php
-function str_between($string, $start, $end){
-	$string = " ".$string; $ini = strpos($string,$start);
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
-}
 $host = "http://127.0.0.1/cgi-bin";
-$link = $_GET["file"];
-$l = urldecode($link);
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $l);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  //curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
-  //curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
-  $html = curl_exec($ch);
-  curl_close($ch);
-$prev=str_between($html,"blog-pager-newer-link' href='","'");
-$prev=str_replace("&amp;","&",$prev);
-$next=str_between($html,"blog-pager-older-link' href='","'");
-$next=str_replace("&amp;","&",$next);
-if($prev <> "") { ?>
+function str_between($string, $start, $end){ 
+	$string = " ".$string; $ini = strpos($string,$start); 
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
+	return substr($string,$ini,$len); 
+}
+$query = $_GET["query"];
+if($query) {
+   $queryArr = explode(',', $query);
+   $page = $queryArr[0];
+   $search = $queryArr[1];
+}
+//http://megaweb.ucoz.com/load/letoltesek/online_filmek/9-2-2
+//http://megaweb.ucoz.com/load/letoltesek/online_filmek/9-3-2
+$l="http://megaweb.ucoz.com/load/letoltesek/online_filmek/9-".$page."-2";
+$html=file_get_contents($l);
+
+if($page > 1) { ?>
 
 <item>
 <?php
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?file=".urlencode($prev);
+$url = $sThisFile."?query=".($page-1).",";
+if($search) { 
+  $url = $url.$search; 
+}
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
@@ -195,60 +188,52 @@ $url = $sThisFile."?file=".urlencode($prev);
 <mediaDisplay name="threePartsView"/>
 </item>
 
-
 <?php } ?>
 <?php
-
-$videos = explode('post-title entry-title', $html);
-
+$videos=explode('class="eTitle"',$html);
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-  $t1 = explode("href='", $video);
-  $t2 = explode("'", $t1[1]);
-  $link = $t2[0];
-  //http://adf.ly/102784/http://www.putlocker.com/file/CB10238E5A31332B
-  if (strpos($link,"adf.ly") !== false) {
-    $t1=explode("http",$link);
-    $link="http".$t1[2];
-  }
+
+//  link  
+  $v1 = explode('href="', $video);
+  $v2 = explode('"', $v1[1]);
+  $link = $v2[0];
+
+  $v1=explode('src="',$video);
+  $v2=explode('"',$v1[2]);
+  $image=$v2[0];
   
-  $t3=explode(">",$t1[1]);
-  $t4=explode("<",$t3[1]);
-  $title=trim($t4[0]);
-
-  $t1 = explode('src="', $video);
-  $t2 = explode('"', $t1[1]);
-  $image = $t2[0];
-
-  $data = trim(str_between($t1[2],"</a></div>","<br>"));
-  $data = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$data);
-  $data = $title;
+//  titlu
+  $v1=explode('color="white">',$video);
+  $v2=explode('<',$v1[1]);
+  $titlu=$v2[0];
   
-  if ($title <> "") {
-  $link = $host.'/scripts/filme/php/filme1_link.php?file='.urlencode($link).','.urlencode($title);
-    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
-
-    echo '
-    <item>
-    <title>'.$title.'</title>
-    <link>'.$link.'</link>
-    <annotation>'.$data.'</annotation>
-    <image>'.$image.'</image>
-    <media:thumbnail url="'.$image.'" />
-    <mediaDisplay name="threePartsView"/>
-    </item>
-    ';
-  }
+  $descriere=$titlu;
+	if($link!="") {
+		$link = "http://127.0.0.1/cgi-bin/scripts/filme/php/megaweb_link.php?file=".$link.",".urlencode($titlu).",".$id;
+		echo'
+		<item>
+		<title>'.$titlu.'</title>
+		<link>'.$link.'</link> 
+	  <annotation>'.$descriere.'</annotation>
+	  <image>'.$image.'</image>
+	  <media:thumbnail url="'.$image.'" />
+	  <mediaDisplay name="threePartsView"/>
+		</item>
+		';
+	}
 }
 
 ?>
-
 <item>
 <?php
 $sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
-$url = $sThisFile."?file=".urlencode($next);
+$url = $sThisFile."?query=".($page+1).",";
+if($search) { 
+  $url = $url.$search; 
+}
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>

@@ -1,12 +1,75 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 error_reporting(0);
+
 $host = "http://127.0.0.1/cgi-bin";
 function str_between($string, $start, $end){
 	$string = " ".$string; $ini = strpos($string,$start);
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
+
+function g_file ($link){
+    $process = curl_init($link);
+	curl_setopt($process, CURLOPT_HTTPGET, 1);
+	curl_setopt($process, CURLOPT_USERAGENT, "MozillaXYZ/1.0");
+	curl_setopt($process, CURLOPT_RETURNTRANSFER, 1);
+	curl_setopt($process,CURLOPT_CONNECTTIMEOUT, 5);
+	$html = curl_exec($process);
+	curl_close($process);
+	return $html;
+}
+
+/* by jumpinjk start */
+
+function get_remote_time($location, $switch){
+//get_remote_time use a remote database (from http://twiki.org) to provide remote local time; the database is up to date.
+//to use this service without buying an api is necessary to trick the file get operation by identify as Mozilla; curl will do this trick... ;-) 
+
+//format: 	get_remote_time("Region/City", switch);
+//examples:
+//			get_remote_time("Europe/Bucharest", 5);
+//			get_remote_time("Europe/London", 4);
+//			get_remote_time("America/Toronto", 7);
+
+//switches:
+//			0 return current remote location day in week (ex: Sun for Sunday)
+//			1 return current remote location day in a month (ex: 27)
+//			2 return current remote location month (ex: May)
+//			3 return current remote location year (ex: 2012)
+//			4 return current remote location time (23:20:12 - HH:MM:SS)
+//			5 return current remote location time shift related to GMT(+4:00 for GMT+4:00)
+//			6 return current remote location zone abbreviation (ex: EEST stands for EEST – Eastern European Summer Time)
+//			7 return remote location unprocessed string (ex: "Sun, 13 May 2012, 16:57:10 -0400 (EDT)" for America/Toronto)
+
+	$link = "http://twiki.org/cgi-bin/xtra/tzdate?tz=".$location;
+	$string = str_between(g_file($link), "<!--tzdate:date-->", "<!--/tzdate:date-->");
+	if ($switch < 7) {
+	 $stk = explode(" ",$string);
+	 $stk[0] = trim($stk[0], ',');
+	 $stk[5] = substr($stk[5],0,3).":".substr($stk[5],3);
+	 $stk[6] = trim($stk[6], '(,)');
+	return $stk[$switch];
+	}
+	return $string;
+}
+
+function get_local_time_zone () {
+	$link = "http://www.ip2location.com";
+	$string = str_between(g_file($link), ">Time Zone</label></td>", "</tr>");
+    $string = str_between($string, '<label for="chkTimeZone">', "</label>");
+	return $string;
+}
+
+//$ora1 = file_get_contents("/tmp/.clock.tmp"); // get machine clock (specific to DMD firmware)
+//$oop = strftime("%H:%M",strtotime("now")); // get linux clock (non specific to platform)
+
+$tz = get_local_time_zone();
+$tz1 = get_remote_time("Europe/Bucharest", 5);
+$ora1 = strtotime($tz) - strtotime($tz1);
+
+/* by jumpinjk end */
+
 $l="http://www.livehd.tv/live.php";
 $h=file_get_contents($l);
 $token=str_between($h,"token':'","'");
@@ -60,7 +123,6 @@ $rtmp=str_between($h,"streamer>","<");
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
@@ -87,11 +149,12 @@ $rtmp=str_between($h,"streamer>","<");
 		<itemDisplay>
 			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 				<script>
+					ora1="<?php echo $ora1 ?>";
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
 					if(focus==idx) 
 					{
-					  location = "http://127.0.0.1/cgi-bin/scripts/tv/php/ph_prog.php?file=" + getItemInfo(idx, "location");
+					  location = "http://127.0.0.1/cgi-bin/scripts/tv/php/ph_prog.php?query=" + getItemInfo(idx, "location") + "," + ora1;
 					  annotation = getURL(location);
 					}
 					getItemInfo(idx, "title");
@@ -123,13 +186,38 @@ $rtmp=str_between($h,"streamer>","<");
 		
   <onUserInput>
     <script>
-      ret = "false";
-      userInput = currentUserInput();
-      majorContext = getPageInfo("majorContext");
-      
-      print("*** majorContext=",majorContext);
-      print("*** userInput=",userInput);
-      
+ret = "false";
+userInput = currentUserInput();
+
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  annotation = " ";
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  redrawDisplay();
+  "true";
+}
+else
+{
+annotation = " ";
+"true";
+}
+      redrawDisplay();
       ret;
     </script>
   </onUserInput>
@@ -150,7 +238,7 @@ $rtmp=str_between($h,"streamer>","<");
 
 	</item_template>
 <channel>
-	<title>OneHD (time is GMT +2)</title>
+	<title><script>"OneHD (GMT" + "<?php echo $tz ?>" + ")";</script></title>
 	<menu>main menu</menu>
 
 <item>
