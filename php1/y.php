@@ -10,14 +10,44 @@ if($query) {
 }
 ?>
 <rss version="2.0">
-<onEnter>
-  startitem = "middle";
-  setRefreshTime(1);
-</onEnter>
-
+<script>
+	setRefreshTime(-1);
+	enablenextplay = 0;
+	itemCount = getPageInfo("itemCount");
+</script>
+<onExit>
+setRefreshTime(-1);
+</onExit>
 <onRefresh>
   setRefreshTime(-1);
   itemCount = getPageInfo("itemCount");
+	if ( Integer( 1 + getFocusItemIndex() ) != getPageInfo("itemCount") && enablenextplay == 1 && playvideo == getFocusItemIndex()) {
+		ItemFocus = getFocusItemIndex();
+		setFocusItemIndex( Integer( 1 + getFocusItemIndex() ) );
+		redrawDisplay();
+		setRefreshTime(-1);
+		"true";
+	}
+
+	if ( enablenextplay == 1 ) {
+		enablenextplay = 0;
+		url=getItemInfo(getFocusItemIndex(),"paurl");
+		movie=getUrl(url);
+		playItemUrl(movie,10);
+
+		if ( Integer( 1 + getFocusItemIndex() ) == getPageInfo("itemCount") ) {
+			enablenextplay = 0;
+			setRefreshTime(-1);
+		} else {
+			playvideo = getFocusItemIndex();
+			setRefreshTime(4000);
+			enablenextplay = 1;
+		}
+	} else {
+		setRefreshTime(-1);
+		redrawDisplay();
+		"true";
+	}
 </onRefresh>
 
 <mediaDisplay name="threePartsView"
@@ -151,7 +181,7 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
-	if( userInput == "two")
+else if( userInput == "two")
 	{
         movie=getItemInfo(getFocusItemIndex(),"download");
         movie1=getUrl(movie);
@@ -159,15 +189,49 @@ if (userInput == "pagedown" || userInput == "pageup")
 		dlok = loadXMLFile(topUrl);
 		"true";
 	}
-if (userInput == "three" || userInput == "3")
+else if (userInput == "three" || userInput == "3")
    {
     jumpToLink("destination");
     "true";
 }
+else if (userInput == "video_play" || userInput == "play") {
+					showIdle();
+					playvideo = getFocusItemIndex();
+					url=getItemInfo(getFocusItemIndex(),"paurl");
+					movie=getUrl(url);
+					playItemUrl(movie,10);
+
+					if( Integer(1+getFocusItemIndex()) == getPageInfo("itemCount") ) {
+						enablenextplay = 0;
+						setRefreshTime(-1);
+					} else {
+						setRefreshTime(4000);
+						enablenextplay = 1;
+					}
+					cancelIdle();
+					ret = "true";
+}
+else if (userInput == "video_ffwd" || userInput == "ffwd") {
+					showIdle();
+					enablenextplay = 0;
+					setRefreshTime(-1);
+					cancelIdle();
+					redrawDisplay();
+					ret = "true";
+}
+else if (userInput == "display" || userInput == "DISPLAY")
+{
+ret="false";
+}
+else
+{
+ enablenextplay = 0;
+ setRefreshTime(-1);
+ ret = "false";
+}
 ret;
 </script>
 </onUserInput>
-
 	</mediaDisplay>
 	<item_template>
 		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
@@ -254,6 +318,7 @@ foreach($videos as $video) {
 	$data=$data[0];
 	$image = "http://i.ytimg.com/vi/".$id."/2.jpg";
 	$link = "http://www.youtube.com/watch?v=".$id;
+	$link1= "http://127.0.0.1/cgi-bin/scripts/util/youtube.cgi?stream,,".urlencode($link);
     $link="http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=".$link;
     //$link=str_replace("&","&amp;",$link);
 	$name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
@@ -261,13 +326,27 @@ foreach($videos as $video) {
     <item>
     <title>'.$title.'</title>
     <onClick>
+    <script>
     showIdle();
     url="'.$link.'";
     movie=getUrl(url);
     cancelIdle();
-    playItemUrl(movie,10,1048576);
+    storagePath = getStoragePath("tmp");
+    storagePath_stream = storagePath + "stream.dat";
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, "'.$title.'");
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+    </script>
     </onClick>
     <download>'.$link.'</download>
+    <paurl>'.$link.'</paurl>
     <name>'.$name.'</name>
     <annotation>'.$descriere.'</annotation>
     <image>'.$image.'</image>

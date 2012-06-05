@@ -50,6 +50,7 @@
 	showDefaultInfo=yes
 	infoYPC=90
 	fontSize=16
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
@@ -82,7 +83,37 @@
   <text offsetXPC=80 offsetYPC=90 widthPC=5 heightPC=5 fontSize=14 backgroundColor=8:8:16 foregroundColor=100:100:100>
     <script>youtubeRegion;</script>
   </text>
-	
+		<itemDisplay>
+			<text align="left" lines="1" cornerRounding=5 offsetXPC=0 offsetYPC=2 widthPC=100 heightPC=96>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					getStringArrayAt(titleArray , idx);
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "14"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>		
   <onUserInput>
     <script>
       ret = "false";
@@ -174,6 +205,19 @@
         print("********** doModalRss=",act);
         ret = "true";
       }
+      else if (majorContext == "items" &amp;&amp; (userInput == "video_play" || userInput == "play"))
+       {
+        idx = getFocusItemIndex();
+        url = getStringArrayAt(urlArray, idx);
+        showIdle();
+        mode = 0;
+	      type="video/mp4"; 
+        url1 = "http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=" + url;
+        movie=getUrl(url1);
+        cancelIdle();
+        playItemUrl(movie,10);
+        ret = "true";
+       }
       ret;
     </script>
   </onUserInput>
@@ -431,34 +475,35 @@
 		<!--
 		<link>rss_file://../etc/translate/rss/xspf/streamPlayer.rss</link>
 		 -->
-		<onClick>
-      idx = getFocusItemIndex();
-      url   = getStringArrayAt(urlArray, idx);
-      
-      infoUrl = translate_base_url+"info,HD:"+hd+","+urlEncode(url);
-
-      dlok = loadXMLFile(infoUrl);
-      if (dlok != null)
-      {
-        historyPath = getStoragePath("key")+"translate.history_video.m3u";
-        historydat = readStringFromFile(historyPath);
-        if(historydat == null)
-          historydat = pushBackStringArray(historydat, "#EXTM3U");
-        historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
-        historydat = pushBackStringArray(historydat, url);
-        writeStringToFile(historyPath, historydat);
-
+	<onClick>
+    idx = getFocusItemIndex();
+    url = getStringArrayAt(urlArray, idx);
+      historyPath = getStoragePath("key")+"translate.history_video.m3u";
+      historydat = readStringFromFile(historyPath);
+      if(historydat == null)
+        historydat = pushBackStringArray(historydat, "#EXTM3U");
+      historydat = pushBackStringArray(historydat, "#EXTINF:-1,"+getStringArrayAt(titleArray, idx));
+      historydat = pushBackStringArray(historydat, url);
+      writeStringToFile(historyPath, historydat);
+      showIdle();
+      mode = 0;
 	    type="video/mp4"; 
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=" + url;
-      urlToPlay=getUrl(movie);
-        showIdle();
-        mode = 0;
-        setRefreshTime(100);
-        playItemURL(urlToPlay, 0);
-        cancelIdle();
-  	  }
-      
-		</onClick>
+      url1 = "http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=" + url;
+      movie=getUrl(url1);
+      cancelIdle();
+    storagePath = getStoragePath("tmp");
+    storagePath_stream = storagePath + "stream.dat";
+    streamArray = null;
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, "");
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, movie);
+    streamArray = pushBackStringArray(streamArray, video/mp4);
+    streamArray = pushBackStringArray(streamArray, getStringArrayAt(titleArray, idx));
+    streamArray = pushBackStringArray(streamArray, "1");
+    writeStringToFile(storagePath_stream, streamArray);
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+	</onClick>
   </item_template>
 
 <channel>

@@ -20,10 +20,10 @@
   showHeader="no" 
   showDefaultInfo=no 
   rollItems=no 
-  idleImageXPC=5 
-  idleImageYPC=5 
-  idleImageWidthPC=8 
-  idleImageHeightPC=10>
+  idleImageXPC=45 
+  idleImageYPC=42 
+  idleImageWidthPC=10 
+  idleImageHeightPC=16>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -54,8 +54,8 @@
 		  <script>if(firstUse == 1) "80:80:80"; else "200:200:200";</script>
 		</foregroundColor>
 	</text>
-	<text redraw="no" align="center" offsetXPC="10" offsetYPC="80" widthPC="80" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="140:140:140">&gt;&gt;| - space, |&lt;&lt; - delete, # play or stop - end</text>
-	<text redraw="no" align="center" offsetXPC="10" offsetYPC="85" widthPC="80" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="140:140:140">info - keyboard. use also  0-9.</text>
+	<text redraw="no" align="center" offsetXPC="10" offsetYPC="80" widthPC="80" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="140:140:140">&gt;&gt;| - gap, |&lt;&lt; - erase, # or play or stop - the completion of a set</text>
+	<text redraw="no" align="center" offsetXPC="10" offsetYPC="85" widthPC="80" heightPC="5" fontSize="16" backgroundColor="-1:-1:-1" foregroundColor="140:140:140">info - the keyboard layout. Also working number buttons</text>
 	<itemDisplay>
 		<text align="center" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100 fontSize=22 backgroundColor=33:40:58 foregroundColor=200:200:200>
 			<script>
@@ -192,7 +192,7 @@
   optionsArray = readStringFromFile(optionsPath);
   if(optionsArray == null)
   {
-    youtubeRegion = "US";
+    youtubeRegion = " ";
   }
   else
   {
@@ -258,10 +258,13 @@
 		itemTitle = getStringArrayAt(itemTitleArray, idx-(-1));
 		if (itemTitle == "#" )
 		{
-      writeStringToFile(getStoragePath("key")+"youtube_search.dat", inputText);
+		  saveString = null;
+		  saveString  = pushBackStringArray(saveString, inputTextCount);
+		  saveString  = pushBackStringArray(saveString, inputTextArray);
+        writeStringToFile(getStoragePath("key")+"youtube_search.dat", saveString);
 			setReturnString(inputText);
 			postMessage("return");
-		}
+			ret = "true";		}
 		else
 		{
 		  if(firstUse == 1)

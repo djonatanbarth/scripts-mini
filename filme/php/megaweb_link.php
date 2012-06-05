@@ -270,6 +270,8 @@ $link=$t2[0];
   $html = curl_exec($ch);
   curl_close($ch);
   $l1=str_between($html,"var url = '","'");
+  if (strpos($l1,"adf.ly") === false)
+  $l1 = "http://adf.ly".$l1;
   $h=get_headers($l1);
   //Location: http://www.movshare.net/video/ch3lm90nhwz8u
   $l1=explode("Location:",$h[9]);

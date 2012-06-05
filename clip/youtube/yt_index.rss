@@ -380,7 +380,12 @@
 				}
 			</onClick>
 		</item>
-
+		<item>
+			<title>My playlist</title>
+			<url></url>
+			<link>http://127.0.0.1/cgi-bin/scripts/clip/youtube/my_list.php</link>
+			<mediaDisplay name="threePartsView"/>
+		</item>
 		<item>
 			<title>Search</title>
 			<onClick>

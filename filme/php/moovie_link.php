@@ -259,7 +259,7 @@ ret;
 $titledownload = preg_replace('/[^A-Za-z0-9_]/','_',$tit);
 $trailer=str_between($html,'youtube_video" href="','"');
 if ($trailer <> "") {
-        $link="http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file=".urlencode($trailer);
+        $link="http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=".urlencode($trailer);
         $title="trailer";
 	    echo'
 	    <item>

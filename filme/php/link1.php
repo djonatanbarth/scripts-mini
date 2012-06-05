@@ -9,6 +9,8 @@ if (strpos($filelink,"adf.ly") !==false) {
   if ($filelink1 == "") {
   $h1=file_get_contents($filelink);
   $filelink=str_between($h1,"var url = '","'");
+  if (strpos($filelink,"adf.ly") === false)
+    $filelink = "http://adf.ly".$filelink;
   } else {
   $filelink=$filelink1;
   }

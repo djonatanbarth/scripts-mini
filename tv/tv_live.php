@@ -180,7 +180,7 @@ ret;
 </item>
 
 <item>
-<title>High Definition Tv (paid only!)</title>
+<title>High Definition Tv</title>
 <link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
