@@ -180,7 +180,7 @@ ret;
 </item>
 
 <item>
-<title>High Definition Tv</title>
+<title>High Definition Tv (paid)</title>
 <link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
@@ -237,13 +237,6 @@ ret;
 </item>
 
 <item>
-<title>TV Live from veetle.com (only LQ) - popular</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/veetle_main.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
 <title>TV Live from freedocast.com</title>
 <link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
@@ -279,13 +272,14 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>TV Live from sovok.tv</title>
 <link><?php echo $host; ?>/scripts/tv/sovok.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 
 </channel>
 </rss>                                                                                                                             

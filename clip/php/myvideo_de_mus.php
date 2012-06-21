@@ -220,11 +220,11 @@ foreach($videos as $video) {
   $t2 = explode('"',$t1[1]);
   $link = $t2[0];
 
-  $t1 = explode("src='", $video);
+  $t1 = explode("longdesc='", $video);
   $t2 = explode("'", $t1[1]);
   $image = $t2[0];
     $t3=explode("_",$image);
-    $link=$t3[0].".mp4";
+    $link=$t3[0].".flv";
     $link=str_replace("/thumbs","",$link);
     $link=str_replace("/web","",$link);
     $link=str_replace("img","is",$link);

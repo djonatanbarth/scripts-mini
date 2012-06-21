@@ -232,7 +232,7 @@ foreach($videos as $video) {
   $image = $t2[0];
 
     $t3=explode("_",$image);
-    $link=$t3[0].".mp4";
+    $link=$t3[0].".flv";
     $link=str_replace("/thumbs","",$link);
     $link=str_replace("/web","",$link);
     $link=str_replace("img","is",$link);
