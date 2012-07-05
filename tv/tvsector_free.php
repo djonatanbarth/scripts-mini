@@ -1,56 +1,6 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
-
-function str_between($string, $start, $end){ 
-	$string = " ".$string; $ini = strpos($string,$start); 
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
-	return substr($string,$ini,$len); 
-}
-//necesita inregistrare pe site
-//futubox.txt are o singura linie de forma
-//username|pass sau email|pass
-$filename = "/usr/local/etc/dvdplayer/futubox.txt";
-$cookie="D://futubox_c.txt";
-$cookie="/tmp/futubox_c.txt";
-if (file_exists($filename)) {
-  $handle = fopen($filename, "r");
-  $c = fread($handle, filesize($filename));
-  fclose($handle);
-  $a=explode("|",$c);
-  $a1=str_replace("?","@",$a[0]);
-  $user=urlencode($a1);
-  $user=str_replace("@","%40",$user);
-  $pass=trim($a[1]);
-if (!file_exists($cookie)) {
-  $l="http://www.futubox.to/users/sign_in";
-  $post="user[login]=".$user."&user[password]=".$pass."&user[remember_me]=1";
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $l);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch,CURLOPT_REFERER,"http://www.futubox.to/user/sign_in");
-  curl_setopt ($ch, CURLOPT_POST, 1);
-  curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
-  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
-  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
-  $html = curl_exec($ch);
-  curl_close($ch);
-}
-}
-
-  $link="http://www.futubox.to/channels/eurosport-hd/livetv/";
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $link);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
-  $html = curl_exec($ch);
-  curl_close($ch);
-  $sid = str_between($html,'url_key:encodeURIComponent("', '"');
-
 ?>
 <rss version="2.0">
 <script>
@@ -67,7 +17,6 @@ if (!file_exists($cookie)) {
   server = "s7";
   setRefreshTime(1);
 
-  sid = <?php echo '"'.$sid.'"' ?>;
 </onEnter>
 <onRefresh>
     itemCount = getPageInfo("itemCount");
@@ -230,16 +179,14 @@ ret;
 <channel>
 	<title>High Definition TV</title>
 	<menu>main menu</menu>
-<?php
-if ($sid) {
-echo '
+
     <item>
     <title>Animal Planet</title>
     <image>http://www.futubox.to/system/icon_ds/32/original/animal_planet.png</image>
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050001.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050001.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -251,7 +198,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010201.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010201.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -263,7 +210,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050239.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050239.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -275,7 +222,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050222.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050222.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -287,7 +234,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050221.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050221.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -299,7 +246,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020503.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020503.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -311,7 +258,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050240.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050240.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -323,7 +270,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -335,7 +282,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050233.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050233.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -347,7 +294,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050201.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050201.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -359,7 +306,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010601.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010601.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -371,7 +318,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010301.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010301.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -383,7 +330,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050232.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050232.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -395,7 +342,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050003.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050003.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -407,7 +354,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020102.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020102.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -419,7 +366,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -431,7 +378,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020401.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020401.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -443,7 +390,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010001.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010001.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -455,7 +402,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050238.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050238.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -467,7 +414,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050225.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050225.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -479,7 +426,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050203.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050203.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -491,7 +438,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020502.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z020502.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -503,7 +450,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050242.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050242.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -515,7 +462,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050237.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050237.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -527,7 +474,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050231.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050231.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -539,7 +486,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050236.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050236.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -551,7 +498,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050229.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050229.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -563,7 +510,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050234.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050234.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -575,7 +522,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050228.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050228.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -587,7 +534,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050230.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050230.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -599,7 +546,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050227.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050227.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -611,7 +558,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050226.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050226.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -623,7 +570,7 @@ echo '
     <annotation>United Kingdom</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050241.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050241.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -635,7 +582,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050218.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050218.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -647,7 +594,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030402.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030402.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -659,7 +606,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -671,7 +618,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050008.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050008.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -683,7 +630,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010102.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010102.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -695,7 +642,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -707,7 +654,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030104.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030104.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -719,7 +666,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -731,7 +678,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010104.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010104.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -743,7 +690,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -755,7 +702,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050220.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050220.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -767,7 +714,7 @@ echo '
     <annotation>Deutschland</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030401.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z030401.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -779,7 +726,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010105.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010105.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -791,7 +738,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050213.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050213.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -803,7 +750,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010111.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010111.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -815,7 +762,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010112.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010112.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -827,7 +774,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010113.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010113.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -839,7 +786,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010110.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010110.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -851,7 +798,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010106.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010106.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -863,7 +810,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010107.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010107.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -875,7 +822,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010109.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010109.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -887,7 +834,7 @@ echo '
     <annotation>France</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010108.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010108.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -899,7 +846,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050245.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050245.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -911,7 +858,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010502.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010502.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -923,7 +870,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050208.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050208.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -935,7 +882,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050209.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050209.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -947,7 +894,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050210.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050210.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -959,7 +906,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050247.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050247.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -971,7 +918,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050246.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050246.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -983,7 +930,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050248.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050248.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -995,7 +942,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010501.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z010501.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1007,7 +954,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050249.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050249.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1019,7 +966,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050223.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050223.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1031,7 +978,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050214.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050214.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1043,7 +990,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050215.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050215.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1055,7 +1002,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050217.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050217.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1067,7 +1014,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050207.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050207.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1079,7 +1026,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050211.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050211.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1091,7 +1038,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050206.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050206.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1103,7 +1050,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050244.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050244.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1115,7 +1062,7 @@ echo '
     <annotation>Italia</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050243.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050243.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1127,7 +1074,7 @@ echo '
     <annotation>Polska</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050224.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z050224.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1139,7 +1086,7 @@ echo '
     <annotation>Adult</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990102.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990102.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1151,7 +1098,7 @@ echo '
     <annotation>Adult</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990103.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1163,7 +1110,7 @@ echo '
     <annotation>Adult</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990104.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990104.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
@@ -1175,26 +1122,12 @@ echo '
     <annotation>Adult</annotation>
     <onClick>
     <script>
-      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/live" + sid;
+      movie = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-b%2060000%20-W%20http://www.futubox.to/donottouch/fpv3.39.swf%20-y%20z990101.stream%20-p%20http://futubox.to/,rtmp://" + server + ".webport.tv/ilt";
       playitemurl(movie,10);
     </script>
     </onClick>
     </item>
-';
-} else {
-exec("rm -f /tmp/futubox_c.txt");
-$link = "/usr/local/etc/www/cgi-bin/scripts/tv/tvsector.rss";
-$description="futubox.to";
 
-	  echo '
-	  <item>
-	  <title>Logon</title>
-	  <link>'.$link.'</link>
-	  <annotation>'.$description.'</annotation>
-	  <mediaDisplay name="onePartView" />
-	  </item>
-	  ';
-}
-?>
+
 </channel>
 </rss>

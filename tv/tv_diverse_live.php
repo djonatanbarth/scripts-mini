@@ -9,7 +9,7 @@ $host = "http://127.0.0.1/cgi-bin";
   storagePath             = getStoragePath("tmp");
   storagePath_stream      = storagePath + "stream.dat";
   storagePath_playlist    = storagePath + "playlist.dat";
-  
+  server = "s6";
   error_info          = "";
 </script>
 <onEnter>
@@ -135,6 +135,19 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
+else if (userInput == "two" || userInput == "2")
+{
+		if (server == "s7")
+           server = "s6";
+		else if (server == "s6")
+           server = "s5";
+		else if (server == "s5")
+          server = "s7";
+        else
+		 server = "s6";
+  redrawDisplay();
+  ret = "true";
+}
 ret;
 </script>
 </onUserInput>
@@ -156,9 +169,53 @@ ret;
 	</item_template>
 
 <channel>
-	<title>TV Live</title>
+	<title>TV Live - Canale diverse</title>
 	<menu>main menu</menu>
-	
+<!--
+<item>
+<title>MTV Live HD</title>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://www.futuboxhd.com/player/player.swf%20-y%20z010001.stream%20-p%20http://www.futuboxhd.com/,rtmp://" + server + ".webport.tv/fb";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
+</item>
+
+<item>
+<title>AXN HD</title>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://www.futuboxhd.com/player/player.swf%20-y%20z050245.stream%20-p%20http://www.futuboxhd.com/,rtmp://" + server + ".webport.tv/fb";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
+</item>
+<item>
+<title>ZDF HD</title>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://www.futuboxhd.com/player/player.swf%20-y%20z030401.stream%20-p%20http://www.futuboxhd.com/,rtmp://" + server + ".webport.tv/fb";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
+</item>
+<item>
+<title>M6 HD</title>
+<onClick>
+	<script>
+		movie = "http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-b%2060000%20-W%20http://www.futuboxhd.com/player/player.swf%20-y%20z010106.stream%20-p%20http://www.futuboxhd.com/,rtmp://" + server + ".webport.tv/fb";
+		playitemurl(movie,10);
+		</script>
+		</onClick>
+</item>
+-->
+<!--
+   <item>
+    <title>BBC1</title>
+    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://rtsp-02.g-box.tv/tv2mobile/bbc1_4164.sdp",10);</onClick>
+  </item>
+
    <item>
     <title>BBC2</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://rtsp-02.g-box.tv/tv2mobile/bbc2_4228.sdp",10);</onClick>
@@ -178,58 +235,18 @@ ret;
     <title>Dave (UK)</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,,rtmp://rtsp-02.g-box.tv/tv2mobile/dave_22272.sdp",10);</onClick>
   </item>
-
+-->
    <item>
     <title>France 24</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://stream1.france24.yacast.net/f24_liveen",10);</onClick>
   </item>
 
-   <item>
-    <title>Cielo</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp86825.live.edgefcs.net/live/cielo_std@17630",10);</onClick>
-  </item>
-
-   <item>
-    <title>Sky Tg 24</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp49989.live.edgefcs.net:1935/live?videoId=53404915001&lineUpId=&pubId=1445083406&playerId=760707277001&affiliateId=/streamRM1@2564",10);</onClick>
-  </item>
-
-   <item>
-    <title>QVC</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp107861.live.edgefcs.net/live/QVC_Italy_Stream1200@34577",10);</onClick>
-  </item>
-
-   <item>
-    <title>Videolina</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://91.121.222.160/videolinalive/videolinalive.sdp",10);</onClick>
-  </item>
 
    <item>
     <title>Quararete TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://wowza1.top-ix.org/quartaretetv/quartareteweb",10);</onClick>
   </item>
 
-   <item>
-    <title>NDR</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://ndr-fs-hh-hi-wmv.wm.llnwd.net/ndr_fs_hh_hi_wmv",10);</onClick>
-  </item>
-
-   <item>
-    <title>hr fernsehen</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://gffstream.fc.llnwd.net/gffstream/005/hr-fernsehen-1",10);</onClick>
-  </item>
-
-
-   <item>
-    <title>Video  BR-Mediathek</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp121359.live.edgefcs.net:1935/live/b7_bfssued_m@49987",10);</onClick>
-  </item>
-
-   <item>
-    <title>LCP</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://stream2.lcp.yacast.net/lcp_live/lcptnt",10);</onClick>
-  </item>
-  
 <item>
 <title>TVE_Internacional</title>
 <onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://documentos32.webcindario.com/player.swf%20-p%20http://documentos32.webcindario.com,rtmp://flash1.e-cast.co.nz/live/tve3",10);</onClick>
@@ -613,68 +630,6 @@ ret;
 <item>
 <title>SUN_News_Network</title>
 <onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www.freeetv.com/modules/Video_Stream/plugins/akaim/liveplayer.swf,rtmp://cp39414.live.edgefcs.net/live/argent@9751",10);</onClick>
-</item>
-
-<item>
-<title>NRJ_(FR)</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www.nrjparis.tv/swf/player/videos_live/index.swf%20-p%20http://www.nrjparis.tv/le-live-3623/webtv/,rtmp://nrjlivefs.fplive.net:1935/nrjlive-live/nrjparis",10);</onClick>
-</item>
-
-<item>
-<title>NRJ_Pure</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www.nrjparis.tv/swf/player/videos_live/index.swf%20-p%20http://www.nrjparis.tv/le-live-3623/webtv/,rtmp://nrjlivefs.fplive.net:1935/nrjlive-live/nrjpure",10);</onClick>
-</item>
-
-<item>
-<title>NRJ_Pop_Rock</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www.nrjparis.tv/swf/player/videos_live/index.swf%20-p%20http://www.nrjparis.tv/le-live-3623/webtv/,rtmp://nrjlivefs.fplive.net:1935/nrjlive-live/nrjpop",10);</onClick>
-</item>
-
-<item>
-<title>NRJ_Urban</title>
-
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www.nrjparis.tv/swf/player/videos_live/index.swf%20-p%20http://www.nrjparis.tv/le-live-3623/webtv/,rtmp://nrjlivefs.fplive.net:1935/nrjlive-live/nrjurban",10);</onClick>
-</item>
-
-<item>
-<title>NRJ_Dance</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://www.nrjparis.tv/swf/player/videos_live/index.swf%20-p%20http://www.nrjparis.tv/le-live-3623/webtv/,rtmp://nrjlivefs.fplive.net:1935/nrjlive-live/nrjdance",10);</onClick>
-</item>
-
-<item>
-<title>OneHD_On_Demand</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://live.1hd.ro/player5.3.swf%20-p%20http://live.1hd.ro/,rtmp://93.114.43.3:1935/vod/mp4:drumul_mingii.mp4",10);</onClick>
-</item>
-
-<item>
-<title>OneHD_Live</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://live.1hd.ro/player5.3.swf%20-p%20http://live.1hd.ro/,rtmp://93.114.43.3:1935/live/onehd",10);</onClick>
-</item>
-
-<item>
-<title>OneHD_Rock</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://live.1hd.ro/player5.3.swf%20-p%20http://live.1hd.ro/,rtmp://93.114.43.3:1935/live/rock",10);</onClick>
-</item>
-
-<item>
-<title>OneHD_Dance</title>
-
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://live.1hd.ro/player5.3.swf%20-p%20http://live.1hd.ro/dance.php,rtmp://93.114.43.3:1935/live/dance",10);</onClick>
-</item>
-
-<item>
-<title>OneHD_Pop</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://live.1hd.ro/player5.3.swf%20-p%20http://live.1hd.ro/pop.php,rtmp://93.114.43.3:1935/live/pop",10);</onClick>
-</item>
-
-<item>
-<title>OneHD_Classics</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://live.1hd.ro/player5.3.swf%20-p%20http://live.1hd.ro/classics.php,rtmp://93.114.43.3:1935/live/classics",10);</onClick>
-</item>
-
-<item>
-<title>OneHD_Jazz</title>
-<onClick>playItemURL("http://127.0.0.1/cgi-bin/translate?stream,Rtmp-options:-W%20http://live.1hd.ro/player5.3.swf%20-p%20http://live.1hd.ro/jazz.php,rtmp://93.114.43.3/live/jazz",10);</onClick>
 </item>
 
 <item>

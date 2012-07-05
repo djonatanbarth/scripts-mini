@@ -64,13 +64,13 @@
 	</image>
 	
 	<text redraw="yes" offsetXPC=50 offsetYPC=20 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
-<script>user;</script>
+<script>username;</script>
 	</text>
 	<text redraw="yes" offsetXPC=50 offsetYPC=30 widthPC=30 heightPC=8 fontSize=17 backgroundColor=8:8:8 foregroundColor=150:150:150>
 <script>pass;</script>
 	</text>
 	<text redraw="yes" offsetXPC=50 offsetYPC=40 widthPC=50 heightPC=8 fontSize=16 backgroundColor=8:8:8 foregroundColor=150:150:150>
-	  <script>settings;</script>
+	  <script>setari;</script>
 	</text>
 	<itemDisplay>
 		<image offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>

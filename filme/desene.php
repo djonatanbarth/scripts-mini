@@ -176,12 +176,6 @@ ret;
 <media:thumbnail url="image/youtube.gif" />
 </item>
 
-<item>
-<title>watchcartoononline.com</title>
-<link><?php echo $host; ?>/scripts/filme/php/watchcartoononline_main1.php</link>
-<annotation>http://www.watchcartoononline.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
 
 <item>
 <title>ToonJet Cartoon Channel</title>

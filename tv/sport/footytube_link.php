@@ -58,8 +58,14 @@ for ($i=0;$i<count($links);$i++) {
          $link="http://videa.hu/static/video/".$id;
       }
   } elseif (strpos($cur_link,'videos.sapo.pt') !==false){
+      //http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/HMFMZuGlZ3DMa4Waupzq/mov/1
+      if (strpos($cur_link,"file=") === false) {
       $v_id = substr(strrchr($cur_link, "/"), 1);
       $link = "http://rd3.videos.sapo.pt/".$v_id."/mov/1" ;
+      } else {
+      $t1=explode("file=",$cur_link);
+      $link=$t1[1];
+      }
   } elseif (strpos($cur_link,'sporxtv.com') !==false) {
       $html = file_get_contents($cur_link);
       $link = str_between($html,"file: '","'");

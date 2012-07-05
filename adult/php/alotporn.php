@@ -232,7 +232,7 @@ foreach($videos as $video) {
     $title=$t4[0];
     $link = $host."/scripts/adult/php/alotporn_link.php?file=".$link;
 
-    $t1 = explode('src="', $video);
+    $t1 = explode('data-original="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
 
@@ -241,7 +241,7 @@ foreach($videos as $video) {
 
     $data = "Duration: ".$data;
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
-
+    if ($title <> "") {
     echo '
     <item>
     <title>'.$title.'</title>
@@ -271,6 +271,7 @@ foreach($videos as $video) {
   <mediaDisplay name="threePartsView"/>
   </item>
   ';
+  }
 }
 
 

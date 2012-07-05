@@ -39,7 +39,7 @@ fi
 mkdir $loc
 cd $loc
 mkdir $loclog/log 
-/sbin/wget --progress=dot:mega -k -bc -a $loclog/log/$NAME.log -O $NAME "$LINK" > /tmp/$NAME.pid
+/usr/local/etc/www/cgi-bin/scripts/wget --progress=dot:mega -k -bc -a $loclog/log/$NAME.log -O $NAME "$LINK" > /tmp/$NAME.pid
 else 
 cd /tmp/usbmounts/sda$DISK
  wget -bq -O $NAME $LINK 

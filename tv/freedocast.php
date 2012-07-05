@@ -162,7 +162,20 @@ if($query) {
    $page = $queryArr[0];
    $search = $queryArr[1];
 }
-
+if ($page == 1) {
+  $link1="http://www.freedocast.com";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $link1);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch,CURLOPT_CONNECTTIMEOUT,20);
+  curl_setopt($ch,CURLOPT_REFERER,$link1);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+  curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+  $html = curl_exec($ch);
+  curl_close($ch);
+}
 $link="http://www.freedocast.com/channels.aspx?pn=".$page."&order=l";
 
   $ch = curl_init();
