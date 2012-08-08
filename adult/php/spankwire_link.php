@@ -7,9 +7,12 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
+/*
 $link = str_between($html, 'encodeURIComponentSub("', '"');
 $html = file_get_contents($link);
 $link1 = str_between($html, "<url>", "</url>");
 $link1=str_replace("&amp;","&",$link1);
+*/
+$link1=urldecode(str_between($html,'flashvars.video_url = "','"'));
 print $link1;
 ?>

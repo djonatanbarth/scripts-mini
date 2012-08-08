@@ -52,7 +52,7 @@ if($query) {
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2= add to favorite, 3 = remove from favorite
+    2= adauga la favorite, 3 = sterge de la favorite
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -208,7 +208,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -231,14 +231,27 @@ foreach($videos as $video) {
     $t1 = explode('href="/', $video);
     $t2 = explode('"', $t1[1]);
     $link = $t2[0];
+    if (!$link) {
+    //href="http://www.twitch.tv/ho5866252
+    $t1 = explode('href="', $video);
+    $t2 = explode('"', $t1[1]);
+    $t3 = explode("/",$t2[0]);
+    $link = $t3[3];
+    }
     $t3= explode(">",$t1[3]);
     $t4=explode("<",$t3[1]);
     $descriere=trim($t4[0]);
 
-    $t1 = explode('src1="', $video);
+    $t1 = explode('src="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
-    
+    if (strpos($image,".jpg") === false) {
+      $t1 = explode('src="', $video);
+      $t2 = explode('"', $t1[2]);
+      $image = $t2[0];
+    }
+    if (strpos($image,".jpg") === false)
+      $image="";
     $t1 = explode('class="title">', $video);
     $t2 = explode('<', $t1[1]);
     $title = trim($t2[0]);
@@ -280,7 +293,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>

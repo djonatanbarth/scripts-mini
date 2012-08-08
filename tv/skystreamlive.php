@@ -50,6 +50,9 @@
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>print(annotation); annotation;</script>
 		</text>
+		<image  redraw="yes" offsetXPC=61 offsetYPC=30 widthPC=30 heightPC=35>
+  <script>print(img); img;</script>
+		</image>
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
 		<idleImage> image/POPUP_LOADING_02.png </idleImage>
 		<idleImage> image/POPUP_LOADING_03.png </idleImage>
@@ -67,6 +70,7 @@
 					if(focus==idx) 
 					{
 					  location = getItemInfo(idx, "location");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -143,7 +147,7 @@ ret;
 
 	</item_template>
 <channel>
-	<title>vtc.com.vn</title>
+	<title>skystreamlive.com</title>
 	<menu>main menu</menu>
 
 <?php
@@ -152,36 +156,43 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$html = file_get_contents("http://vtc.com.vn/");
-//$html=str_between($html,"<table cellspacing='0' cellpadding='0'>",'</table>');
-$videos = explode('<div class="Channels">', $html);
+$html = file_get_contents("http://www.skystreamlive.com/guide.php");
+$videos = explode("list-item", $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1 = explode('contentid="', $video);
+    $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
-    $link=$t2[0];
+    $link="http://www.skystreamlive.com".$t2[0];
     
+    $t4=explode(">",$t1[1]);
+    $t5=explode("<",$t4[1]);
+    $title=trim($t5[0]);
     
-    $t3=explode(">",$t1[1]);
-    $t4=explode("<",$t3[1]);
-    $title=trim($t4[0]);
+    $t1=explode('src="',$video);
+    $t2=explode('"',$t1[1]);
+    $image="http://www.skystreamlive.com".$t2[0];
+    $image = str_replace(" ","%20",$image);
+    
+
     echo '
     <item>
     <title>'.$title.'</title>
     <onClick>
     <script>
     showIdle();
-    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/vtc_link.php?file='.urlencode($link).'");
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/skystreamlive_link.php?file='.urlencode($link).'");
     url1=url;
     annotation=url1;
-    movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://vtc.com.vn/player1.swf%20-p%20http://vtc.com.vn," + url1;
+    movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url1;
     cancelIdle();
     playItemURL(movie, 10);
     </script>
     </onClick>
+    <image>'.$image.'</image>
+    <media:thumbnail url="'.$image.'" />
     <mediaDisplay name="threePartsView"/>
     </item>
     ';

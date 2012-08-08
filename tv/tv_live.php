@@ -232,6 +232,12 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
+<item>
+<title>TV Live from skystreamlive.com</title>
+<link><?php echo $host; ?>/scripts/tv/skystreamlive.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
 
 <item>
 <title>TV Live - other</title>
@@ -257,6 +263,21 @@ ret;
 <item>
 <title>TV Live - Deutschland (tv-kino.net)</title>
 <link><?php echo $host; ?>/scripts/tv/tv-kino.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>vtc.com.vn</title>
+<link><?php echo $host; ?>/scripts/tv/vtc.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+
+<item>
+<title>Other (live update)</title>
+<link>http://hdforall.uphero.com//tv1/temp_tv.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>

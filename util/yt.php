@@ -23,6 +23,8 @@ if(preg_match('/youtube\.com\/(v\/|watch\?v=)([\w\-]+)/', $file, $match)) {;
     if (in_array($tip,$a_itags)) break;
   }
 }
+//http://o-o.preferred.google-vie1.v1.lscache6.c.youtube.com/videoplayback?upn=5t_U8LY3XUU&
+//http://o-o---preferred---google-vie1---v6---lscache7.c.youtube.com/videoplayback?upn=qLp_K2lihPg&
 # zkusit odstranit z $tip query fexp - pokud se vyskytuje
 if (strpos($link, "fexp")) {
 	$query = parse_url($link);
@@ -31,6 +33,7 @@ if (strpos($link, "fexp")) {
 	unset($output[fexp]);
 	$link=$path.http_build_query($output);
 }
+$link=urldecode(str_replace("---",".",$link));
 print $link;
 die();
 ?>

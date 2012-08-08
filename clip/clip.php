@@ -458,6 +458,15 @@ columnCount=5
 </item>
 
 <item>
+<title>dancetrippin.tv</title>
+	<link><?php echo $host; ?>/scripts/clip/php/dancetrippin.php</link>
+	<location>http://www.dancetrippin.tv</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dancetrippin.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dancetrippin.png" />
+	<annotation>DanceTrippin.tv: The Man With No Shadow (aka De Man Zonder Schaduw in his homeland of the Netherlands) closes Zomerpark 2012 with a stunning set that builds and builds to the perfect ending of an amazing day in Amsterdam. Much respect to the organization GZG for this special event!</annotation>
+</item>
+
+<item>
 <title>Dailymotion</title>
 	<link><?php echo $host; ?>/scripts/clip/dm.php</link>
 	<location>http://www.dailymotion.com</location>
