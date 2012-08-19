@@ -50,8 +50,8 @@
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>print(annotation); annotation;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=61 offsetYPC=30 widthPC=30 heightPC=35>
-  <script>print(img); img;</script>
+		<image  redraw="yes" offsetXPC=61 offsetYPC=30 widthPC=30 heightPC=25>
+		<script>print(img); img;</script>
 		</image>
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
 		<idleImage> image/POPUP_LOADING_02.png </idleImage>
@@ -69,7 +69,7 @@
 					focus = getFocusItemIndex();
 					if(focus==idx) 
 					{
-					  annotation = getItemInfo(idx, "annotation");
+					  location = getItemInfo(idx, "location");
 					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
@@ -123,10 +123,9 @@ if (userInput == "pagedown" || userInput == "pageup")
   print("new idx: "+idx);
   setFocusItemIndex(idx);
 	setItemFocus(0);
-
+  redrawDisplay();
   "true";
 }
-redrawDisplay();
 ret;
 </script>
 </onUserInput>
@@ -147,7 +146,7 @@ ret;
 
 	</item_template>
 <channel>
-	<title>veohcast.tv</title>
+	<title>ilive.to</title>
 	<menu>main menu</menu>
 
 
@@ -158,17 +157,13 @@ if($query) {
    $page = $queryArr[0];
    $search = $queryArr[1];
 }
-//http://www.veohcast.tv/onlinenow.php
-//http://www.veohcast.tv/onlinenow1.php
-//$html = file_get_contents("http://www.veohcast.tv/livechannel.php");
-
+//http://www.seeon.tv/channels/
+//http://www.seeon.tv/channels/?p=2
 if ($page==1) {
-  $html = file_get_contents("http://www.veohcast.tv/onlinenow.php");
+  $html = file_get_contents("http://www.ilive.to/channels/");
 } else {
-  $page1=$page-1;
-  $html = file_get_contents("http://www.veohcast.tv/onlinenow".$page1.".php");
+  $html = file_get_contents("http://www.ilive.to/channels/?p=".$page);
 }
-
 if($page > 1) { ?>
 
 <item>
@@ -195,50 +190,36 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-//$html=str_between($html,'<table width="100%">','<div class="headwrap"');
-//$image="http://veohcast.tv/images/logo.png";
-$videos = explode('<td align="center">', $html);
+
+$videos = explode('channel-listing-container', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1 = explode('.php?n=', $video);
+    $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
-    $id=$t2[0];
-    if (strpos($id,"stream") === false) $id="";
+    $link = $t2[0];
 
-    
-    $t1=explode('src="',$video);
-    $t2=explode('"',$t1[1]);
-    $image=$t2[0];
-    if (strpos($image,"http") === false)
-      $image="http://www.veohcast.tv".$image;
-    $image=str_replace("http:/i","http://www.veohcast.tv/i",$image);
-    $t1 = substr(strrchr($image, "/"), 1);
-    $t2=explode(".",$t1);
-    $title=$t2[0];
-    if (!$title) $title=$id;
-    if (strpos($image,"logo.png") !== false) $title=$id;
-    //rtmp://184.75.208.220/live
-    $link="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:";
-    $link=$link."-W http://www.veohcast.tv/player/veohcast.tv.swf -p http://www.veohcast.tv";
-    $link=$link." -a live -y ";
-    $link=str_replace(" ","%20",$link);
-    if ($id) {
+    $t1 = explode('src="', $video);
+    $t2 = explode('"', $t1[1]);
+    $image = $t2[0];
+
+    $title = str_between($video,"<strong>","</strong>");
+    if ($image <> "") {
     echo '
     <item>
     <title>'.$title.'</title>
     <onClick>
     <script>
     showIdle();
-    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/veohcast_link.php?file='.urlencode($id).'");
-    url1="'.$link.'" + url;
-    annotation="'.$id.'";
-    playItemURL(url1, 10);
+    url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/ilive_link.php?file='.urlencode($link).'");
+    movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url;
+    annotation=url;
+    cancelIdle();
+    playItemURL(movie, 10);
     </script>
     </onClick>
-    <annotation>'.$id.'</annotation>
     <image>'.$image.'</image>
     <media:thumbnail url="'.$image.'" />
     <mediaDisplay name="threePartsView"/>

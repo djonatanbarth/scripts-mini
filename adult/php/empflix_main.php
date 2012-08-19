@@ -169,7 +169,7 @@ function str_between($string, $start, $end){
   		<link>'.$link.'</link>
   	</item>';
 $html = file_get_contents("http://www.empflix.com/");
-$html = str_between($html,'div id="categoriesList"','</ul>');
+$html = str_between($html,'List of tags','</ul>');
 $videos = explode('<li>', $html);
 unset($videos[0]);
 $videos = array_values($videos);

@@ -7,6 +7,8 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 /*
+http://www.veohcast.tv/channelV.php?n=20012@hyqw
+/videochannel.php?n=20012@hyqw
 ///videochannel.php?n=9B728SYFYUSTVNOW1
 //http://veohcast.tv/videochannel.php?n=syfy
 //Referer: http://www.veohcast.tv/videolive1channel.php?n=908060CT
@@ -58,11 +60,17 @@ $server=substr($server, 0, -1);
 $server=$server."/".$f;
 print $server;
 */
+///sector.php?n=z010301.stream
+////veohV.php?n=00009.stream
 $link=urldecode($link);
-$link="http://www.veohcast.tv".str_replace("channelprivate","private",$link);
-$html=file_get_contents($link);
-$s=str_between($html,"streamer=","&");
-$f=str_between($html,"file=","&");
-$server=$s."/".$f;
-print $server;
+if (strpos($link,"z") !== false)
+  $link1="http://www.veohcast.tv/sector.php?n=".$link;
+else
+  $link1="http://www.veohcast.tv/veohV.php?n=".$link;
+$html=file_get_contents($link1);
+
+$s=trim(str_between($html,"streamer', '","'"));
+$f=str_between($html,"file', '","'");
+$ll=$f.",".$s;
+print $ll;
 ?>

@@ -11,6 +11,8 @@ $html=file_get_contents($link);
 $rtmp=str_between($html,"streamer: '","'");
 $y=str_between($html,"file: '","'");
 $w=str_between($html,"flash', src: '","'");
+if (strpos($w,"http") === false)
+   $w="http://www.youfreetv.net/".$w;
 $l="Rtmp-options:-a live -W ".$w." -y ".$y.",".$rtmp;
 $l=str_replace(" ","%20",$l);
 print $l;

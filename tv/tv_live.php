@@ -151,7 +151,19 @@ ret;
 
     <title>TV Live</title>
 
+<item>
+<title>TV Live - favorite list</title>
+<link><?php echo $host; ?>/scripts/tv/php/ohlulz_fav.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
 
+<item>
+<title>High Definition TV</title>
+<link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
 
 
 <item>
@@ -169,61 +181,34 @@ ret;
 </item>
 
 <item>
-<title>High Definition Tv (paid)</title>
-<link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>High Definition TV (free)</title>
-<link><?php echo $host; ?>/scripts/tv/tvsector_free.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - rtmpGui - wilmaa</title>
-<link><?php echo $host; ?>/scripts/tv/wilmaa.php</link>
+<title>TV Live - RTMP list</title>
+<link><?php echo $host; ?>/scripts/tv/rtmp.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
 
 
 <item>
-<title>TV Live - rtmpGui - other - backup list</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz.php</link>
+<title>TV Live - Other</title>
+<link>/usr/local/etc/www/cgi-bin/scripts/tv/tv_diverse_live.rss</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
 
 <item>
-<title>TV Live - rtmpGui - other - live list</title>
-<link><?php echo $host; ?>/scripts/tv/ohlulz1.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<item>
-<title>TV Live - RTMP US</title>
-<link><?php echo $host; ?>/scripts/tv/rtmp_bat.php?file=http://hdforall.googlecode.com/files/rtmp_us.txt,RTMP+US</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-
-<item>
-<title>TV Live - rtmpGui - favorite list</title>
-<link><?php echo $host; ?>/scripts/tv/php/ohlulz_fav.php</link>
+<title>TV Live from ilive.to</title>
+<link><?php echo $host; ?>/scripts/tv/ilive.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
 
 <item>
-<title>Justin.tv</title>
-<link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
+<title>TV Live from veohcast.tv</title>
+<link><?php echo $host; ?>/scripts/tv/veohcast.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
+
 
 <item>
 <title>TV Live from freedocast.com</title>
@@ -233,22 +218,15 @@ ret;
 </item>
 
 <item>
+<title>TV Live from Justin.tv</title>
+<link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>TV Live from skystreamlive.com</title>
 <link><?php echo $host; ?>/scripts/tv/skystreamlive.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - other</title>
-<link><?php echo $host; ?>/scripts/tv/tv_diverse_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - Deutschland</title>
-<link><?php echo $host; ?>/scripts/tv/german_tv.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -267,20 +245,29 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
+
 <item>
-<title>vtc.com.vn</title>
+<title>TV Live - Vietnam (vtc.com.vn)</title>
 <link><?php echo $host; ?>/scripts/tv/vtc.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
 
-
+<!--
 <item>
-<title>Other (live update)</title>
-<link>http://hdforall.uphero.com//tv1/temp_tv.php</link>
+<title>mozhay TV (Russian) - press Audio to change channel</title>
+<link><?php echo $host; ?>/scripts/tv/mozhay.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 
+
+<item>
+<title>Other (online list)</title>
+<link>http://hdforall.uphero.com/tv1/temp_tv.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
 </channel>
 </rss>                                                                                                                             
