@@ -64,17 +64,19 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-		<text align="center" redraw="yes" fontSize=24 offsetXPC=60 offsetYPC=60 widthPC=30 heightPC=10 backgroundColor=0:0:0 foregroundColor=200:200:200>
+<!--
+		<text align="center" redraw="yes" fontSize=20 offsetXPC=60 offsetYPC=60 widthPC=30 heightPC=10 backgroundColor=0:0:0 foregroundColor=200:200:200>
         <script>print(annotation); annotation;</script>
         </text>
+-->
 		<image align="center" redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=20>
 		<script>print(img); img;</script>
 		</image>
-		<!--
+<!--
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
     <script>"Press 2 for other server. Server : " + server;</script>
 		</text>
-		-->
+-->
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -263,7 +265,7 @@ foreach($videos as $video) {
  $t1=explode('alt="',$video);
  $t2=explode('"',$t1[1]);
  $title=$t2[0];
-
+ $title=str_replace("_"," ",$title);
     echo '
     <item>
     <title>'.$title.'</title>

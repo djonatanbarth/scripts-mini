@@ -13,6 +13,7 @@ function str_between($string, $start, $end){
 }
 $cookie="/tmp/futubox_c.txt";
 //$cookie="D://futubox_c.txt";
+$serv="s01";
 $link=urldecode($link);
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $link);
@@ -29,12 +30,22 @@ $link=urldecode($link);
   $a="live".$sid;
   $w="http://futubox.to/donottouch/fpv3.39.swf";
   $p=$link;
-$exec = "/usr/local/etc/www/cgi-bin/scripts/rtmpdump -V -v -r rtmp://s01.webport.tv:1935/live -a ".$a." -y ".$y." -W http://futubox.to/donottouch/fpv3.39.swf -p ".$p."  2>/tmp/log.txt";
+/*
+$exec = "rm -f /tmp/test.mp4";
+$ret=exec($exec);
+$exec = "rm -f /tmp/log.txt";
+$ret=exec($exec);
+$exec = "/usr/local/etc/www/cgi-bin/scripts/rtmpdump -V -v -B 0.1 -b 0 -r rtmp://s01.webport.tv:1935/live -a ".$a." -y ".$y." -W http://futubox.to/donottouch/fpv3.39.swf -p ".$p."  -o /tmp/test.mp4 2>/tmp/log.txt";
 $ret=exec($exec,$a1);
 $h=file_get_contents("/tmp/log.txt");
-$t1=explode("redirect, STRING:",$h);
-$t2=explode("?",$t1[1]);
-$rtmp=trim($t2[0]);
+$t1=explode("NetStream.Play.PublishNotify",$h);
+$t2=explode("rtmp://",$t1[1]);
+$t3=explode(".",$t2[1]);
+$trtmp="rtmp://".$t3[0].".futubox.com:1935";
+//$t1=explode("redirect, STRING:",$h);
+//$t2=explode("?",$t1[1]);
+//$rtmp=trim($t2[0]);
+*/
 $l="Rtmp-options:-a ".$a." -W ".$w." -p ".$p." -y ".$y.",".$rtmp;
 $l=str_replace(" ","%20",$l);
 print $l;
