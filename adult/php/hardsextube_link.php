@@ -6,9 +6,14 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $link = $_GET["file"];
-    $html = file_get_contents($link);
-		$link = str_between($html, 'flvpathValue: "', '"');
-		$link = str_replace("_@?_nva","&nva",$link);
-		$link = str_replace("_@?_hash","&hash",$link);
+$html = file_get_contents($link);
+$link = str_between($html, 'flvpathValue: "', '"');
+$link = str_replace("_@?_nva","&nva",$link);
+$link = str_replace("_@?_hash","&hash",$link);
+if (!$link) {
+$l1=str_between($html,'flvserver: "','"');
+$l2=str_between($html,'flv: "/','"');
+$link=$l1.$l2;
+}
 print $link;
 ?>

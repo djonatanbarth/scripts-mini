@@ -99,7 +99,10 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
 } elseif (file_exists("/tmp/usbmounts/sdc2/download")) {
    $dir = "/tmp/usbmounts/sdc1/download/log/*log";
 } elseif (file_exists("/tmp/hdd/volumes/HDD1/download")) {
-   $dir = "/tmp/hdd/root/log/*log";
+   if (file_exists("/tmp/hdd/root"))
+     $dir = "/tmp/hdd/root/log/*log";
+   else
+     $dir = "/tmp/hdd/volumes/HDD1/download/log/*log";
 } else {
      $dir = "";
 }
@@ -117,6 +120,9 @@ $t3 = explode("K", $log);
 $t4 = substr($log, -25);
 $t5 = explode("%", $log);
 $end = substr($t5[0], -3);
+if (strpos($log_file,"saved") === true) {
+  $end = "100";
+}
 $t0 = $i+1;
 //pid
 $pd = "/tmp/".$t1[0].".pid";

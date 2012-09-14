@@ -32,6 +32,8 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
      $dir = "";
      $dir_log = "";
 }
+$t1=explode(":",$y);
+$y=$t1[1];
 $dl=$dir.$y;
 $out='#!/bin/sh
 cat <<EOF

@@ -30,7 +30,12 @@ then
 elif [ -d /tmp/hdd/volumes/HDD1/download ]
 then
 	loc=/tmp/hdd/volumes/HDD1/download
-	loclog=/tmp/hdd/root
+	if [ -d /tmp/hdd/root ]
+	then
+	  loclog=/tmp/hdd/root
+    else
+      loclog=/tmp/hdd/volumes/HDD1/download
+    fi
 else
 	loc=''
 	loclog=''
@@ -38,7 +43,7 @@ fi
 case $GO in
 		"start" ) 
 		cd $loc
-		/sbin/wget -bc -a $loclog/log/$NAME.log -O $NAME $LINK > /tmp/$NAME.pid
+		/usr/local/etc/www/cgi-bin/scripts/wget -bc -a $loclog/log/$NAME.log -O $NAME $LINK > /tmp/$NAME.pid
 		echo  "Start Download $NAME";;
 		"stop" )
 		kill -9 $PID

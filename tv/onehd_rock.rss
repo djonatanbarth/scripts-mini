@@ -1,0 +1,1051 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  startitem = "middle";
+  info = "2=download, 3=stop download, 1=check dl. status";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="80"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="80"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="55" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    4/6 jump +- 100, 7/9 jump +- 500
+		</text>
+  	<text redraw="yes" offsetXPC="75" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(info); info;</script>
+		</text>
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "14"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "nine" || userInput == "9")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -500;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "seven" || userInput == "7")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 500;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "six" || userInput == "6")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -100;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "four" || userInput == "4")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 100;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if (userInput == "one" || userInput == "1")
+{
+  showIdle();
+  info=getUrl("http://127.0.0.1/cgi-bin/scripts/util/info_rtmp.php");
+  cancelIdle();
+  ret="true";
+}
+else if (userInput == "two" || userInput == "2")
+{
+  showIdle();
+  url1="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=" + getItemInfo(getFocusItemIndex(),"down");
+  dummy=getUrl(url1);
+  cancelIdle();
+  info = "Start download";
+  movie="http://127.0.0.1/cgi-bin/scripts/tv/rock_d.cgi";
+  dummy=getUrl(movie);
+  ret="true";
+}
+else if (userInput == "three" || userInput == "3")
+{
+ topUrl="http://127.0.0.1/cgi-bin/scripts/util/info_rtmp.cgi";
+ dummy=getUrl(topUrl);
+ info= "Stop download";
+ ret = "true";
+}
+redrawDisplay();
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>OneHD - Rock</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>Rock:Billy Idol In Super Overdrive - Live (1:08:34)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ABilly_Idol_In_Super_Overdrive-Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ABilly_Idol_In_Super_Overdrive-Live.mp4</down>
+    <annotation>mp4:Billy_Idol_In_Super_Overdrive-Live.mp4</annotation>
+    <durata>1:08:34</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Blur - Live at Hyde Park (0:59:50)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ABlur-Live_at_Hyde_Park.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ABlur-Live_at_Hyde_Park.mp4</down>
+    <annotation>mp4:Blur-Live_at_Hyde_Park.mp4</annotation>
+    <durata>0:59:50</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Bon Jovi - Lost Highway (2:41:39)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ABon_Jovi-Lost_Highway.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ABon_Jovi-Lost_Highway.mp4</down>
+    <annotation>mp4:Bon_Jovi-Lost_Highway.mp4</annotation>
+    <durata>2:41:39</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Coldplay Glastonbury 2011 (1:30:51)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AColdplay.Glastonbury.2011.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AColdplay.Glastonbury.2011.mp4</down>
+    <annotation>mp4:Coldplay.Glastonbury.2011.mp4</annotation>
+    <durata>1:30:51</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Dire Straits - Alchemy Live (1:30:08)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ADire_Straits-Alchemy_Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ADire_Straits-Alchemy_Live.mp4</down>
+    <annotation>mp4:Dire_Straits-Alchemy_Live.mp4</annotation>
+    <durata>1:30:08</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Dream Theatre - live at Budokan (2:52:47)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ADream+Theatre-live+at+Budokan.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ADream+Theatre-live+at+Budokan.mp4</down>
+    <annotation>mp4:Dream Theatre-live at Budokan.mp4</annotation>
+    <durata>2:52:47</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Foo Fighters (1:21:16)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AFoo.Fighters.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AFoo.Fighters.mp4</down>
+    <annotation>mp4:Foo.Fighters.mp4</annotation>
+    <durata>1:21:16</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Foreigner - Live (1:44:42)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AForeigner-Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AForeigner-Live.mp4</down>
+    <annotation>mp4:Foreigner-Live.mp4</annotation>
+    <durata>1:44:42</durata>
+    </item>
+    
+    <item>
+    <title>Rock:heaven and hell radio city hall (1:56:07)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3Aheaven.and.hell.radio.city.hall.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3Aheaven.and.hell.radio.city.hall.mp4</down>
+    <annotation>mp4:heaven.and.hell.radio.city.hall.mp4</annotation>
+    <durata>1:56:07</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Joe Satriani - Live (1:23:54)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AJoe_Satriani-Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AJoe_Satriani-Live.mp4</down>
+    <annotation>mp4:Joe_Satriani-Live.mp4</annotation>
+    <durata>1:23:54</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Legends - Live At Montreux (1:46:12)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ALegends-Live_At_Montreux.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ALegends-Live_At_Montreux.mp4</down>
+    <annotation>mp4:Legends-Live_At_Montreux.mp4</annotation>
+    <durata>1:46:12</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Megadeth - Buenos Aires (1:35:20)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AMegadeth-Buenos_Aires.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AMegadeth-Buenos_Aires.mp4</down>
+    <annotation>mp4:Megadeth-Buenos_Aires.mp4</annotation>
+    <durata>1:35:20</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Mr Big - Back To Budokan (2:35:11)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AMr_Big-Back_To_Budokan.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AMr_Big-Back_To_Budokan.mp4</down>
+    <annotation>mp4:Mr_Big-Back_To_Budokan.mp4</annotation>
+    <durata>2:35:11</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Nightwish - End Of An Era (1:43:03)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ANightwish+-+End+Of+An+Era.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ANightwish+-+End+Of+An+Era.mp4</down>
+    <annotation>mp4:Nightwish - End Of An Era.mp4</annotation>
+    <durata>1:43:03</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Nuclear Blast Clips (3:29:52)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ANuclear+Blast+Clips.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ANuclear+Blast+Clips.mp4</down>
+    <annotation>mp4:Nuclear Blast Clips.mp4</annotation>
+    <durata>3:29:52</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Oasis - Electric Proms (0:57:45)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AOasis-Electric_Proms.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AOasis-Electric_Proms.mp4</down>
+    <annotation>mp4:Oasis-Electric_Proms.mp4</annotation>
+    <durata>0:57:45</durata>
+    </item>
+    
+    <item>
+    <title>Rock:OneRepublic (0:56:20)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AOneRepublic.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AOneRepublic.mp4</down>
+    <annotation>mp4:OneRepublic.mp4</annotation>
+    <durata>0:56:20</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Paramore - The Final Riot (1:10:00)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AParamore+-+The+Final+Riot.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AParamore+-+The+Final+Riot.mp4</down>
+    <annotation>mp4:Paramore - The Final Riot.mp4</annotation>
+    <durata>1:10:00</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Paul Simon and Friends (1:45:40)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3APaul_Simon_and_Friends.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3APaul_Simon_and_Friends.mp4</down>
+    <annotation>mp4:Paul_Simon_and_Friends.mp4</annotation>
+    <durata>1:45:40</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Porcupine - Tree Anesthetize (2:10:05)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3APorcupine-Tree_Anesthetize.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3APorcupine-Tree_Anesthetize.mp4</down>
+    <annotation>mp4:Porcupine-Tree_Anesthetize.mp4</annotation>
+    <durata>2:10:05</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Queen - Rock Montreal 1981 (1:35:10)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AQueen-Rock_Montreal_1981.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AQueen-Rock_Montreal_1981.mp4</down>
+    <annotation>mp4:Queen-Rock_Montreal_1981.mp4</annotation>
+    <durata>1:35:10</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Queen Paul Rodgers - Return of the Champions (1:11:11)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AQueen_Paul+Rodgers-Return_of_the_Champions.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AQueen_Paul+Rodgers-Return_of_the_Champions.mp4</down>
+    <annotation>mp4:Queen_Paul Rodgers-Return_of_the_Champions.mp4</annotation>
+    <durata>1:11:11</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Reamonn - Eleven (1:34:34)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AReamonn-Eleven.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AReamonn-Eleven.mp4</down>
+    <annotation>mp4:Reamonn-Eleven.mp4</annotation>
+    <durata>1:34:34</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Reamonn - Eleven - Live at Acoustic at the Casino (1:34:34)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AReamonn-Eleven-Live_at_Acoustic_at_the_Casino.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AReamonn-Eleven-Live_at_Acoustic_at_the_Casino.mp4</down>
+    <annotation>mp4:Reamonn-Eleven-Live_at_Acoustic_at_the_Casino.mp4</annotation>
+    <durata>1:34:34</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Return to Forever - Live at Montreux (2:30:53)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AReturn_to_Forever-Live_at_Montreux.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AReturn_to_Forever-Live_at_Montreux.mp4</down>
+    <annotation>mp4:Return_to_Forever-Live_at_Montreux.mp4</annotation>
+    <durata>2:30:53</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Roben Ford (1:28:33)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ARoben_Ford.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ARoben_Ford.mp4</down>
+    <annotation>mp4:Roben_Ford.mp4</annotation>
+    <durata>1:28:33</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Rock And Roll Hall Of Fame - The25th Anniversary (4:05:47)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ARock+And+Roll+Hall+Of+Fame-The25th.Anniversary.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ARock+And+Roll+Hall+Of+Fame-The25th.Anniversary.mp4</down>
+    <annotation>mp4:Rock And Roll Hall Of Fame-The25th.Anniversary.mp4</annotation>
+    <durata>4:05:47</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Rolling Stones - Live At The Max (1:24:43)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ARolling_Stones-Live_At_The_Max.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ARolling_Stones-Live_At_The_Max.mp4</down>
+    <annotation>mp4:Rolling_Stones-Live_At_The_Max.mp4</annotation>
+    <durata>1:24:43</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Rory Galagher - Irish Tour (1:24:11)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ARory_Galagher-Irish_Tour.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ARory_Galagher-Irish_Tour.mp4</down>
+    <annotation>mp4:Rory_Galagher-Irish_Tour.mp4</annotation>
+    <durata>1:24:11</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Soundstage - Rob Thomas Live at Red Rocks (1:26:36)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ASoundstage-Rob_Thomas_Live_at_Red_Rocks.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ASoundstage-Rob_Thomas_Live_at_Red_Rocks.mp4</down>
+    <annotation>mp4:Soundstage-Rob_Thomas_Live_at_Red_Rocks.mp4</annotation>
+    <durata>1:26:36</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Soundstage - Tom Petty And The Heartbreakers (2:26:17)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ASoundstage-Tom+Petty+And+The+Heartbreakers.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ASoundstage-Tom+Petty+And+The+Heartbreakers.mp4</down>
+    <annotation>mp4:Soundstage-Tom Petty And The Heartbreakers.mp4</annotation>
+    <durata>2:26:17</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Status Quo Pictures - Live At Montreux (1:40:29)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AStatus_Quo_Pictures-Live_At_Montreux.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AStatus_Quo_Pictures-Live_At_Montreux.mp4</down>
+    <annotation>mp4:Status_Quo_Pictures-Live_At_Montreux.mp4</annotation>
+    <durata>1:40:29</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Steve Vai - Where the Wild Things Are (2:42:54)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ASteve_Vai-Where_the_Wild_Things_Are.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ASteve_Vai-Where_the_Wild_Things_Are.mp4</down>
+    <annotation>mp4:Steve_Vai-Where_the_Wild_Things_Are.mp4</annotation>
+    <durata>2:42:54</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Styx And The Contemporary Youth Orchestra - One With Everything (1:51:18)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AStyx_And_The_Contemporary_Youth_Orchestra-One_With_Everything.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AStyx_And_The_Contemporary_Youth_Orchestra-One_With_Everything.mp4</down>
+    <annotation>mp4:Styx_And_The_Contemporary_Youth_Orchestra-One_With_Everything.mp4</annotation>
+    <durata>1:51:18</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Talking Heads - Stop Making Sense 1984 (1:27:47)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3ATalking_Heads-Stop_Making_Sense_1984.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3ATalking_Heads-Stop_Making_Sense_1984.mp4</down>
+    <annotation>mp4:Talking_Heads-Stop_Making_Sense_1984.mp4</annotation>
+    <durata>1:27:47</durata>
+    </item>
+    
+    <item>
+    <title>Rock:The Airborne - Toxic Event (1:42:11)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe_Airborne-Toxic_Event.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe_Airborne-Toxic_Event.mp4</down>
+    <annotation>mp4:The_Airborne-Toxic_Event.mp4</annotation>
+    <durata>1:42:11</durata>
+    </item>
+    
+    <item>
+    <title>Rock:The Big Four - Metallica Slayer Megadeth Anthrax (3:52:59)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe_Big_Four-Metallica_Slayer_Megadeth_Anthrax.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe_Big_Four-Metallica_Slayer_Megadeth_Anthrax.mp4</down>
+    <annotation>mp4:The_Big_Four-Metallica_Slayer_Megadeth_Anthrax.mp4</annotation>
+    <durata>3:52:59</durata>
+    </item>
+    
+    <item>
+    <title>Rock:The Cure Trilogy Live in Berlin (3:16:26)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe.Cure.Trilogy.Live.in.Berlin.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe.Cure.Trilogy.Live.in.Berlin.mp4</down>
+    <annotation>mp4:The.Cure.Trilogy.Live.in.Berlin.mp4</annotation>
+    <durata>3:16:26</durata>
+    </item>
+    
+    <item>
+    <title>Rock:The Eagles - Farewell Tour (2:44:24)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe_Eagles-Farewell_Tour.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe_Eagles-Farewell_Tour.mp4</down>
+    <annotation>mp4:The_Eagles-Farewell_Tour.mp4</annotation>
+    <durata>2:44:24</durata>
+    </item>
+    
+    <item>
+    <title>Rock:The Killers - Live (1:59:10)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe_Killers-Live.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe_Killers-Live.mp4</down>
+    <annotation>mp4:The_Killers-Live.mp4</annotation>
+    <durata>1:59:10</durata>
+    </item>
+    
+    <item>
+    <title>Rock:The Moody Blues - Lovely to See You (1:45:53)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe_Moody_Blues-Lovely_to_See_You.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe_Moody_Blues-Lovely_to_See_You.mp4</down>
+    <annotation>mp4:The_Moody_Blues-Lovely_to_See_You.mp4</annotation>
+    <durata>1:45:53</durata>
+    </item>
+    
+    <item>
+    <title>Rock:The Pixies - Acoustic Live 2005 (0:27:13)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AThe+Pixies+-+Acoustic+Live+2005.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AThe+Pixies+-+Acoustic+Live+2005.mp4</down>
+    <annotation>mp4:The Pixies - Acoustic Live 2005.mp4</annotation>
+    <durata>0:27:13</durata>
+    </item>
+    
+    <item>
+    <title>Rock:U2 - 360 grads (2:09:08)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AU2-360_grads.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AU2-360_grads.mp4</down>
+    <annotation>mp4:U2-360_grads.mp4</annotation>
+    <durata>2:09:08</durata>
+    </item>
+    
+    <item>
+    <title>Rock:U2 - Glastonbury 2011 (4:11:59)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AU2-Glastonbury+2011.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AU2-Glastonbury+2011.mp4</down>
+    <annotation>mp4:U2-Glastonbury 2011.mp4</annotation>
+    <durata>4:11:59</durata>
+    </item>
+    
+    <item>
+    <title>Rock:U2 - Rattle and Hum - 1988 (1:38:53)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AU2-Rattle_and_Hum-1988.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AU2-Rattle_and_Hum-1988.mp4</down>
+    <annotation>mp4:U2-Rattle_and_Hum-1988.mp4</annotation>
+    <durata>1:38:53</durata>
+    </item>
+    
+    <item>
+    <title>Rock:U2 Glastonbury 2011 (1:36:21)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AU2.Glastonbury.2011.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AU2.Glastonbury.2011.mp4</down>
+    <annotation>mp4:U2.Glastonbury.2011.mp4</annotation>
+    <durata>1:36:21</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Water On The Road (1:18:13)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AWater_On_The_Road.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AWater_On_The_Road.mp4</down>
+    <annotation>mp4:Water_On_The_Road.mp4</annotation>
+    <durata>1:18:13</durata>
+    </item>
+    
+    <item>
+    <title>Rock:Within Temptation - Black Symphony (2:06:33)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/tv/rock_link.php?file=mp4%3AWithin_Temptation-Black_Symphony.mp4";
+    url1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/rock.cgi";
+    cancelIdle();
+    playItemUrl(movie,10);
+    </script>
+    </onClick>
+    <down>mp4%3AWithin_Temptation-Black_Symphony.mp4</down>
+    <annotation>mp4:Within_Temptation-Black_Symphony.mp4</annotation>
+    <durata>2:06:33</durata>
+    </item>
+    </channel>
+</rss>

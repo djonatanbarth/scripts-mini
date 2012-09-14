@@ -187,6 +187,12 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
+<item>
+<title>Playlist from database.eu.pn</title>
+<link><?php echo $host; ?>/scripts/tv/simpletv.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
 
 <item>
 <title>TV Live - Other</title>
@@ -202,13 +208,6 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>TV Live from veohcast.tv</title>
-<link><?php echo $host; ?>/scripts/tv/veohcast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
 
 <item>
 <title>TV Live from freedocast.com</title>
@@ -220,13 +219,6 @@ ret;
 <item>
 <title>TV Live from Justin.tv</title>
 <link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from skystreamlive.com</title>
-<link><?php echo $host; ?>/scripts/tv/skystreamlive.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>

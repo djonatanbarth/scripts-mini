@@ -160,8 +160,8 @@ ret;
 	<menu>main menu</menu>
 
    <item>
-   <title>OneHD concerts</title>
-   <link>/usr/local/etc/www/cgi-bin/scripts/tv/rock_pop.rss</link>
+   <title>OneHD Concerts</title>
+   <link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_concert.rss</link>
    </item>
    <item>
     <title>Virgin TV</title>

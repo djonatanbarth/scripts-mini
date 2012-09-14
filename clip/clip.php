@@ -292,6 +292,51 @@ columnCount=5
 </item>
 
 <item>
+<title>funnyordie.com</title>
+	<link><?php echo $host; ?>/scripts/clip/php/funnyordie_main.php</link>
+	<location>http://www.funnyordie.com</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/funnyordie.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/funnyordie.png" />
+	<annotation>funny or die - Funny videos, funny pictures, funny jokes, top ten lists, funny blogs, caption contests, and funny articles featuring celebrities, comedians, and you.</annotation>
+</item>
+
+<item>
+<title>youclubvideo</title>
+	<link><?php echo $host; ?>/scripts/clip/php/youclubvideo.php</link>
+	<location>http://www.youclubvideo.com</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png" />
+	<annotation>YouClubVideo was started as an idea to bring together a wide variety of clubbing experiences and people from all the countries of the world that have in common the same feelings, sounds and sences of club music.</annotation>
+</item>
+
+<item>
+<title>dancetrippin.tv</title>
+	<link><?php echo $host; ?>/scripts/clip/php/dancetrippin.php</link>
+	<location>http://www.dancetrippin.tv</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dancetrippin.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dancetrippin.png" />
+	<annotation>DanceTrippin.tv: The Man With No Shadow (aka De Man Zonder Schaduw in his homeland of the Netherlands) closes Zomerpark 2012 with a stunning set that builds and builds to the perfect ending of an amazing day in Amsterdam. Much respect to the organization GZG for this special event!</annotation>
+</item>
+
+<item>
+<title>Dailymotion</title>
+	<link><?php echo $host; ?>/scripts/clip/dm.php</link>
+	<location>http://www.dailymotion.com</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png" />
+	<annotation>Dailymotion is about finding new ways to see, share and engage your world through the power of online video. You can find - or upload - videos about your interests and hobbies, eyewitness accounts of recent news and distant places, and everything else from the strange to the spectacular.</annotation>
+</item>
+
+<item>
+<title>HD Podcast</title>
+	<link><?php echo $host; ?>/scripts/clip/php/podcasthd.php</link>
+	<location>http://www.podcast.tv/high-definition-video-podcasts.html</location>
+	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/podcast.png</image>
+	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/podcast.png" />
+	<annotation>HD-Podcasts (High Definition)  | podcast.tv is an international video podcast directory with podcast recommendations and useful podcasting functions for enjoying podcasts and learn how to podcast</annotation>
+</item>
+
+<item>
 <title>clipfish.de</title>
 	<link><?php echo $host; ?>/scripts/clip/php/clipfish.php?query=1</link>
 	<location>http://www.clipfish.de</location>
@@ -439,41 +484,9 @@ columnCount=5
 	<annotation>UProm.TV - Lade Deine Video Clips hoch und komm so ins Fernsehen! Mit UProm.TV hat jeder die Chance, mit seinen eigenen Videoclips ins TV zu kommen</annotation>
 </item>
 -->
-<item>
-<title>funnyordie.com</title>
-	<link><?php echo $host; ?>/scripts/clip/php/funnyordie_main.php</link>
-	<location>http://www.funnyordie.com</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/funnyordie.png</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/funnyordie.png" />
-	<annotation>funny or die - Funny videos, funny pictures, funny jokes, top ten lists, funny blogs, caption contests, and funny articles featuring celebrities, comedians, and you.</annotation>
-</item>
 
-<item>
-<title>youclubvideo</title>
-	<link><?php echo $host; ?>/scripts/clip/php/youclubvideo.php</link>
-	<location>http://www.youclubvideo.com</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png" />
-	<annotation>YouClubVideo was started as an idea to bring together a wide variety of clubbing experiences and people from all the countries of the world that have in common the same feelings, sounds and sences of club music.</annotation>
-</item>
 
-<item>
-<title>dancetrippin.tv</title>
-	<link><?php echo $host; ?>/scripts/clip/php/dancetrippin.php</link>
-	<location>http://www.dancetrippin.tv</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dancetrippin.png</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dancetrippin.png" />
-	<annotation>DanceTrippin.tv: The Man With No Shadow (aka De Man Zonder Schaduw in his homeland of the Netherlands) closes Zomerpark 2012 with a stunning set that builds and builds to the perfect ending of an amazing day in Amsterdam. Much respect to the organization GZG for this special event!</annotation>
-</item>
 
-<item>
-<title>Dailymotion</title>
-	<link><?php echo $host; ?>/scripts/clip/dm.php</link>
-	<location>http://www.dailymotion.com</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png" />
-	<annotation>Dailymotion is about finding new ways to see, share and engage your world through the power of online video. You can find - or upload - videos about your interests and hobbies, eyewitness accounts of recent news and distant places, and everything else from the strange to the spectacular.</annotation>
-</item>
 
 <item>
 <title>BlipTV</title>
@@ -522,14 +535,7 @@ columnCount=5
 <annotation>Revision3 is the leading independent free online video service that offers hit TV shows including Diggnation with Kevin Rose, Scam School, Film Riot, etc.</annotation>
 </item>
 
-<item>
-<title>HD Podcast</title>
-	<link><?php echo $host; ?>/scripts/clip/php/podcasthd.php</link>
-	<location>http://www.podcast.tv/high-definition-video-podcasts.html</location>
-	<image>/usr/local/etc/www/cgi-bin/scripts/clip/image/podcast.png</image>
-	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/podcast.png" />
-	<annotation>HD-Podcasts (High Definition)  | podcast.tv is an international video podcast directory with podcast recommendations and useful podcasting functions for enjoying podcasts and learn how to podcast</annotation>
-</item>
+
 
 <item>
 <title>Video Podcast Directory</title>

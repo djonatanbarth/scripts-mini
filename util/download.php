@@ -14,7 +14,10 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
 } elseif (file_exists("/tmp/usbmounts/sdc2/download")) {
    $dir = "/tmp/usbmounts/sdc1/download/log/*log";
 } elseif (file_exists("/tmp/hdd/volumes/HDD1/download")) {
-   $dir = "/tmp/hdd/root/log/*log";
+   if (file_exists("/tmp/hdd/root"))
+     $dir = "/tmp/hdd/root/log/*log";
+   else
+     $dir = "/tmp/hdd/volumes/HDD1/download/log/*log";
 } else {
      $dir = "";
 }

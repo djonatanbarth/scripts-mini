@@ -31,7 +31,12 @@ then
 elif [ -d /tmp/hdd/volumes/HDD1 ]
 then
 	loc=/tmp/hdd/volumes/HDD1/download
-	loclog=/tmp/hdd/root
+	if [ -d /tmp/hdd/root ]
+	then
+	  loclog=/tmp/hdd/root
+    else
+      loclog=/tmp/hdd/volumes/HDD1/download
+    fi
 else
 	loc=''
 	loclog=''

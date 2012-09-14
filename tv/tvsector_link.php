@@ -24,7 +24,18 @@ $link=urldecode($link);
   $html = curl_exec($ch);
   curl_close($ch);
   $sid = str_between($html,'url_key:encodeURIComponent("', '"');
-  $y=str_between($html,'setChannel("','"');
+  //$y=str_between($html,'setChannel("','"');
+  $h1=explode("this.setChannel",$html);
+  preg_match_all("/z\d{6}/",$h1[1],$m);
+  $ch=$m[0];
+  if ($ch[1]) {
+  if ($serv=="HD")
+     $y=$ch[0];
+  else
+     $y=$ch[1];
+  } else {
+     $y=$ch[0];
+  }
   $y=$y.".stream".$sid;
   $rtmp="rtmp://".$serv.".webport.tv:1935/live";
   $a="live".$sid;

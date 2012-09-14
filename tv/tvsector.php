@@ -14,7 +14,7 @@ $host = "http://127.0.0.1/cgi-bin";
 </script>
 <onEnter>
   startitem = "middle";
-  server = "s7";
+  server = "SD";
   setRefreshTime(1);
 </onEnter>
 <onRefresh>
@@ -72,11 +72,11 @@ $host = "http://127.0.0.1/cgi-bin";
 		<image align="center" redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=20>
 		<script>print(img); img;</script>
 		</image>
-<!--
+
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    <script>"Press 2 for other server. Server : " + server;</script>
+    <script>"Press 2 to change quality. Quality : " + server;</script>
 		</text>
--->
+
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -150,22 +150,12 @@ if (userInput == "pagedown" || userInput == "pageup")
 }
 else if (userInput == "two" || userInput == "2")
 {
-		if (server == "s7")
-           server = "s6";
-		else if (server == "s6")
-           server = "s5";
-		else if (server == "s5")
-          server = "s4";
-		else if (server == "s4")
-          server = "s3";
-		else if (server == "s3")
-          server = "s2";
-		else if (server == "s2")
-          server = "s1";
-		else if (server == "s1")
-          server = "s7";
+		if (server == "HD")
+           server = "SD";
+		else if (server == "SD")
+           server = "HD";
         else
-		 server = "s1";
+		 server = "HD";
   ret = "true";
 }
 redrawDisplay();
@@ -248,7 +238,7 @@ if (file_exists($filename)) {
   $html = curl_exec($ch);
   curl_close($ch);
   
-  $html=str_between($html,"Channels List","</table>");
+  $html=str_between($html,"<table>","</table>");
   $videos = explode('href="', $html);
 
 unset($videos[0]);
