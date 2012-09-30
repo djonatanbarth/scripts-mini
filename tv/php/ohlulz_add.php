@@ -21,7 +21,8 @@ if($query) {
 if ($mod == "add") {
 if ($dir <> "") {
 $html=file_get_contents($dir);
-$html=$html."<item><link>".$link."</link><title>".$title."</title></item>";
+if (strpos($html,$link) === false)
+   $html=$html."<item><link>".$link."</link><title>".$title."</title></item>";
 } else {
 $dir = "/usr/local/etc/ohlulz.dat";
 $html="<item><link>".$link."</link><title>".$title."</title></item>";
@@ -32,15 +33,21 @@ file_put_contents($dir,$html);
 if ($dir <> "") {
 $html=file_get_contents("/usr/local/etc/ohlulz.dat");
 $out="";
+$first=0;
 $videos=explode("<item>",$html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
   $l=str_between($video,"<link>","</link>");
   $t=str_between($video,"<title>","</title>");
-  if ($l <> $link) {
+  if (($l == $link) && ($first == 0))
+    $first = 1;
+  elseif (($l == $link) && ($first >= 1))
+    $first = 2;
+  if ($l <> $link)
     $out=$out."<item><link>".$l."</link><title>".$t."</title></item>";
-  }
+  elseif ($first == 2)
+    $out=$out."<item><link>".$l."</link><title>".$t."</title></item>";
 }
 }
 if ($out <> "") {

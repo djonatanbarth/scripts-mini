@@ -7,7 +7,9 @@ $host = "http://127.0.0.1/cgi-bin";
   startitem = "middle";
   setRefreshTime(1);
 </onEnter>
-
+<onExit>
+setRefreshTime(-1);
+</onExit>
 <onRefresh>
   setRefreshTime(-1);
   itemCount = getPageInfo("itemCount");
@@ -16,7 +18,7 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
-
+	
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -39,42 +41,37 @@ $host = "http://127.0.0.1/cgi-bin";
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
-	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
-
+		
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
-		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    3 = Remove from favorite. Reload page after!
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-		  <script>print(annotation); annotation;</script>
-		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-  image/tv_radio.png
+		image/movies.png
 		</image>
-		<idleImage> image/POPUP_LOADING_01.png </idleImage>
-		<idleImage> image/POPUP_LOADING_02.png </idleImage>
-		<idleImage> image/POPUP_LOADING_03.png </idleImage>
-		<idleImage> image/POPUP_LOADING_04.png </idleImage>
-		<idleImage> image/POPUP_LOADING_05.png </idleImage>
-		<idleImage> image/POPUP_LOADING_06.png </idleImage>
-		<idleImage> image/POPUP_LOADING_07.png </idleImage>
-		<idleImage> image/POPUP_LOADING_08.png </idleImage>
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
 
 		<itemDisplay>
 			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx)
+					if(focus==idx) 
 					{
-					  annotation = getItemInfo(idx, "title");
-					  img = getItemInfo(idx,"image");
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -102,7 +99,7 @@ $host = "http://127.0.0.1/cgi-bin";
 			</text>
 
 		</itemDisplay>
-
+		
 <onUserInput>
 <script>
 ret = "false";
@@ -128,23 +125,14 @@ if (userInput == "pagedown" || userInput == "pageup")
   setFocusItemIndex(idx);
 	setItemFocus(0);
   redrawDisplay();
-  ret="true";
-}
-else if (userInput == "three" || userInput == "3")
-{
- showIdle();
- url="http://127.0.0.1/cgi-bin/scripts/tv/php/ohlulz_add.php?mod=delete*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1") + "*" + "<?php echo $img; ?>";
- dummy=getUrl(url);
- cancelIdle();
- redrawDisplay();
- ret="true";
+  "true";
 }
 ret;
 </script>
 </onUserInput>
-
+		
 	</mediaDisplay>
-
+	
 	<item_template>
 		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
@@ -158,52 +146,75 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
-  <channel>
 
-    <title>TV Live - rtmpGui - favorite</title>
+<channel>
+	<title>Movies from Noobroom</title>
+	<menu>main menu</menu>
+
 
 <?php
-function str_between($string, $start, $end){
-	$string = " ".$string; $ini = strpos($string,$start);
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
+function str_between($string, $start, $end){ 
+	$string = " ".$string; $ini = strpos($string,$start); 
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
+	return substr($string,$ini,$len); 
 }
-$image="image/tv_radio.png";
-if (file_exists("/usr/local/etc/ohlulz.dat")) {
-$html=file_get_contents("/usr/local/etc/ohlulz.dat");
-$videos=explode("<item>",$html);
+    $title="Alphabetic";
+    $link="http://37.128.191.200/azlist.php";
+    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
+    $title="Top Rating";
+	$link="http://37.128.191.200/rating.php";
+    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
+$html = file_get_contents("http://37.128.191.200/genre.php");
+//http://37.128.191.200/genre.php?b=00000000000000000000100000
+$img = "image/movies.png";
+$len= strlen("00000000000000000000100000");
+$videos = explode('checkbox" name="', $html);
 unset($videos[0]);
+$n=1;
 $videos = array_values($videos);
 foreach($videos as $video) {
-  $l=urldecode(str_between($video,"<link>","</link>"));
-  $l=str_replace(" ","%20",$l);
-  $t=urldecode(str_between($video,"<title>","</title>"));
-  $arr[]=array($t, $l);
+    $l="";
+    for ($k=1;$k<$len+1;$k++) {
+      if ($k==$n)
+        $l.="1";
+      else
+        $l.="0";
+    }
+    $n++;
+    $link="http://37.128.191.200/genre.php?b=".$l;
+
+    $t3 = explode('>', $video);
+    $t4 = explode('<', $t3[1]);
+    $title = $t4[0];
+
+		$link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link1.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
 }
-asort($arr);
-foreach ($arr as $key => $val) {
-    echo '
-    <item>
-    <title>'.$arr[$key][0].'</title>
-    <link1>'.urlencode($arr[$key][1]).'</link1>
-    <title1>'.urlencode($arr[$key][0]).'</title1>
-    <onClick>
-    <script>
-    showIdle();
-    movie="'.$arr[$key][1].'";
-    cancelIdle();
-    playItemUrl(movie,10);
-    </script>
-    </onClick>
-    <annotation>'.$arr[$key][1].'</annotation>
-    <image>'.$image.'</image>
-    <media:thumbnail url="'.$image.'" />
-    </item>
-    ';
-}
-}
+
 ?>
 
-
 </channel>
-</rss>                                                                                                                             
+</rss>

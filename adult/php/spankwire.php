@@ -216,7 +216,8 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$videos = explode('<div class="vid-thumb">', $html);
+//<div class="thmb-wrapper">
+$videos = explode('<div class="thmb-wrapper">', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
