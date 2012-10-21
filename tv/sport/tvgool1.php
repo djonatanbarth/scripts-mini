@@ -1,15 +1,25 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
-$host = "http://127.0.0.1/cgi-bin";
+$query = $_GET["file"];
+if($query) {
+   $queryArr = explode(',', $query);
+   $link = urldecode($queryArr[0]);
+   $tit = urldecode($queryArr[1]);
+}
 ?>
 <rss version="2.0">
 <onEnter>
+    storagePath             = getStoragePath("tmp");
+    storagePath_stream      = storagePath + "stream.dat";
+    storagePath_playlist    = storagePath + "playlist.dat";
   startitem = "middle";
   setRefreshTime(1);
 </onEnter>
-<onExit>
-setRefreshTime(-1);
-</onExit>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
 
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
@@ -23,11 +33,11 @@ setRefreshTime(-1);
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="50"
+	itemWidthPC="80"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="50"
+	capWidthPC="80"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -44,12 +54,11 @@ setRefreshTime(-1);
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
+
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-		image/movies.png
-		</image>
+
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -68,6 +77,7 @@ setRefreshTime(-1);
 					{
 					  location = getItemInfo(idx, "location");
 					  annotation = getItemInfo(idx, "annotation");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -75,7 +85,7 @@ setRefreshTime(-1);
   				<script>
   					idx = getQueryItemIndex();
   					focus = getFocusItemIndex();
-  			    if(focus==idx) "16"; else "14";
+  			    if(focus==idx) "14"; else "14";
   				</script>
 				</fontSize>
 			  <backgroundColor>
@@ -120,9 +130,9 @@ if (userInput == "pagedown" || userInput == "pageup")
   print("new idx: "+idx);
   setFocusItemIndex(idx);
 	setItemFocus(0);
-  redrawDisplay();
   "true";
 }
+redrawDisplay();
 ret;
 </script>
 </onUserInput>
@@ -140,89 +150,100 @@ ret;
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
-
 	</item_template>
-
 <channel>
-	<title>Movies from Noobroom</title>
+	<title><?php echo $tit; ?></title>
 	<menu>main menu</menu>
 
 
 <?php
+
 function str_between($string, $start, $end){ 
 	$string = " ".$string; $ini = strpos($string,$start); 
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-//
-    $title="Latest";
-    $link="http://37.128.191.200/latest.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-    $title="Alfabetic";
-    $link="http://37.128.191.200/azlist.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-    $title="Top Rating";
-	$link="http://37.128.191.200/rating.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-$html = file_get_contents("http://37.128.191.200/genre.php");
-//http://37.128.191.200/genre.php?b=00000000000000000000100000
-$img = "image/movies.png";
-$len= strlen("00000000000000000000100000");
-$videos = explode('checkbox" name="', $html);
+$html=file_get_contents($link);
+$html=str_between($html,"</span></li></ul>","</center>");
+$image="/usr/local/etc/www/cgi-bin/scripts/tv/image/tvgool.png";
+$videos = explode('<p>', $html);
+
 unset($videos[0]);
-$n=1;
 $videos = array_values($videos);
+
 foreach($videos as $video) {
-    $l="";
-    for ($k=1;$k<$len+1;$k++) {
-      if ($k==$n)
-        $l.="1";
-      else
-        $l.="0";
+  $t0 = explode('iframe', $video);
+  $t1=explode('src="',$t0[1]);
+  $t2 = explode('"', $t1[1]);
+  $link = $t2[0];
+
+  $t3 = explode("<",$video);
+  $title = trim($t3[0]);
+  $title = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$title);
+  if (!$title) $title="Rezumat";
+
+  $link2="http://127.0.0.1/cgi-bin/scripts/filme/php/link.php?file=".urlencode($link);
+  if ($link <> "") {
+	    echo'
+	    <item>
+	    <title>'.$title.'</title>
+        <onClick>
+        <script>
+        showIdle();
+        movie="'.$link2.'";
+        url=getUrl(movie);
+        cancelIdle();
+        streamArray = null;
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, video/x-flv);
+        streamArray = pushBackStringArray(streamArray, "'.$title.'");
+        streamArray = pushBackStringArray(streamArray, "1");
+        writeStringToFile(storagePath_stream, streamArray);
+        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+        </script>
+        </onClick>
+        </item>
+        ';
+  } else {
+    $t1=explode("file=content",$video);
+    $t2=explode("&",$t1[1]);
+    $y=$t2[0];
+    $t1=explode("streamer=",$video);
+    $t2=explode("&",$t1[1]);
+    $r=$t2[0];
+    if ($y) {
+        $y="mp4:content".$y;
+        $link2="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-y%20".$y."%20-a%20vod/_definst_mp4%20-W%20http://www.galwayhockeyclub.com/plugins/hwdvs-videoplayer/jwflv_v5/mediaplayer.swf%20-p%20http://www.tvgool.ro,".$r;
+	    echo'
+	    <item>
+	    <title>'.$title.'</title>
+        <onClick>
+        <script>
+        showIdle();
+        url="'.$link2.'";
+        cancelIdle();
+        streamArray = null;
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, "");
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, url);
+        streamArray = pushBackStringArray(streamArray, video/x-flv);
+        streamArray = pushBackStringArray(streamArray, "'.$title.'");
+        streamArray = pushBackStringArray(streamArray, "1");
+        writeStringToFile(storagePath_stream, streamArray);
+        doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+        </script>
+        </onClick>
+        </item>
+        ';
     }
-    $n++;
-    $link="http://37.128.191.200/genre.php?b=".$l;
-
-    $t3 = explode('>', $video);
-    $t4 = explode('<', $t3[1]);
-    $title = $t4[0];
-
-		$link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
 }
-
+}
 ?>
+
 
 </channel>
 </rss>

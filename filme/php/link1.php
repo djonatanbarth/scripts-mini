@@ -605,7 +605,6 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   }
 } elseif (strpos($filelink, 'youtube') !== false){
   $link=youtube($filelink);
-  $link = "http://127.0.0.1/cgi-bin/scripts/util/yt.cgi";
 } elseif (strpos($filelink, 'flvz.com') !== false){
   $link=flvz($filelink);
 } elseif (strpos($filelink, 'rapidmov.net') !== false){

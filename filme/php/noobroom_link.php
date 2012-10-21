@@ -53,6 +53,15 @@ $l1="http://37.128.191.200/views.php?f=".$id;
   curl_setopt($ch,CURLOPT_REFERER,$link);
   $html = curl_exec($ch);
   curl_close($ch);
+
+if ($server == "0")
+   $movie="http://178.159.0.82/index.php?file=".$id."&start=0&type=flv&hd=0&auth=1";
+elseif ($server == "3")
+   $movie="http://178.159.0.82/index.php?file=".$id."&start=0&type=flv&hd=0&auth=1";
+elseif ($server == "6")
+   $movie="http://96.47.226.90/index.php?file=".$id."&start=0&type=flv&hd=0&auth=1";
+else
+{
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $movie);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -64,7 +73,7 @@ $l1="http://37.128.191.200/views.php?f=".$id;
   $html = curl_exec($ch);
   curl_close($ch);
   //echo $html;
-$movie=trim(str_between($html,"Location:","&"))."&start=0";
-//////////////////////////////////////////////////////////////////
+  $movie=trim(str_between($html,"Location:","&"))."&start=0&type=flv&hd=0&auth=1";
+}
 print $movie;
 ?>

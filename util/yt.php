@@ -1,57 +1,57 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php
-function str_between($string, $start, $end){
-	$string = " ".$string; $ini = strpos($string,$start);
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
-}
-function rstrstr($haystack,$needle)
-    {
-        return substr($haystack, 0,strpos($haystack, $needle));
-    }
-error_reporting(0);
+############################################################################
+# Copyright: ©2011, ©2012 wencaS <wenca.S@seznam.cz>
+# This file is part of xListPlay.
+# licence GNU GPL v2
+############################################################################
 $a_itags=array(37,22,18);
-//@include('ytqual.inc');
 
 $file=$_GET["file"];
-$file=urldecode($file);
 if(preg_match('/youtube\.com\/(v\/|watch\?v=)([\w\-]+)/', $file, $match)) {
   $id = $match[2];
-  //$link="http://www.youtube.com/watch?v=".$id;
   $link = 'http://www.youtube.com/get_video_info?&video_id=' . $id . '&el=vevo&ps=default';
   $html=file_get_contents($link);
   $html = urldecode($html);
-  $html = urldecode($html);
-  $t1=explode("url=",$html);
-  //print_r($t1);
+  $link   = "http://www.youtube.com/watch?v=".$id;
+  $html   = file_get_contents($link);
+  preg_match('#playerConfig = {(?P<out>.*)};#im', $html, $out);
+  $parts  = json_decode('{'.$out['out'].'}', true);
+  $videos = explode(',', $parts['args']['url_encoded_fmt_stream_map']);
+foreach ($videos as $video) {
+		$vid = urldecode(urldecode($video));
+		$vid = str_replace(array('sig=', '---'), array('signature=', '.'), $vid);
+		parse_str($vid, $output);
 
-  for ($i=0;$i<count($t1);$i++) {
-    $l=$t1[$i];
-    $a1=explode(";",$l);
-    $part1= $a1[0];
-    $a2=explode("sig=",$l);
-    $a3=explode("&",$a2[1]);
-    $link=$part1."&signature=".$a3[0];
-    //$link=str_replace("sig=","signature=",$link);
-    //if (strpos($link,"throttle") !== false) {
-    $t3=explode("itag=",$link);
-    $t4=explode("&",$t3[1]);
-    $tip=$t4[0];
-    if (in_array($tip,$a_itags)) break;
-    //}
-    //echo $l1."<BR>";
-  }
+		if (in_array($output['itag'], $a_itags)) break;
+	}
 }
-//$link=urldecode($link);
-if (strpos($link, "fexp")) {
-	$query = parse_url($link);
-	parse_str( $query[query] , $output);
-	$path = ($query['scheme']."://".$query['host'].$query['path']."?");
-	unset($output[fexp]);
-	$link=$path.http_build_query($output);
-}
-$link=urldecode($link);
+	/**
+	 *	parse $link by wencaS
+	 * zkusit odstranit z $tip query fexp - pokud se vyskytuje
+	 * je mozne odstranit i dalsi query !! (aspon ve FF video bez nich hraje)
+	 * mv=m
+	 * sver=3
+	 * mt=1345139882
+	 * ms=tsu
+	 * quality=medium
+	 * fallback_host=tc.v6.cache6.c.youtube.com
+	 */
+	$path = $output['url'].'&';
+  unset($output['url']);
 
-print $link;
+	if (isset($output['fexp']))          unset($output['fexp']);
+	if (isset($output['type']))          unset($output['type']);
+	if (isset($output['mv']))            unset($output['mv']);
+	if (isset($output['sver']))          unset($output['sver']);
+	if (isset($output['mt']))            unset($output['mt']);
+	if (isset($output['ms']))            unset($output['ms']);
+	if (isset($output['quality']))       unset($output['quality']);
+	if (isset($output['codecs']))        unset($output['codecs']);
+	if (isset($output['fallback_host'])) unset($output['fallback_host']);
+
+	$link=urldecode($path.http_build_query($output));
+	
+	print $link;
 die();
 ?>

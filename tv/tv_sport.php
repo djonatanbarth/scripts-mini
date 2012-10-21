@@ -273,12 +273,12 @@ columnCount=4
 </item>
 
 <item>
-<title>soccerclips.net</title>
-<link><?php echo $host; ?>/scripts/tv/sport/soccerclips_main.php</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/soccerclips.jpg" />
-<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/soccerclips.jpg</image>
-<location>http://www.soccerclips.net</location>
-<annotation>Football videos, football news, forum and more. SoccerClips is a community of football fans.</annotation>
+<title>www.tvgool.ro</title>
+<link><?php echo $host; ?>/scripts/tv/sport/tvgool.php?query=,http://www.tvgool.ro</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/tvgool.png" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/tvgool.png</image>
+<location>http://www.tvgool.ro</location>
+<annotation>Latest Football Highlights & Goals from major leagues.</annotation>
 </item>
 
 <item>

@@ -209,7 +209,7 @@ function xml_fix($string) {
     $v=str_replace("\/","/",$v);
     return $v;
 }
-$link="http://www.dancetrippin.tv/video/list/";
+$link="http://new.dancetrippin.tv/video/list/";
 $html=file_get_contents($link);
 $html=xml_fix($html);
 $videos = explode('venue":', $html);
@@ -219,9 +219,9 @@ $videos = array_values($videos);
 
 foreach($videos as $video) {
 
-    $link="http://www.dancetrippin.tv/video/".str_between($video,'slug": "','"');
+    $link="http://new.dancetrippin.tv/video/".str_between($video,'slug": "','"');
     $title=str_between($video,'title": "','",');
-    $image="http://www.dancetrippin.tv/media/".str_between($video,'image": "','"');
+    $image="http://new.dancetrippin.tv/media/".str_between($video,'image": "','"');
     $image=str_replace(" ","%20",$image);
     $description=str_between($video,'description": "','",');
     $location=str_between($video,'location": "','",');

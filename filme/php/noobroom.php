@@ -27,7 +27,7 @@ $l = urldecode($queryArr[1]);
   optionsArray = readStringFromFile(optionsPath);
   if(optionsArray == null)
   {
-    subtitle = "off";
+    subtitle = "on";
      server = "-1";
      sserver="Default";
      hhd = "0";
@@ -40,7 +40,7 @@ $l = urldecode($queryArr[1]);
     hhd = getStringArrayAt(optionsArray, 2);
   }
   if (subtitle == " " || subtitle == "" || subtitle == null)
-    subtitle = "off";
+    subtitle = "on";
   if (server == " " || server == "" || server == null)
     {
     server = "-1";
@@ -61,11 +61,10 @@ $l = urldecode($queryArr[1]);
     else if (server == "3")
       sserver="Amsterdam";
     else if (server == "0")
-      sserver="Chicago";
+      sserver="Amsterdam 2";
     else if (server == "6")
       sserver="Miami";
   setRefreshTime(1);
-  subtitle = "off";
 </onEnter>
 <onExit>
   arr = null;
@@ -196,6 +195,16 @@ if (userInput == "pagedown" || userInput == "pageup")
   setItemFocus(0);
   ret = "true";
 }
+else if (userInput == "three" || userInput == "3")
+{
+if (subtitle == "off")
+  subtitle = "on";
+else if (subtitle == "on")
+  subtitle = "off";
+else
+  subtitle = "on";
+ret = "true";
+}
 else if (userInput == "two" || userInput == "2")
 	{
      showIdle();
@@ -245,7 +254,7 @@ if (server == "-1")
 else if (server == "6")
   {
     server = "0";
-    sserver="Chicago";
+    sserver="Amsterdam 2";
   }
 else if (server == "0")
   {
@@ -342,7 +351,7 @@ foreach($videos as $video) {
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + subtitle + "," + server + "," + hhd;
+     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + "no" + "," + server + "," + hhd;
      movie=geturl(url);
      cancelIdle();
     storagePath = getStoragePath("tmp");
@@ -396,7 +405,10 @@ foreach ($arr as $key => $val) {
  $title=$arr[$key][0];
  $link=$arr[$key][1];
    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-   $title1=$title;
+   if (!$srt[$link])
+      $title1=$title." (*)";
+   else
+      $title1=$title;
    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
      echo '
      <item>
@@ -404,7 +416,7 @@ foreach ($arr as $key => $val) {
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + subtitle + "," + server + "," + hhd;
+     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + "no" + "," + server + "," + hhd;
      movie=geturl(url);
      cancelIdle();
     storagePath = getStoragePath("tmp");

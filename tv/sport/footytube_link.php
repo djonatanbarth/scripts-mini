@@ -33,7 +33,7 @@ $s="/youtube\.c|videa\.hu\/flvplayer|kiwi\.kz|sapo\.pt|dailymotion|dai\.ly|sporx
 for ($i=0;$i<count($links);$i++) {
   $cur_link=$links[$i];
   if (preg_match($s,$cur_link)) {
-   if (strpos($cur_link, 'youtube.com/watch') !== false){
+   if ((strpos($cur_link, 'youtube.com/watch') !== false) || (strpos($cur_link,'youtube.com/embed') !== false)){
      //echo $cur_link;
      $link=youtube($cur_link);
    } elseif (strpos($cur_link,'kiwi.kz') !==false){

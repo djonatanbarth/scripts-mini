@@ -179,14 +179,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>TV Live - RTMP list</title>
 <link><?php echo $host; ?>/scripts/tv/rtmp.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>Playlist from database.eu.pn</title>
 <link><?php echo $host; ?>/scripts/tv/simpletv.php</link>
@@ -254,12 +254,5 @@ ret;
 </item>
 -->
 
-
-<item>
-<title>Other (online list)</title>
-<link>http://hdforall.uphero.com/tv1/temp_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
 </channel>
 </rss>                                                                                                                             
