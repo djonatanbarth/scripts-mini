@@ -59,7 +59,8 @@ if ($server == "0")
 elseif ($server == "3")
    $movie="http://178.159.0.82/index.php?file=".$id."&start=0&type=flv&hd=0&auth=1";
 elseif ($server == "6")
-   $movie="http://96.47.226.90/index.php?file=".$id."&start=0&type=flv&hd=0&auth=1";
+   //$movie="http://96.47.226.90/index.php?file=".$id."&start=0&type=flv&hd=0&auth=1";
+   $movie="http://96.44.147.140/index.php?file=".$id."&start=0&type=flv&hd=0&auth=0";
 else
 {
   $ch = curl_init();

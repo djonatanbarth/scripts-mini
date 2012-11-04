@@ -169,8 +169,12 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $image="image/tv_radio.png";
-if (file_exists("/usr/local/etc/ohlulz.dat")) {
-$html=file_get_contents("/usr/local/etc/ohlulz.dat");
+if (file_exists("/data"))
+  $f= "/data/ohlulz.dat";
+else
+  $f="/usr/local/etc/ohlulz.dat";
+if (file_exists($f)) {
+$html=file_get_contents($f);
 $videos=explode("<item>",$html);
 unset($videos[0]);
 $videos = array_values($videos);

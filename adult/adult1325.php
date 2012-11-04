@@ -160,13 +160,13 @@ $host = "http://127.0.0.1/cgi-bin";
 <channel>
 
 <title>Adult Channel - XXX</title>
-<!--
+
 <item>
-<title>Porn TV</title>
-<link><?php echo $host; ?>/scripts/adult/porn_tv.php</link>
+<title>online-moviez</title>
+<link><?php echo $host; ?>/scripts/filme/php/online-moviez1.php</link>
 <image>image/adult.png</image>
 </item>
--->
+
 <!--
 <item>
 <title>Porn TV</title>

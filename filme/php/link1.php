@@ -1003,28 +1003,32 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $h = curl_exec($ch);
    $link=str_between($h,'file:"','"');
 } elseif (strpos($filelink,"streamcloud.eu") !==false) {
-   //http://streamcloud.eu/jeg408oelwcw/xf-captiva.avi.html
-   //op=download1&usr_login=&id=jeg408oelwcw&fname=xf-captiva.avi&referer=http%3A%2F%2Fwww.movie2k.to%2FVilla-Captive-online-film-1234383.html&hash=fx4bvg2nd5khvqjpot7h6ycltzfjppaf&imhuman=Weiter+zum+Video
-   //op=download1&usr_login=&id=jeg408oelwcw&fname=xf-captiva.avi&referer=http%3A%2F%2Fstreamcloud.eu%2Fjeg408oelwcw%2Fxf-captiva.avi.html&hash=5whpmtswdlu27y4fvuypmj6os4w7oxmj&imhuman=Weiter+zum+Video
+   //op=download1&usr_login=&id=zo88qnclmj5z&fname=666_-_Best_Of_Piss_Nr_2_German.avi&referer=http%3A%2F%2Fstreamcloud.eu%2Fzo88qnclmj5z%2F666_-_Best_Of_Piss_Nr_2_German.avi.html&hash=&imhuman=Weiter+zum+Video
    $string = $filelink;
    $ch = curl_init($string);
    curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
    curl_setopt($ch, CURLOPT_REFERER, $string);
    curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
    $h = curl_exec($ch);
    $id=str_between($h,'"id" value="','"');
    $fname=str_between($h,'"fname" value="','"');
    $reff=str_between($h,'referer" value="','"');
    $hash=str_between($h,'hash" value="','"');
    $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=".urlencode($reff)."&hash=".$hash."&imhuman=Weiter+zum+Video";
-   sleep(10);
+   sleep(11);
+   //echo $post;
    curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
    curl_setopt($ch, CURLOPT_REFERER, $string);
    curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
    curl_setopt ($ch, CURLOPT_POST, 1);
    curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
    $h = curl_exec($ch);
+   //echo $h;
    $link=str_between($h,'file: "','"');
+   //file: "
 } elseif (strpos($filelink,"zalaa.com") !==false) {
    //http://www.zalaa.com/4qkcjgb868wy
    //http://www.zalaa.com/o337wb48sc5t/gefaehrtn.dvdscr-pwnd.avi.htm

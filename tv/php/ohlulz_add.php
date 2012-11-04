@@ -6,8 +6,12 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 clearstatcache();
-if (file_exists("/usr/local/etc/ohlulz.dat")) {
-   $dir = "/usr/local/etc/ohlulz.dat";
+if (file_exists("/data"))
+  $f= "/data/ohlulz.dat";
+else
+  $f="/usr/local/etc/ohlulz.dat";
+if (file_exists($f)) {
+   $dir = $f;
 } else {
      $dir = "";
 }
@@ -24,14 +28,15 @@ $html=file_get_contents($dir);
 if (strpos($html,$link) === false)
    $html=$html."<item><link>".$link."</link><title>".$title."</title></item>";
 } else {
-$dir = "/usr/local/etc/ohlulz.dat";
+$dir = $f;
 $html="<item><link>".$link."</link><title>".$title."</title></item>";
 }
-exec('rm -f  /usr/local/etc/ohlulz.dat');
+$exec = "rm -f ".$f;
+exec($exec);
 file_put_contents($dir,$html);
 } else if ($mod="delete") {
 if ($dir <> "") {
-$html=file_get_contents("/usr/local/etc/ohlulz.dat");
+$html=file_get_contents($f);
 $out="";
 $first=0;
 $videos=explode("<item>",$html);
@@ -51,10 +56,12 @@ foreach($videos as $video) {
 }
 }
 if ($out <> "") {
-exec('rm -f  /usr/local/etc/ohlulz.dat');
-file_put_contents("/usr/local/etc/ohlulz.dat",$out);
+$exec = "rm -f ".$f;
+exec($exec);
+file_put_contents($f,$out);
 } else {
-exec('rm -f  /usr/local/etc/ohlulz.dat');
+$exec = "rm -f ".$f;
+exec($exec);
 }
 }
 

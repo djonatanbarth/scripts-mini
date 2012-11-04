@@ -335,7 +335,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/podcast.png" />
 	<annotation>HD-Podcasts (High Definition)  | podcast.tv is an international video podcast directory with podcast recommendations and useful podcasting functions for enjoying podcasts and learn how to podcast</annotation>
 </item>
-
+<!--
 <item>
 <title>clipfish.de</title>
 	<link><?php echo $host; ?>/scripts/clip/php/clipfish.php?query=1</link>
@@ -353,6 +353,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/web_de.gif" />
 	<annotation>Lustige Videos, gratis Nachrichten-Videos, Promi-Videos, Game-Trailer und Kino-Trailer - WEB.DE Video Community - WEB.DE Video</annotation>
 </item>
+-->
 <!--
 <item>
     <title>ARD.de</title>
@@ -411,6 +412,7 @@ columnCount=5
 	<annotation>Ziel von iKiwi ist es, die besten Videos des Internets auf einem Portal kostenlos anzubieten und durch innovative Funktionalitäten den Nutzern einen größtmöglichen Mehrwert und kreativen Spielraum zu bieten.</annotation>
 </item>
 -->
+<!--
 <item>
 <title>vol.at</title>
 	<link><?php echo $host; ?>/scripts/clip/php/video_vol_at.php?query=1</link>
@@ -419,7 +421,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/video_vol_at.png" />
 	<annotation>Aktuelle Nachrichten aus Vorarlberg, sterreich und der Welt: News, Sport Nachrichten, Wetter, Wirtschaft, Kultur, Stars, Veranstaltungen, Reise, Chat, uvm.</annotation>
 </item>
-
+-->
 <item>
 <title>businessworld</title>
 	<link><?php echo $host; ?>/scripts/clip/php/businessworld.php?query=1</link>
