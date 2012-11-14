@@ -195,6 +195,8 @@ function videobb($l) {
   }
   return $fl;
 }
+//http://cs527520.userapi.com/u178356934/videos/94eb44cb8f.360.mp4
+//http://cs533423.userapi.com/u164308929/video/a90195bdb0.360.mp4
 function vk($string) {
   if (strpos($string,"video_ext.php") === false) {
 	$h = file_get_contents($string);
@@ -206,16 +208,16 @@ function vk($string) {
 	$host=str_replace("\\/","/",$host);
 	$host=str_replace("\/","/",$host);
 	$vtag=str_between($l,'"vtag\":\"','\"');
-	$r=$host."u".$uid."/video/".$vtag.".360.mp4";
+	$r=$host."u".$uid."/videos/".$vtag.".360.mp4";
  } else {
     $baza = file_get_contents($string);
     $host = str_between($baza,"var video_host = '","'");
     $uid = str_between($baza,"var video_uid = '","'");
     $vtag = str_between($baza,"var video_vtag = '","'");
     $hd = str_between($baza,"var video_max_hd = '","'");
-    $r = $host."u".$uid."/video/".$vtag.".360.mp4";
+    $r = $host."u".$uid."/videos/".$vtag.".360.mp4";
     if ($hd == "0") {
-      $r = $host."u".$uid."/video/".$vtag.".240.mp4";
+      $r = $host."u".$uid."/videos/".$vtag.".240.mp4";
     }
  }
   return $r;
@@ -890,6 +892,31 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
    $h = curl_exec($ch);
    $link=unpack_DivXBrowserPlugin(2,$h);
+} elseif (strpos($filelink,'videos.sapo.pt') !==false){
+      //http://rd3.videos.sapo.pt/play?file=http://rd3.videos.sapo.pt/HMFMZuGlZ3DMa4Waupzq/mov/1
+      if (strpos($filelink,"file=") === false) {
+      $v_id = substr(strrchr($filelink, "/"), 1);
+      $link = "http://rd3.videos.sapo.pt/".$v_id."/mov/1" ;
+      } else {
+      $t1=explode("file=",$filelink);
+      $link=$t1[1];
+      }
+} elseif (strpos($filelink,'sporxtv.com') !==false) {
+      $html = file_get_contents($filelink);
+      $link = str_between($html,"file: '","'");
+} elseif (strpos($filelink,'videa.hu') !==false){
+      preg_match('/(v=)([A-Za-z0-9_]+)/', $filelink, $m);
+      $id=$m[2];
+      if ($id <> "") {
+         $filelink="http://videa.hu/videok/sport/".$id;
+         $html = file_get_contents($cur_link);
+         $id=str_between($html,"flvplayer.swf?f=",".0&");
+         $link="http://videa.hu/static/video/".$id;
+      } else {
+         $html = file_get_contents($filelink);
+         $id=str_between($html,"flvplayer.swf?f=",".0&");
+         $link="http://videa.hu/static/video/".$id;
+      }
 }
 //////////////////////////////////////////////////////////////////
 if (strpos($filelink, 'seriale.filmesubtitrate.info') !==false) {

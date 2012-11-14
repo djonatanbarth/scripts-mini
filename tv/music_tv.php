@@ -156,18 +156,19 @@ ret;
 	</item_template>
 
 <channel>
-	<title>TV Live - Music</title>
+	<title>TV Live - Muzica</title>
 	<menu>main menu</menu>
 
    <item>
    <title>OneHD Concerts</title>
    <link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_concert.rss</link>
    </item>
+
    <item>
     <title>Virgin TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://fms.105.net:1935/live/virgin1",10);</onClick>
   </item>
-
+   <!--
    <item>
     <title>Top 40</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://fms.105.net:1935/live/charts1",10);</onClick>
@@ -182,7 +183,7 @@ ret;
     <title>Legend</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://fms.105.net:1935/live/legend1",10);</onClick>
   </item>
-
+   -->
    <item>
     <title>Radio 105 TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://fms.105.net:1935/live/105Test1",10);</onClick>
@@ -192,7 +193,7 @@ ret;
     <title>Radio Monte Carlo</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://fms.105.net:1935/live/rmc1",10);</onClick>
   </item>
-
+    <!--
    <item>
     <title>Music 1</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://80.94.85.180/live/stream21",10);</onClick>
@@ -202,7 +203,7 @@ ret;
     <title>DeeJay TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,http://wm.streaming.kataweb.it/reflector:40004",10);</onClick>
   </item>
-
+    -->
    <item>
     <title>1 Music</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://80.232.172.37/rtplive/vlc.sdp",10);</onClick>
@@ -232,12 +233,12 @@ ret;
     <title>Soleil TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://live240.impek.com/soleiltv?MSWMExt=.asf",10);</onClick>
   </item>
-
+   <!--
    <item>
     <title>Music Box</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://81.89.49.210/musicbox",10);</onClick>
   </item>
-
+  -->
 
    <item>
     <title>HIP HOP TV</title>
@@ -248,17 +249,17 @@ ret;
     <title>Spirit Television</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://nyc04.egihosting.com/839181",10);</onClick>
   </item>
-
+   <!--
    <item>
     <title>StreetClip TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://85.214.55.57:1234",10);</onClick>
   </item>
-
+   -->
    <item>
     <title>Labelle TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtsp://www.labelletv.com/labelletv",10);</onClick>
   </item>
-
+   <!--
    <item>
     <title>Ibiza on TV Live TV from Italy</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtsp://81.174.67.45/ibizaontv",10);</onClick>
@@ -268,7 +269,7 @@ ret;
     <title>La Locale</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtsp://stream.lalocale.com/lalocale",10);</onClick>
   </item>
-
+   -->
    <item>
     <title>Play TV</title>
     <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtsp://93.103.4.16/playtv",10);</onClick>

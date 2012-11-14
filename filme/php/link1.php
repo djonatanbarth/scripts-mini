@@ -380,16 +380,16 @@ function vk($string) {
 	$host=str_replace("\\/","/",$host);
 	$host=str_replace("\/","/",$host);
 	$vtag=str_between($l,'"vtag\":\"','\"');
-	$r=$host."u".$uid."/video/".$vtag.".360.mp4";
+	$r=$host."u".$uid."/videos/".$vtag.".360.mp4";
  } else {
     $baza = file_get_contents($string);
     $host = str_between($baza,"var video_host = '","'");
     $uid = str_between($baza,"var video_uid = '","'");
     $vtag = str_between($baza,"var video_vtag = '","'");
     $hd = str_between($baza,"var video_max_hd = '","'");
-    $r = $host."u".$uid."/video/".$vtag.".360.mp4";
+    $r = $host."u".$uid."/videos/".$vtag.".360.mp4";
     if ($hd == "0") {
-      $r = $host."u".$uid."/video/".$vtag.".240.mp4";
+      $r = $host."u".$uid."/videos/".$vtag.".240.mp4";
     }
  }
   return $r;

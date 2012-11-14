@@ -1,0 +1,1273 @@
+<?xml version='1.0' encoding='UTF8' ?>
+<rss version="2.0">
+<script>
+  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
+
+  storagePath             = getStoragePath("tmp");
+  storagePath_stream      = storagePath + "stream.dat";
+  storagePath_playlist    = storagePath + "playlist.dat";
+
+  error_info          = "";
+</script>
+<onEnter>
+  startitem = "middle";
+  setRefreshTime(1);
+</onEnter>
+
+<onRefresh>
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
+</onRefresh>
+
+<mediaDisplay name="threePartsView"
+	sideLeftWidthPC="0"
+	sideRightWidthPC="0"
+
+	headerImageWidthPC="0"
+	selectMenuOnRight="no"
+	autoSelectMenu="no"
+	autoSelectItem="no"
+	itemImageHeightPC="0"
+	itemImageWidthPC="0"
+	itemXPC="8"
+	itemYPC="25"
+	itemWidthPC="80"
+	itemHeightPC="8"
+	capXPC="8"
+	capYPC="25"
+	capWidthPC="80"
+	capHeightPC="64"
+	itemBackgroundColor="0:0:0"
+	itemPerPage="8"
+  itemGap="0"
+	bottomYPC="90"
+	backgroundColor="0:0:0"
+	showHeader="no"
+	showDefaultInfo="no"
+	imageFocus=""
+	sliding="no"
+	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+>
+
+  	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>getPageInfo("pageTitle");</script>
+		</text>
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="55" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    2= Add to favorite, 4/6 jump +- 100, 7/9 jump +- 500
+		</text>
+  	<text redraw="yes" offsetXPC="75" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
+		</text>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(annotation); annotation;</script>
+		</text>
+
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+
+		<itemDisplay>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
+				<script>
+					idx = getQueryItemIndex();
+					focus = getFocusItemIndex();
+					if(focus==idx)
+					{
+					  location = getItemInfo(idx, "location");
+					  annotation = getItemInfo(idx, "annotation");
+					}
+					getItemInfo(idx, "title");
+				</script>
+				<fontSize>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "14"; else "14";
+  				</script>
+				</fontSize>
+			  <backgroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "10:80:120"; else "-1:-1:-1";
+  				</script>
+			  </backgroundColor>
+			  <foregroundColor>
+  				<script>
+  					idx = getQueryItemIndex();
+  					focus = getFocusItemIndex();
+  			    if(focus==idx) "255:255:255"; else "140:140:140";
+  				</script>
+			  </foregroundColor>
+			</text>
+
+		</itemDisplay>
+
+<onUserInput>
+<script>
+ret = "false";
+userInput = currentUserInput();
+titlu="";
+if (userInput == "pagedown" || userInput == "pageup")
+{
+  idx = Integer(getFocusItemIndex());
+  if (userInput == "pagedown")
+  {
+    idx -= -8;
+    if(idx &gt;= itemCount)
+      idx = itemCount-1;
+  }
+  else
+  {
+    idx -= 8;
+    if(idx &lt; 0)
+      idx = 0;
+  }
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "nine" || userInput == "9")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -500;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "seven" || userInput == "7")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 500;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "six" || userInput == "6")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= -100;
+    if(idx &gt;= itemCount)
+    idx = itemCount-1;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if(userInput == "four" || userInput == "4")
+{
+    idx = Integer(getFocusItemIndex());
+    idx -= 100;
+    if(idx &lt; 0)
+      idx = 0;
+
+  print("new idx: "+idx);
+  setFocusItemIndex(idx);
+	setItemFocus(0);
+  "true";
+}
+else if (userInput == "two" || userInput == "2")
+{
+ showIdle();
+ url="http://127.0.0.1/cgi-bin/scripts/tv/php/ohlulz_add.php?mod=add*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1");
+ dummy=getUrl(url);
+ cancelIdle();
+ ret="true";
+}
+redrawDisplay();
+ret;
+</script>
+</onUserInput>
+
+	</mediaDisplay>
+
+	<item_template>
+		<mediaDisplay  name="threePartsView" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10">
+        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+        <idleImage>image/POPUP_LOADING_02.png</idleImage>
+        <idleImage>image/POPUP_LOADING_03.png</idleImage>
+        <idleImage>image/POPUP_LOADING_04.png</idleImage>
+        <idleImage>image/POPUP_LOADING_05.png</idleImage>
+        <idleImage>image/POPUP_LOADING_06.png</idleImage>
+        <idleImage>image/POPUP_LOADING_07.png</idleImage>
+        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		</mediaDisplay>
+
+	</item_template>
+<channel>
+	<title>RTMP List</title>
+	<menu>main menu</menu>
+
+    <item>
+    <title>Active Channel (United Kingdom)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.theactivechannel.com/flash/flowplayer.rtmp.swf%20-y%20livestream%20-p%20http://www.theactivechannel.com/live/%20live=1,rtmp://d1yolrx8wdti.rtmphost.com/simulcast";
+    titlu="rtmp://d1yolrx8wdti.rtmphost.com/simulcast";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://d1yolrx8wdti.rtmphost.com/simulcast</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.theactivechannel.com%2Fflash%2Fflowplayer.rtmp.swf%2520-y%2520livestream%2520-p%2520http%3A%2F%2Fwww.theactivechannel.com%2Flive%2F%2520live%3D1%2Crtmp%3A%2F%2Fd1yolrx8wdti.rtmphost.com%2Fsimulcast</link1>
+    <title1>Active+Channel+%28United+Kingdom%29</title1>
+    </item>
+    
+    <item>
+    <title>Al Jazeera News (YouTube)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://s.ytimg.com/yt/swfbin/watch_as3-vflpp9opi.swf%20-y%20aljazeera_eng_high%20-p%20http://www.youtube.com/user/AlJazeeraEnglish,rtmp://aljazeeraflashlivefs.fplive.net/aljazeeraflashlive-live";
+    titlu="rtmp://aljazeeraflashlivefs.fplive.net/aljazeeraflashlive-live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://aljazeeraflashlivefs.fplive.net/aljazeeraflashlive-live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fs.ytimg.com%2Fyt%2Fswfbin%2Fwatch_as3-vflpp9opi.swf%2520-y%2520aljazeera_eng_high%2520-p%2520http%3A%2F%2Fwww.youtube.com%2Fuser%2FAlJazeeraEnglish%2Crtmp%3A%2F%2Faljazeeraflashlivefs.fplive.net%2Faljazeeraflashlive-live</link1>
+    <title1>Al+Jazeera+News+%28YouTube%29</title1>
+    </item>
+    
+    <item>
+    <title>ALjazeera News #2 [HQ] (Qatar)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.elahmad.com/tv/swf/al_jazeera_english.swf%20-y%20aljazeera_english_1%20-p%20http://www.elahmad.com/%20live=1,rtmp://aljazeeraflashlivefs.fplive.net/aljazeeraflashlive-live/";
+    titlu="rtmp://aljazeeraflashlivefs.fplive.net/aljazeeraflashlive-live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://aljazeeraflashlivefs.fplive.net/aljazeeraflashlive-live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.elahmad.com%2Ftv%2Fswf%2Fal_jazeera_english.swf%2520-y%2520aljazeera_english_1%2520-p%2520http%3A%2F%2Fwww.elahmad.com%2F%2520live%3D1%2Crtmp%3A%2F%2Faljazeeraflashlivefs.fplive.net%2Faljazeeraflashlive-live%2F</link1>
+    <title1>ALjazeera+News+%232+%5BHQ%5D+%28Qatar%29</title1>
+    </item>
+    
+    <item>
+    <title>Australian Christian Channel</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://mediasuite.316networks.com/templates/livefull2.swf%20-y%20Aus_Christian_1@55415%20-p%20http://mediasuite.316networks.com/,rtmp://80.150.142.55:1935/live?_fcs_vhost=cp54218.live.edgefcs.net";
+    titlu="rtmp://80.150.142.55:1935/live?_fcs_vhost=cp54218.live.edgefcs.net";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://80.150.142.55:1935/live?_fcs_vhost=cp54218.live.edgefcs.net</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fmediasuite.316networks.com%2Ftemplates%2Flivefull2.swf%2520-y%2520Aus_Christian_1%4055415%2520-p%2520http%3A%2F%2Fmediasuite.316networks.com%2F%2Crtmp%3A%2F%2F80.150.142.55%3A1935%2Flive%3F_fcs_vhost%3Dcp54218.live.edgefcs.net</link1>
+    <title1>Australian+Christian+Channel</title1>
+    </item>
+    
+    <item>
+    <title>BBC World #2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.livestation.com/flash/player/5.4/player.swf%20-y%20bbcworld1_en_high.sdp%20-p%20http://www.livestation.com/,rtmp://media2.lsops.net/live/";
+    titlu="rtmp://media2.lsops.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://media2.lsops.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.livestation.com%2Fflash%2Fplayer%2F5.4%2Fplayer.swf%2520-y%2520bbcworld1_en_high.sdp%2520-p%2520http%3A%2F%2Fwww.livestation.com%2F%2Crtmp%3A%2F%2Fmedia2.lsops.net%2Flive%2F</link1>
+    <title1>BBC+World+%232</title1>
+    </item>
+    
+    <item>
+    <title>Bloomberg (US) #2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://beta.cdn.livestation.com/player/5.7/player.swf%20-y%20bloomber_en_high.sdp%20-p%20http://www.livestation.com/bloomberg,rtmp://media7.lsops.net/live/";
+    titlu="rtmp://media7.lsops.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://media7.lsops.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fbeta.cdn.livestation.com%2Fplayer%2F5.7%2Fplayer.swf%2520-y%2520bloomber_en_high.sdp%2520-p%2520http%3A%2F%2Fwww.livestation.com%2Fbloomberg%2Crtmp%3A%2F%2Fmedia7.lsops.net%2Flive%2F</link1>
+    <title1>Bloomberg+%28US%29+%232</title1>
+    </item>
+    
+    <item>
+    <title>Canal  (France)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.wat.tv/swflive.swf%20-y%20Flash-Occultation-80@9004%20-p%20http://www.wat.tv/swflive,rtmp://cp59069.live.edgefcs.net:1935/live?ovpfv=1.1/";
+    titlu="rtmp://cp59069.live.edgefcs.net:1935/live?ovpfv=1.1/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp59069.live.edgefcs.net:1935/live?ovpfv=1.1/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.wat.tv%2Fswflive.swf%2520-y%2520Flash-Occultation-80%409004%2520-p%2520http%3A%2F%2Fwww.wat.tv%2Fswflive%2Crtmp%3A%2F%2Fcp59069.live.edgefcs.net%3A1935%2Flive%3Fovpfv%3D1.1%2F</link1>
+    <title1>Canal++%28France%29</title1>
+    </item>
+    
+    <item>
+    <title>Canal 24 horas</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf%20-y%2024H_AKA_WEB_NOG@59024%20-p%20http://www.rtve.es/noticias/directo/canal-24h,rtmp://cp68975.live.edgefcs.net:443/live";
+    titlu="rtmp://cp68975.live.edgefcs.net:443/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp68975.live.edgefcs.net:443/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.rtve.es%2Fswf%2F4.1.11%2FRTVEPlayerVideo.swf%2520-y%252024H_AKA_WEB_NOG%4059024%2520-p%2520http%3A%2F%2Fwww.rtve.es%2Fnoticias%2Fdirecto%2Fcanal-24h%2Crtmp%3A%2F%2Fcp68975.live.edgefcs.net%3A443%2Flive</link1>
+    <title1>Canal+24+horas</title1>
+    </item>
+    
+    <item>
+    <title>Canal Extremadura (Spain)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://alacarta.canalextremadura.es/sites/all/modules/custom/slx_reproductor/js/mediaplayer-5.7/player.swf%20-y%20stream001%20-p%20http://alacarta.canalextremadura.es/tv/directo,rtmp://canalextremaduralivefs.fplive.net/canalextremaduralive-live";
+    titlu="rtmp://canalextremaduralivefs.fplive.net/canalextremaduralive-live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://canalextremaduralivefs.fplive.net/canalextremaduralive-live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Falacarta.canalextremadura.es%2Fsites%2Fall%2Fmodules%2Fcustom%2Fslx_reproductor%2Fjs%2Fmediaplayer-5.7%2Fplayer.swf%2520-y%2520stream001%2520-p%2520http%3A%2F%2Falacarta.canalextremadura.es%2Ftv%2Fdirecto%2Crtmp%3A%2F%2Fcanalextremaduralivefs.fplive.net%2Fcanalextremaduralive-live</link1>
+    <title1>Canal+Extremadura+%28Spain%29</title1>
+    </item>
+    
+    <item>
+    <title>Canal Vasco (Spain)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://jonas.do.am/player.swf%20-y%20eitb-CanalVasco@5519%20-p%20http://jonas.do.am/,rtmp://cp70268.live.edgefcs.net/live/";
+    titlu="rtmp://cp70268.live.edgefcs.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp70268.live.edgefcs.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fjonas.do.am%2Fplayer.swf%2520-y%2520eitb-CanalVasco%405519%2520-p%2520http%3A%2F%2Fjonas.do.am%2F%2Crtmp%3A%2F%2Fcp70268.live.edgefcs.net%2Flive%2F</link1>
+    <title1>Canal+Vasco+%28Spain%29</title1>
+    </item>
+    
+    <item>
+    <title>Cartoon Network</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.tvgloboonline.net/protegido.swf%20-y%20cartoon%20-p%20http://www.tvgloboonline.net,rtmp://178.33.231.166/live";
+    titlu="rtmp://178.33.231.166/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://178.33.231.166/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.tvgloboonline.net%2Fprotegido.swf%2520-y%2520cartoon%2520-p%2520http%3A%2F%2Fwww.tvgloboonline.net%2Crtmp%3A%2F%2F178.33.231.166%2Flive</link1>
+    <title1>Cartoon+Network</title1>
+    </item>
+    
+    <item>
+    <title>CBL Movie</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.live-onweb.com/events/low_embed_channel.swf%20-y%20-11290293_quicklive%20-p%20http://www.live-onweb.com,rtmp://188.165.233.9:51935/cblchannel/ch1/-11290293_quicklive/";
+    titlu="rtmp://188.165.233.9:51935/cblchannel/ch1/-11290293_quicklive/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://188.165.233.9:51935/cblchannel/ch1/-11290293_quicklive/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.live-onweb.com%2Fevents%2Flow_embed_channel.swf%2520-y%2520-11290293_quicklive%2520-p%2520http%3A%2F%2Fwww.live-onweb.com%2Crtmp%3A%2F%2F188.165.233.9%3A51935%2Fcblchannel%2Fch1%2F-11290293_quicklive%2F</link1>
+    <title1>CBL+Movie</title1>
+    </item>
+    
+    <item>
+    <title>CBN Live (United States)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.cbn.com/media/player/player.swf%20-y%20iptv1_1_500@42325%20-p%20http://www.cbn.com/media/player/index.aspx?s=cbnlive-1%20-a%20live/,rtmp://cp145180.live.edgefcs.net/live/";
+    titlu="rtmp://cp145180.live.edgefcs.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp145180.live.edgefcs.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.cbn.com%2Fmedia%2Fplayer%2Fplayer.swf%2520-y%2520iptv1_1_500%4042325%2520-p%2520http%3A%2F%2Fwww.cbn.com%2Fmedia%2Fplayer%2Findex.aspx%3Fs%3Dcbnlive-1%2520-a%2520live%2F%2Crtmp%3A%2F%2Fcp145180.live.edgefcs.net%2Flive%2F</link1>
+    <title1>CBN+Live+%28United+States%29</title1>
+    </item>
+    
+    <item>
+    <title>CBN News (US)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.cbn.com/media/player/player.swf%20-y%20newschannel_1_500@42322%20-p%20http://www.cbn.com/media/player/index.aspx?s=cbnlive-3,rtmp://cp145180.live.edgefcs.net/live/";
+    titlu="rtmp://cp145180.live.edgefcs.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp145180.live.edgefcs.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.cbn.com%2Fmedia%2Fplayer%2Fplayer.swf%2520-y%2520newschannel_1_500%4042322%2520-p%2520http%3A%2F%2Fwww.cbn.com%2Fmedia%2Fplayer%2Findex.aspx%3Fs%3Dcbnlive-3%2Crtmp%3A%2F%2Fcp145180.live.edgefcs.net%2Flive%2F</link1>
+    <title1>CBN+News+%28US%29</title1>
+    </item>
+    
+    <item>
+    <title>City News Toronto</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.citytv.com/swf/NowPlaying.swf%20-y%20Citynewsch_online@15402%20-p%20http://www.citytv.com,rtmp://cp105185.live.edgefcs.net:1935/live/";
+    titlu="rtmp://cp105185.live.edgefcs.net:1935/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp105185.live.edgefcs.net:1935/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.citytv.com%2Fswf%2FNowPlaying.swf%2520-y%2520Citynewsch_online%4015402%2520-p%2520http%3A%2F%2Fwww.citytv.com%2Crtmp%3A%2F%2Fcp105185.live.edgefcs.net%3A1935%2Flive%2F</link1>
+    <title1>City+News+Toronto</title1>
+    </item>
+    
+    <item>
+    <title>Create and Craft (UK)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.idealworld.tv/common/flash/showpage/liveplayer.swf%20-y%20createandcraft2%20-p%20http://www.idealworld.tv/WatchTvLive.aspx,rtmp://live.simplestreamcdn.net/idealworld/chan=createandcraft";
+    titlu="rtmp://live.simplestreamcdn.net/idealworld/chan=createandcraft";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://live.simplestreamcdn.net/idealworld/chan=createandcraft</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.idealworld.tv%2Fcommon%2Fflash%2Fshowpage%2Fliveplayer.swf%2520-y%2520createandcraft2%2520-p%2520http%3A%2F%2Fwww.idealworld.tv%2FWatchTvLive.aspx%2Crtmp%3A%2F%2Flive.simplestreamcdn.net%2Fidealworld%2Fchan%3Dcreateandcraft</link1>
+    <title1>Create+and+Craft+%28UK%29</title1>
+    </item>
+    
+    <item>
+    <title>Deluxe Music (Germany)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static.staging.deluxemusic.tv.dl1.ipercast.net/theme/deluxemusic.tv/flash/player.swf%20-y%20web_850%20-p%20http://deluxemusic.tv.staging.ipercast.net/,rtmp://flash.cdn.deluxemusic.tv/deluxemusic.tv-live/";
+    titlu="rtmp://flash.cdn.deluxemusic.tv/deluxemusic.tv-live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://flash.cdn.deluxemusic.tv/deluxemusic.tv-live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fstatic.staging.deluxemusic.tv.dl1.ipercast.net%2Ftheme%2Fdeluxemusic.tv%2Fflash%2Fplayer.swf%2520-y%2520web_850%2520-p%2520http%3A%2F%2Fdeluxemusic.tv.staging.ipercast.net%2F%2Crtmp%3A%2F%2Fflash.cdn.deluxemusic.tv%2Fdeluxemusic.tv-live%2F</link1>
+    <title1>Deluxe+Music+%28Germany%29</title1>
+    </item>
+    
+    <item>
+    <title>Etb Sat (Spain)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://jonas.do.am/player.swf%20-y%20eitb-ETBSat@5219%20-p%20http://jonas.do.am,rtmp://cp70268.live.edgefcs.net/live/";
+    titlu="rtmp://cp70268.live.edgefcs.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp70268.live.edgefcs.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fjonas.do.am%2Fplayer.swf%2520-y%2520eitb-ETBSat%405219%2520-p%2520http%3A%2F%2Fjonas.do.am%2Crtmp%3A%2F%2Fcp70268.live.edgefcs.net%2Flive%2F</link1>
+    <title1>Etb+Sat+%28Spain%29</title1>
+    </item>
+    
+    <item>
+    <title>EuroNews (English)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.euronews.com/media/player_live_1_12.swf%20-p%20http://www.euronews.com/news/streaming-live/,rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive/en_video750_flash_all.sdp";
+    titlu="rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive/en_video750_flash_all.sdp";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive/en_video750_flash_all.sdp</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.euronews.com%2Fmedia%2Fplayer_live_1_12.swf%2520-p%2520http%3A%2F%2Fwww.euronews.com%2Fnews%2Fstreaming-live%2F%2Crtmp%3A%2F%2Ffr-par-1.stream-relay.hexaglobe.net%3A1935%2Frtpeuronewslive%2Fen_video750_flash_all.sdp</link1>
+    <title1>EuroNews+%28English%29</title1>
+    </item>
+    
+    <item>
+    <title>EuroNews (France)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://fr.euronews.net/media/player_live_1_12.swf%20-y%20fr_video750_flash_all.sdp%20-p%20http://fr.euronews.net/infos/en-direct/,rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    titlu="rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Ffr.euronews.net%2Fmedia%2Fplayer_live_1_12.swf%2520-y%2520fr_video750_flash_all.sdp%2520-p%2520http%3A%2F%2Ffr.euronews.net%2Finfos%2Fen-direct%2F%2Crtmp%3A%2F%2Ffr-par-1.stream-relay.hexaglobe.net%3A1935%2Frtpeuronewslive</link1>
+    <title1>EuroNews+%28France%29</title1>
+    </item>
+    
+    <item>
+    <title>EuroNews (Germany)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://de.euronews.net/media/player_live_1_12.swf%20-y%20de_video750_flash_all.sdp%20-p%20http://de.euronews.net/nachrichten/livestream/,rtmp://fr-par-2.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    titlu="rtmp://fr-par-2.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fr-par-2.stream-relay.hexaglobe.net:1935/rtpeuronewslive</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fde.euronews.net%2Fmedia%2Fplayer_live_1_12.swf%2520-y%2520de_video750_flash_all.sdp%2520-p%2520http%3A%2F%2Fde.euronews.net%2Fnachrichten%2Flivestream%2F%2Crtmp%3A%2F%2Ffr-par-2.stream-relay.hexaglobe.net%3A1935%2Frtpeuronewslive</link1>
+    <title1>EuroNews+%28Germany%29</title1>
+    </item>
+    
+    <item>
+    <title>EuroNews (Italy)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://it.euronews.net/media/player_live_1_12.swf%20-y%20it_video750_flash_all.sdp%20-p%20http://it.euronews.net/notizie/in-diretta/,rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    titlu="rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fit.euronews.net%2Fmedia%2Fplayer_live_1_12.swf%2520-y%2520it_video750_flash_all.sdp%2520-p%2520http%3A%2F%2Fit.euronews.net%2Fnotizie%2Fin-diretta%2F%2Crtmp%3A%2F%2Ffr-par-1.stream-relay.hexaglobe.net%3A1935%2Frtpeuronewslive</link1>
+    <title1>EuroNews+%28Italy%29</title1>
+    </item>
+    
+    <item>
+    <title>EuroNews (Spain)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://es.euronews.net/media/player_live_1_12.swf%20-y%20es_video750_flash_all.sdp%20-p%20http://es.euronews.net/noticias/en-directo/,rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    titlu="rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fr-par-1.stream-relay.hexaglobe.net:1935/rtpeuronewslive</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fes.euronews.net%2Fmedia%2Fplayer_live_1_12.swf%2520-y%2520es_video750_flash_all.sdp%2520-p%2520http%3A%2F%2Fes.euronews.net%2Fnoticias%2Fen-directo%2F%2Crtmp%3A%2F%2Ffr-par-1.stream-relay.hexaglobe.net%3A1935%2Frtpeuronewslive</link1>
+    <title1>EuroNews+%28Spain%29</title1>
+    </item>
+    
+    <item>
+    <title>HGTV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.tikilive.com/public/flash/viewerModules/player/PlayerModule.swf%20-p%20http://myiplayer.com/channeliframes/hgtv.html,rtmp://fms2.tikilive.com:1935/view/25503_222/stream25503";
+    titlu="rtmp://fms2.tikilive.com:1935/view/25503_222/stream25503";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fms2.tikilive.com:1935/view/25503_222/stream25503</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.tikilive.com%2Fpublic%2Fflash%2FviewerModules%2Fplayer%2FPlayerModule.swf%2520-p%2520http%3A%2F%2Fmyiplayer.com%2Fchanneliframes%2Fhgtv.html%2Crtmp%3A%2F%2Ffms2.tikilive.com%3A1935%2Fview%2F25503_222%2Fstream25503</link1>
+    <title1>HGTV</title1>
+    </item>
+    
+    <item>
+    <title>ITV 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://static2.sawlive.tv/player.swf%20-p%20http://sawlive.tv/,rtmp://213.152.180.220/app/12028";
+    titlu="rtmp://213.152.180.220/app/12028";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://213.152.180.220/app/12028</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fstatic2.sawlive.tv%2Fplayer.swf%2520-p%2520http%3A%2F%2Fsawlive.tv%2F%2Crtmp%3A%2F%2F213.152.180.220%2Fapp%2F12028</link1>
+    <title1>ITV+1</title1>
+    </item>
+    
+    <item>
+    <title>La 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf%20-y%20LA1_AKA_WEB_NOG@58877%20-p%20http://www.rtve.es/noticias/directo-la-1,rtmp://cp68975.live.edgefcs.net:1935/live";
+    titlu="rtmp://cp68975.live.edgefcs.net:1935/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp68975.live.edgefcs.net:1935/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.rtve.es%2Fswf%2F4.1.11%2FRTVEPlayerVideo.swf%2520-y%2520LA1_AKA_WEB_NOG%4058877%2520-p%2520http%3A%2F%2Fwww.rtve.es%2Fnoticias%2Fdirecto-la-1%2Crtmp%3A%2F%2Fcp68975.live.edgefcs.net%3A1935%2Flive</link1>
+    <title1>La+1</title1>
+    </item>
+    
+    <item>
+    <title>La 2</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.rtve.es/swf/4.1.11/RTVEPlayerVideo.swf%20-y%20LA2_AKA_WEB_NOG@60554%20-p%20http://www.rtve.es/television/la-2-directo,rtmp://cp68975.live.edgefcs.net:1935/live";
+    titlu="rtmp://cp68975.live.edgefcs.net:1935/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp68975.live.edgefcs.net:1935/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.rtve.es%2Fswf%2F4.1.11%2FRTVEPlayerVideo.swf%2520-y%2520LA2_AKA_WEB_NOG%4060554%2520-p%2520http%3A%2F%2Fwww.rtve.es%2Ftelevision%2Fla-2-directo%2Crtmp%3A%2F%2Fcp68975.live.edgefcs.net%3A1935%2Flive</link1>
+    <title1>La+2</title1>
+    </item>
+    
+    <item>
+    <title>La 6 (Italy)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://webtv.la6.tv/swf/player.swf%20-y%20la6.stream%20-p%20http://webtv.la6.tv/,rtmp://la6.stream.internetone.it/streaming";
+    titlu="rtmp://la6.stream.internetone.it/streaming";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://la6.stream.internetone.it/streaming</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwebtv.la6.tv%2Fswf%2Fplayer.swf%2520-y%2520la6.stream%2520-p%2520http%3A%2F%2Fwebtv.la6.tv%2F%2Crtmp%3A%2F%2Fla6.stream.internetone.it%2Fstreaming</link1>
+    <title1>La+6+%28Italy%29</title1>
+    </item>
+    
+    <item>
+    <title>La Tele (Switzerland)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.latele.ch/webtv/MAPlayer.swf%20-y%20latele%20-p%20http://www.latele.ch/,rtmp://rtmp.infomaniak.ch:1935/livecast";
+    titlu="rtmp://rtmp.infomaniak.ch:1935/livecast";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://rtmp.infomaniak.ch:1935/livecast</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.latele.ch%2Fwebtv%2FMAPlayer.swf%2520-y%2520latele%2520-p%2520http%3A%2F%2Fwww.latele.ch%2F%2Crtmp%3A%2F%2Frtmp.infomaniak.ch%3A1935%2Flivecast</link1>
+    <title1>La+Tele+%28Switzerland%29</title1>
+    </item>
+    
+    <item>
+    <title>L-TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.blitzvideoserver06.de/blitzvideoplayer4.swf%20-y%20livestream%20-p%20http://www.l-tv-live.de,rtmp://62.113.210.105/ltv-live";
+    titlu="rtmp://62.113.210.105/ltv-live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://62.113.210.105/ltv-live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.blitzvideoserver06.de%2Fblitzvideoplayer4.swf%2520-y%2520livestream%2520-p%2520http%3A%2F%2Fwww.l-tv-live.de%2Crtmp%3A%2F%2F62.113.210.105%2Fltv-live</link1>
+    <title1>L-TV</title1>
+    </item>
+    
+    <item>
+    <title>NASA (US)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.nasa.gov/templateimages/redesign/flash_player/swf/4.5/player.swf%20-y%20MED-HQ-Flash@42814%20-p%20http://www.nasa.gov/multimedia/nasatv/media_flash.html,rtmp://cp76072.live.edgefcs.net/live/";
+    titlu="rtmp://cp76072.live.edgefcs.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp76072.live.edgefcs.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.nasa.gov%2Ftemplateimages%2Fredesign%2Fflash_player%2Fswf%2F4.5%2Fplayer.swf%2520-y%2520MED-HQ-Flash%4042814%2520-p%2520http%3A%2F%2Fwww.nasa.gov%2Fmultimedia%2Fnasatv%2Fmedia_flash.html%2Crtmp%3A%2F%2Fcp76072.live.edgefcs.net%2Flive%2F</link1>
+    <title1>NASA+%28US%29</title1>
+    </item>
+    
+    <item>
+    <title>NASA HD</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://cdn1.ustream.tv/swf/4/viewer.rsl.705.swf%20-y%20nasahd@55196%20-p%20http://www.nasa.gov/multimedia/nasatv/ustream.html,rtmp://cp39920.live.edgefcs.net:1935/live";
+    titlu="rtmp://cp39920.live.edgefcs.net:1935/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp39920.live.edgefcs.net:1935/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fcdn1.ustream.tv%2Fswf%2F4%2Fviewer.rsl.705.swf%2520-y%2520nasahd%4055196%2520-p%2520http%3A%2F%2Fwww.nasa.gov%2Fmultimedia%2Fnasatv%2Fustream.html%2Crtmp%3A%2F%2Fcp39920.live.edgefcs.net%3A1935%2Flive</link1>
+    <title1>NASA+HD</title1>
+    </item>
+    
+    <item>
+    <title>HGTV HD (US)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.tikilive.com/public/flash/viewerModules/player/PlayerModule.swf%20-y%20stream25503%20-p%20http://www.tikilive.com/,rtmp://fms3.tikilive.com:1935/view/25503_212/stream25503";
+    titlu="rtmp://fms3.tikilive.com:1935/view/25503_212/stream25503";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fms3.tikilive.com:1935/view/25503_212/stream25503</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.tikilive.com%2Fpublic%2Fflash%2FviewerModules%2Fplayer%2FPlayerModule.swf%2520-y%2520stream25503%2520-p%2520http%3A%2F%2Fwww.tikilive.com%2F%2Crtmp%3A%2F%2Ffms3.tikilive.com%3A1935%2Fview%2F25503_212%2Fstream25503</link1>
+    <title1>HGTV+HD+%28US%29</title1>
+    </item>
+    
+    <item>
+    <title>Nick - Comedy Central</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.wilmaa.com/player/main_v3.334.swf%20-y%20nick_cc_1_800@45519%20-p%20http://www.wilmaa.com%20-x%20927444%20-w%206c1be1765187eae0bc9af07d858fae59a0effd3c5b803d08db261ced2c5512bb,rtmp://cp108478.live.edgefcs.net/live/";
+    titlu="rtmp://cp108478.live.edgefcs.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp108478.live.edgefcs.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.wilmaa.com%2Fplayer%2Fmain_v3.334.swf%2520-y%2520nick_cc_1_800%4045519%2520-p%2520http%3A%2F%2Fwww.wilmaa.com%2520-x%2520927444%2520-w%25206c1be1765187eae0bc9af07d858fae59a0effd3c5b803d08db261ced2c5512bb%2Crtmp%3A%2F%2Fcp108478.live.edgefcs.net%2Flive%2F</link1>
+    <title1>Nick+-+Comedy+Central</title1>
+    </item>
+    
+    <item>
+    <title>Omroep Gelderland</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.omroepgelderland.nl/design/channel/tv/swf/player.swf%20-y%20surfnetvdox=OmroepGelderland=livetv%20-p%20http://www.omroepgelderland.nl/web/show/,rtmp://fl1.ams.cdn.surf.net/live/";
+    titlu="rtmp://fl1.ams.cdn.surf.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fl1.ams.cdn.surf.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.omroepgelderland.nl%2Fdesign%2Fchannel%2Ftv%2Fswf%2Fplayer.swf%2520-y%2520surfnetvdox%3DOmroepGelderland%3Dlivetv%2520-p%2520http%3A%2F%2Fwww.omroepgelderland.nl%2Fweb%2Fshow%2F%2Crtmp%3A%2F%2Ffl1.ams.cdn.surf.net%2Flive%2F</link1>
+    <title1>Omroep+Gelderland</title1>
+    </item>
+    
+    <item>
+    <title>Play.me</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.wilmaa.com/player/main_v5.027.swf%20-y%20beep-flash-live@34654%20-p%20http://www.wilmaa.com/%20-v%20-a%20live,rtmp://cp107974.live.edgefcs.net:1935/live";
+    titlu="rtmp://cp107974.live.edgefcs.net:1935/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp107974.live.edgefcs.net:1935/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.wilmaa.com%2Fplayer%2Fmain_v5.027.swf%2520-y%2520beep-flash-live%4034654%2520-p%2520http%3A%2F%2Fwww.wilmaa.com%2F%2520-v%2520-a%2520live%2Crtmp%3A%2F%2Fcp107974.live.edgefcs.net%3A1935%2Flive</link1>
+    <title1>Play.me</title1>
+    </item>
+    
+    <item>
+    <title>QVC (UK)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.qvcuk.com/ondemand/flowplayer.rtmp-3.1.3.swf%20-y%20QVCLive1@14308%20-p%20http://www.qvcuk.com/,rtmp://cp79650.live.edgefcs.net/live";
+    titlu="rtmp://cp79650.live.edgefcs.net/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp79650.live.edgefcs.net/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.qvcuk.com%2Fondemand%2Fflowplayer.rtmp-3.1.3.swf%2520-y%2520QVCLive1%4014308%2520-p%2520http%3A%2F%2Fwww.qvcuk.com%2F%2Crtmp%3A%2F%2Fcp79650.live.edgefcs.net%2Flive</link1>
+    <title1>QVC+%28UK%29</title1>
+    </item>
+    
+    <item>
+    <title>Radio 105 TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.highermedia.com/assets/flash/jw_player.swf%20-y%20105Test1%20-p%20http://www.highermedia.com/,rtmp://fms.105.net:1935/live/";
+    titlu="rtmp://fms.105.net:1935/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fms.105.net:1935/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.highermedia.com%2Fassets%2Fflash%2Fjw_player.swf%2520-y%2520105Test1%2520-p%2520http%3A%2F%2Fwww.highermedia.com%2F%2Crtmp%3A%2F%2Ffms.105.net%3A1935%2Flive%2F</link1>
+    <title1>Radio+105+TV</title1>
+    </item>
+    
+    <item>
+    <title>Radio Montecarlo TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://video.radiomontecarlo.net/com/universalmind/swf/videoPlayer.swf%20-y%20rmc1%20-p%20radiomontecarlo.net/,rtmp://fms.105.net:1935/live/rmc1";
+    titlu="rtmp://fms.105.net:1935/live/rmc1";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fms.105.net:1935/live/rmc1</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fvideo.radiomontecarlo.net%2Fcom%2Funiversalmind%2Fswf%2FvideoPlayer.swf%2520-y%2520rmc1%2520-p%2520radiomontecarlo.net%2F%2Crtmp%3A%2F%2Ffms.105.net%3A1935%2Flive%2Frmc1</link1>
+    <title1>Radio+Montecarlo+TV</title1>
+    </item>
+    
+    <item>
+    <title>Rete 8</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://win.rete8.it/streaming/swf/player.swf%20-y%208042%20-p%20http://win.rete8.it/streaming/player.htm,rtmp://stream.6indiretta.com/8042";
+    titlu="rtmp://stream.6indiretta.com/8042";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://stream.6indiretta.com/8042</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwin.rete8.it%2Fstreaming%2Fswf%2Fplayer.swf%2520-y%25208042%2520-p%2520http%3A%2F%2Fwin.rete8.it%2Fstreaming%2Fplayer.htm%2Crtmp%3A%2F%2Fstream.6indiretta.com%2F8042</link1>
+    <title1>Rete+8</title1>
+    </item>
+    
+    <item>
+    <title>Rete Oro</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://webcontv.com/ReteOro/flashfiles/WebconTV1.1.swf%20-y%20ReteOro%20-p%20http://webcontv.com/ReteOro/flashfiles/webconTV.jsp,rtmp://176.31.225.220:1935/ReteOro/LiveIst/";
+    titlu="rtmp://176.31.225.220:1935/ReteOro/LiveIst/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://176.31.225.220:1935/ReteOro/LiveIst/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwebcontv.com%2FReteOro%2Fflashfiles%2FWebconTV1.1.swf%2520-y%2520ReteOro%2520-p%2520http%3A%2F%2Fwebcontv.com%2FReteOro%2Fflashfiles%2FwebconTV.jsp%2Crtmp%3A%2F%2F176.31.225.220%3A1935%2FReteOro%2FLiveIst%2F</link1>
+    <title1>Rete+Oro</title1>
+    </item>
+    
+    <item>
+    <title>Rete Veneta</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://fpdownload.adobe.com/strobe/FlashMediaPlayback.swf%20-y%20ReteVenetaStream1%20-p%20http://www.reteveneta.it/live.aspx,rtmp://video.reteveneta.it:1935/live";
+    titlu="rtmp://video.reteveneta.it:1935/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://video.reteveneta.it:1935/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Ffpdownload.adobe.com%2Fstrobe%2FFlashMediaPlayback.swf%2520-y%2520ReteVenetaStream1%2520-p%2520http%3A%2F%2Fwww.reteveneta.it%2Flive.aspx%2Crtmp%3A%2F%2Fvideo.reteveneta.it%3A1935%2Flive</link1>
+    <title1>Rete+Veneta</title1>
+    </item>
+    
+    <item>
+    <title>RFH (Germany)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.freeetv.com/script/mediaplayer/player.swf%20-y%20RFH_high%20-p%20http://www.waaatch.com/,rtmp://62.113.210.250/medienasa-live/";
+    titlu="rtmp://62.113.210.250/medienasa-live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://62.113.210.250/medienasa-live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.freeetv.com%2Fscript%2Fmediaplayer%2Fplayer.swf%2520-y%2520RFH_high%2520-p%2520http%3A%2F%2Fwww.waaatch.com%2F%2Crtmp%3A%2F%2F62.113.210.250%2Fmedienasa-live%2F</link1>
+    <title1>RFH+%28Germany%29</title1>
+    </item>
+    
+    <item>
+    <title>RomaUno TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.romauno.tv/player/player.swf%20-y%20live.sdp%20-p%20http://www.romauno.tv,rtmp://188.40.2.148:1935/romauno";
+    titlu="rtmp://188.40.2.148:1935/romauno";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://188.40.2.148:1935/romauno</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.romauno.tv%2Fplayer%2Fplayer.swf%2520-y%2520live.sdp%2520-p%2520http%3A%2F%2Fwww.romauno.tv%2Crtmp%3A%2F%2F188.40.2.148%3A1935%2Fromauno</link1>
+    <title1>RomaUno+TV</title1>
+    </item>
+    
+    <item>
+    <title>Rouge TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.rougetv.ch/JWPlayer/mediaplayer/player.swf%20-y%20rougetv%20-p%20http://www.rougetv.ch/live.php,rtmp://rtmp.infomaniak.ch/livecast/";
+    titlu="rtmp://rtmp.infomaniak.ch/livecast/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://rtmp.infomaniak.ch/livecast/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.rougetv.ch%2FJWPlayer%2Fmediaplayer%2Fplayer.swf%2520-y%2520rougetv%2520-p%2520http%3A%2F%2Fwww.rougetv.ch%2Flive.php%2Crtmp%3A%2F%2Frtmp.infomaniak.ch%2Flivecast%2F</link1>
+    <title1>Rouge+TV</title1>
+    </item>
+    
+    <item>
+    <title>RTL 102.5 TV (Italy)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.viewmy.tv/player-licensed.swf%20-y%20radiovisione_03%20-p%20http://www.viewmy.tv/clip.aspx?srcid=578,rtmp://rtl-livestream4me.weebo.it/live/";
+    titlu="rtmp://rtl-livestream4me.weebo.it/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://rtl-livestream4me.weebo.it/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.viewmy.tv%2Fplayer-licensed.swf%2520-y%2520radiovisione_03%2520-p%2520http%3A%2F%2Fwww.viewmy.tv%2Fclip.aspx%3Fsrcid%3D578%2Crtmp%3A%2F%2Frtl-livestream4me.weebo.it%2Flive%2F</link1>
+    <title1>RTL+102.5+TV+%28Italy%29</title1>
+    </item>
+    
+    <item>
+    <title>RTL Klub</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.veemi.com/player/player-licensed.swf%20-y%20onlinetvnonstop%20-p%20http://www.veemi.com/,rtmp://76.10.221.69/live/_definst_/";
+    titlu="rtmp://76.10.221.69/live/_definst_/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://76.10.221.69/live/_definst_/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.veemi.com%2Fplayer%2Fplayer-licensed.swf%2520-y%2520onlinetvnonstop%2520-p%2520http%3A%2F%2Fwww.veemi.com%2F%2Crtmp%3A%2F%2F76.10.221.69%2Flive%2F_definst_%2F</link1>
+    <title1>RTL+Klub</title1>
+    </item>
+    
+    <item>
+    <title>RTL TVI</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://sapiens.bplaced.net/data/StrobeMediaPlayback.swf%20-y%20TVI_Inlet_8@21855%20-p%20http://fbhost-tv.com/pays/belgique/rtltvi2.php,rtmp://cp132832.live.edgefcs.net:443/live/TVI_Inlet_8@21855";
+    titlu="rtmp://cp132832.live.edgefcs.net:443/live/TVI_Inlet_8@21855";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp132832.live.edgefcs.net:443/live/TVI_Inlet_8@21855</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fsapiens.bplaced.net%2Fdata%2FStrobeMediaPlayback.swf%2520-y%2520TVI_Inlet_8%4021855%2520-p%2520http%3A%2F%2Ffbhost-tv.com%2Fpays%2Fbelgique%2Frtltvi2.php%2Crtmp%3A%2F%2Fcp132832.live.edgefcs.net%3A443%2Flive%2FTVI_Inlet_8%4021855</link1>
+    <title1>RTL+TVI</title1>
+    </item>
+    
+    <item>
+    <title>RTL-TVI</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://sapiens.bplaced.net/data/StrobeMediaPlayback.swf%20-y%20TVI@61203%20-p%20http://fbhost-tv.com,rtmp://cp132832.live.edgefcs.net:1935/live/TVI@61203";
+    titlu="rtmp://cp132832.live.edgefcs.net:1935/live/TVI@61203";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp132832.live.edgefcs.net:1935/live/TVI@61203</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fsapiens.bplaced.net%2Fdata%2FStrobeMediaPlayback.swf%2520-y%2520TVI%4061203%2520-p%2520http%3A%2F%2Ffbhost-tv.com%2Crtmp%3A%2F%2Fcp132832.live.edgefcs.net%3A1935%2Flive%2FTVI%4061203</link1>
+    <title1>RTL-TVI</title1>
+    </item>
+    
+    <item>
+    <title>RTS deux (Switzerland)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.wilmaa.com/player/main_v5.033.swf%20-y%20tsr2_1_800@45523%20-p%20http://www.wilmaa.com%20-x%20927444%20-w%206c1be1765187eae0bc9af07d858fae59a0effd3c5b803d08db261ced2c5512bb,rtmp://cp115491.live.edgefcs.net/live";
+    titlu="rtmp://cp115491.live.edgefcs.net/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp115491.live.edgefcs.net/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.wilmaa.com%2Fplayer%2Fmain_v5.033.swf%2520-y%2520tsr2_1_800%4045523%2520-p%2520http%3A%2F%2Fwww.wilmaa.com%2520-x%2520927444%2520-w%25206c1be1765187eae0bc9af07d858fae59a0effd3c5b803d08db261ced2c5512bb%2Crtmp%3A%2F%2Fcp115491.live.edgefcs.net%2Flive</link1>
+    <title1>RTS+deux+%28Switzerland%29</title1>
+    </item>
+    
+    <item>
+    <title>RTS un (Switzerland)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.wilmaa.com/player/main_v5.033.swf%20-y%20tsr1_1_800@45522%20-p%20http://www.wilmaa.com%20-x%20927444%20-w%206c1be1765187eae0bc9af07d858fae59a0effd3c5b803d08db261ced2c5512bb,rtmp://cp115491.live.edgefcs.net/live";
+    titlu="rtmp://cp115491.live.edgefcs.net/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp115491.live.edgefcs.net/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.wilmaa.com%2Fplayer%2Fmain_v5.033.swf%2520-y%2520tsr1_1_800%4045522%2520-p%2520http%3A%2F%2Fwww.wilmaa.com%2520-x%2520927444%2520-w%25206c1be1765187eae0bc9af07d858fae59a0effd3c5b803d08db261ced2c5512bb%2Crtmp%3A%2F%2Fcp115491.live.edgefcs.net%2Flive</link1>
+    <title1>RTS+un+%28Switzerland%29</title1>
+    </item>
+    
+    <item>
+    <title>Russia Today</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.shadownet.info/webplayer/player.swf%20-p%20http://www.shadownet.info/channels/russia-today.html,rtmp://fms5.visionip.tv/live/RT_2";
+    titlu="rtmp://fms5.visionip.tv/live/RT_2";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fms5.visionip.tv/live/RT_2</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.shadownet.info%2Fwebplayer%2Fplayer.swf%2520-p%2520http%3A%2F%2Fwww.shadownet.info%2Fchannels%2Frussia-today.html%2Crtmp%3A%2F%2Ffms5.visionip.tv%2Flive%2FRT_2</link1>
+    <title1>Russia+Today</title1>
+    </item>
+    
+    <item>
+    <title>Sevilla FC TV (Spain)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://desk.camtenna.com/sevillafc/assets/swf/flowplayer.unlimited-3.2.4.swf%20-y%20Sevilla%20-p%20http://www.sevillafc.es/nuevaweb/medios/tvdirecto%20-a%2080137,rtmp://fl0.c80137.cdn.qbrick.com/80137";
+    titlu="rtmp://fl0.c80137.cdn.qbrick.com/80137";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fl0.c80137.cdn.qbrick.com/80137</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fdesk.camtenna.com%2Fsevillafc%2Fassets%2Fswf%2Fflowplayer.unlimited-3.2.4.swf%2520-y%2520Sevilla%2520-p%2520http%3A%2F%2Fwww.sevillafc.es%2Fnuevaweb%2Fmedios%2Ftvdirecto%2520-a%252080137%2Crtmp%3A%2F%2Ffl0.c80137.cdn.qbrick.com%2F80137</link1>
+    <title1>Sevilla+FC+TV+%28Spain%29</title1>
+    </item>
+    
+    <item>
+    <title>Sky TG24 (Italy)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://admin.brightcove.com/viewer/us20110820.1743/federatedVideoUI/BrightcovePlayer.swf%20-y%20streamRM1@2564%20-p%20http://tg24.sky.it/tg24/diretta.html,rtmp://cp49989.live.edgefcs.net:443/live/";
+    titlu="rtmp://cp49989.live.edgefcs.net:443/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp49989.live.edgefcs.net:443/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fadmin.brightcove.com%2Fviewer%2Fus20110820.1743%2FfederatedVideoUI%2FBrightcovePlayer.swf%2520-y%2520streamRM1%402564%2520-p%2520http%3A%2F%2Ftg24.sky.it%2Ftg24%2Fdiretta.html%2Crtmp%3A%2F%2Fcp49989.live.edgefcs.net%3A443%2Flive%2F</link1>
+    <title1>Sky+TG24+%28Italy%29</title1>
+    </item>
+    
+    <item>
+    <title>Studio 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://94.23.226.227/studiouno/flowplayer.rtmp-3.1.3.swf%20-y%20studiouno.sdp%20-p%20http://94.23.226.227/studiouno/studiouno.html,rtmp://94.23.226.227/studiouno/";
+    titlu="rtmp://94.23.226.227/studiouno/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://94.23.226.227/studiouno/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2F94.23.226.227%2Fstudiouno%2Fflowplayer.rtmp-3.1.3.swf%2520-y%2520studiouno.sdp%2520-p%2520http%3A%2F%2F94.23.226.227%2Fstudiouno%2Fstudiouno.html%2Crtmp%3A%2F%2F94.23.226.227%2Fstudiouno%2F</link1>
+    <title1>Studio+1</title1>
+    </item>
+    
+    <item>
+    <title>Super TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://fms.player.streamshow.it/jwplayer/player.swf%20-y%20supertv%20-p%20http://bresciasat.com/pg029.html,rtmp://fms.shared.streamshow.it/supertvweb";
+    titlu="rtmp://fms.shared.streamshow.it/supertvweb";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fms.shared.streamshow.it/supertvweb</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Ffms.player.streamshow.it%2Fjwplayer%2Fplayer.swf%2520-y%2520supertv%2520-p%2520http%3A%2F%2Fbresciasat.com%2Fpg029.html%2Crtmp%3A%2F%2Ffms.shared.streamshow.it%2Fsupertvweb</link1>
+    <title1>Super+TV</title1>
+    </item>
+    
+    <item>
+    <title>SVTplay (Sweden)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://svtplay.se/flash/svtplayer-2011.13.swf%20-y%20webb0_720p%20-p%20http://svtplay.se/,rtmp://fl10.c00928.cdn.qbrick.com/00928/";
+    titlu="rtmp://fl10.c00928.cdn.qbrick.com/00928/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fl10.c00928.cdn.qbrick.com/00928/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fsvtplay.se%2Fflash%2Fsvtplayer-2011.13.swf%2520-y%2520webb0_720p%2520-p%2520http%3A%2F%2Fsvtplay.se%2F%2Crtmp%3A%2F%2Ffl10.c00928.cdn.qbrick.com%2F00928%2F</link1>
+    <title1>SVTplay+%28Sweden%29</title1>
+    </item>
+    
+    <item>
+    <title>Telemadrid Sat (Spain)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://jonas.do.am/player.swf%20-y%20TSAtelemadridsat@47720%20-p%20http://jonas.do.am/,rtmp://cp118140.live.edgefcs.net/live/";
+    titlu="rtmp://cp118140.live.edgefcs.net/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp118140.live.edgefcs.net/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fjonas.do.am%2Fplayer.swf%2520-y%2520TSAtelemadridsat%4047720%2520-p%2520http%3A%2F%2Fjonas.do.am%2F%2Crtmp%3A%2F%2Fcp118140.live.edgefcs.net%2Flive%2F</link1>
+    <title1>Telemadrid+Sat+%28Spain%29</title1>
+    </item>
+    
+    <item>
+    <title>Teleregione</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.teleregione.tv/mediaplayer.swf%20-y%20livestream%20-p%20http://www.teleregione.tv/,rtmp://streaming.teleinfo.it/live";
+    titlu="rtmp://streaming.teleinfo.it/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://streaming.teleinfo.it/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.teleregione.tv%2Fmediaplayer.swf%2520-y%2520livestream%2520-p%2520http%3A%2F%2Fwww.teleregione.tv%2F%2Crtmp%3A%2F%2Fstreaming.teleinfo.it%2Flive</link1>
+    <title1>Teleregione</title1>
+    </item>
+    
+    <item>
+    <title>TF1 HD (France)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.wat.tv/images/v40/PlayerWat.swf%20-y%20eTF1_Flash_live_hd@51544%20-p%20http://www.tf1.fr/live,rtmp://cp150242.live.edgefcs.net:80/live/";
+    titlu="rtmp://cp150242.live.edgefcs.net:80/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp150242.live.edgefcs.net:80/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.wat.tv%2Fimages%2Fv40%2FPlayerWat.swf%2520-y%2520eTF1_Flash_live_hd%4051544%2520-p%2520http%3A%2F%2Fwww.tf1.fr%2Flive%2Crtmp%3A%2F%2Fcp150242.live.edgefcs.net%3A80%2Flive%2F</link1>
+    <title1>TF1+HD+%28France%29</title1>
+    </item>
+    
+    <item>
+    <title>Tom & Jerry 24/7</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.canaistv.net/swf/player.swf%20-y%20tom%20-p%20http://www.canaistv.net/tvamigos/tomejerry.html,rtmp://204.45.66.154/ctv";
+    titlu="rtmp://204.45.66.154/ctv";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://204.45.66.154/ctv</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.canaistv.net%2Fswf%2Fplayer.swf%2520-y%2520tom%2520-p%2520http%3A%2F%2Fwww.canaistv.net%2Ftvamigos%2Ftomejerry.html%2Crtmp%3A%2F%2F204.45.66.154%2Fctv</link1>
+    <title1>Tom+%26+Jerry+24%2F7</title1>
+    </item>
+    
+    <item>
+    <title>TVA (Canada)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://admin.brightcove.com/viewer/us1.25.04.01.2011-05-24182704/federatedVideoUI/BrightcovePlayer.swf%20-y%20tvahd@9750%20-p%20http://admin.brightcove.com/,rtmp://cp39414.live.edgefcs.net:443/live/";
+    titlu="rtmp://cp39414.live.edgefcs.net:443/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp39414.live.edgefcs.net:443/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fadmin.brightcove.com%2Fviewer%2Fus1.25.04.01.2011-05-24182704%2FfederatedVideoUI%2FBrightcovePlayer.swf%2520-y%2520tvahd%409750%2520-p%2520http%3A%2F%2Fadmin.brightcove.com%2F%2Crtmp%3A%2F%2Fcp39414.live.edgefcs.net%3A443%2Flive%2F</link1>
+    <title1>TVA+%28Canada%29</title1>
+    </item>
+    
+    <item>
+    <title>TVE La 1 (Spain)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.rtve.es/swf/4.0.37/RTVEPlayerVideo.swf%20-y%20LA1_AKA_WEB_NOG@58877%20-p%20http://www.rtve.es/noticias/directo-la-1,rtmp://cp68975.live.edgefcs.net:1935/live";
+    titlu="rtmp://cp68975.live.edgefcs.net:1935/live";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://cp68975.live.edgefcs.net:1935/live</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.rtve.es%2Fswf%2F4.0.37%2FRTVEPlayerVideo.swf%2520-y%2520LA1_AKA_WEB_NOG%4058877%2520-p%2520http%3A%2F%2Fwww.rtve.es%2Fnoticias%2Fdirecto-la-1%2Crtmp%3A%2F%2Fcp68975.live.edgefcs.net%3A1935%2Flive</link1>
+    <title1>TVE+La+1+%28Spain%29</title1>
+    </item>
+    
+    <item>
+    <title>Umbria TV</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.mediastreaming.it/umbriatv/player.swf%20-y%20livestream%20-p%20http://www.mediastreaming.it/umbriatv/,rtmp://fl1.mediastreaming.it/umbriatv";
+    titlu="rtmp://fl1.mediastreaming.it/umbriatv";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fl1.mediastreaming.it/umbriatv</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.mediastreaming.it%2Fumbriatv%2Fplayer.swf%2520-y%2520livestream%2520-p%2520http%3A%2F%2Fwww.mediastreaming.it%2Fumbriatv%2F%2Crtmp%3A%2F%2Ffl1.mediastreaming.it%2Fumbriatv</link1>
+    <title1>Umbria+TV</title1>
+    </item>
+    
+    <item>
+    <title>Virgin 1</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://www.highermedia.com/assets/flash/jw_player.swf%20-y%20virgin1%20-p%20http://www.virginone.com/,rtmp://fms.105.net:1935/live/";
+    titlu="rtmp://fms.105.net:1935/live/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://fms.105.net:1935/live/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fwww.highermedia.com%2Fassets%2Fflash%2Fjw_player.swf%2520-y%2520virgin1%2520-p%2520http%3A%2F%2Fwww.virginone.com%2F%2Crtmp%3A%2F%2Ffms.105.net%3A1935%2Flive%2F</link1>
+    <title1>Virgin+1</title1>
+    </item>
+    
+    <item>
+    <title>WDR (Germany)</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,Rtmp-options:-W%20http://player.longtailvideo.com/player.swf%20-y%20wdrfs_h264_m_a%20-p%20http://www.adamski.tv/146WDR.php,rtmp://gffstream.fc.llnwd.net:1935/gffstream/003/";
+    titlu="rtmp://gffstream.fc.llnwd.net:1935/gffstream/003/";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    <annotation>rtmp://gffstream.fc.llnwd.net:1935/gffstream/003/</annotation>
+    <link1>http%3A%2F%2F127.0.0.1%2Fcgi-bin%2Fscripts%2Futil%2Ftranslate.cgi%3Fstream%2CRtmp-options%3A-W%2520http%3A%2F%2Fplayer.longtailvideo.com%2Fplayer.swf%2520-y%2520wdrfs_h264_m_a%2520-p%2520http%3A%2F%2Fwww.adamski.tv%2F146WDR.php%2Crtmp%3A%2F%2Fgffstream.fc.llnwd.net%3A1935%2Fgffstream%2F003%2F</link1>
+    <title1>WDR+%28Germany%29</title1>
+    </item>
+    </channel>
+</rss>

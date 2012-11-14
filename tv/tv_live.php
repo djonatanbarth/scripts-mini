@@ -195,6 +195,13 @@ ret;
 </item>
 
 <item>
+<title>TV Live - Other RTMP List</title>
+<link>/usr/local/etc/www/cgi-bin/scripts/tv/other_rtmp.rss</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
 <title>TV Live - Other</title>
 <link>/usr/local/etc/www/cgi-bin/scripts/tv/tv_diverse_live.rss</link>
 <media:thumbnail url="image/tv_radio.png" />
