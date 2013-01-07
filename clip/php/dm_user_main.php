@@ -189,7 +189,7 @@ if($search) {
 
 <?php
 
-$videos = explode('dmpi_user_item', $html);
+$videos = explode('class="pl_user', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -199,7 +199,7 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $link = 'http://www.dailymotion.com/user'.$t2[0];
 
-    $t1 = explode('data-src="', $video);
+    $t1 = explode('src="', $video);
     $t2 = explode('?', $t1[1]);
     $image = $t2[0];
 
@@ -207,8 +207,8 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $title = trim($t2[0]);
     if ($title == "") {
-    $t1=explode("dmco_simplelink video_title id",$video);
-    $t2=explode(">",$t1[1]);
+    $t1=explode('href="',$video);
+    $t2=explode(">",$t1[2]);
     $t3=explode("<",$t2[1]);
     $title=trim($t3[0]);
     }

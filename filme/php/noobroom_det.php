@@ -6,8 +6,14 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $id = $_GET["file"];
+$l="http://noobroom.com/";
+$h=file_get_contents($l);
+//http://72.8.190.49
+$noob=str_between($h,'value="','"');
 ///?imdb.com/title/tt2084342"
-$html=file_get_contents("http://37.128.191.200/?".$id);
+//http://37.128.191.193/
+//$html=file_get_contents("http://37.128.191.200/?".$id);
+$html=file_get_contents($noob."/?".$id);
 $t1=explode("?imdb.com",$html);
 $t2=explode('"',$t1[1]);
 if ($t2[0])
@@ -32,6 +38,7 @@ $tit=str_replace("&raquo;",">>",$tit);
 $tit=str_replace("&#xE9;","e",$tit);
 $tit=str_replace("&#xCE;","I",$tit);
 $tit=str_replace("&#xEE;","i",$tit);
+$tit=str_replace("&#xE2;","a",$tit);
 
 $imdb="IMDB: ".trim(str_between($html,'ratingValue">','<'));
 $gen=str_between($html,'div class="infobar">','</div>');
@@ -49,6 +56,7 @@ $desc=str_replace("&raquo;",">>",$desc);
 $desc=str_replace("&#xE9;","e",$desc);
 $desc=str_replace("&#xCE;","I",$desc);
 $desc=str_replace("&#xEE;","i",$desc);
+$desc=str_replace("&#xE2;","a",$desc);
 $desc = trim(preg_replace("/<(.*)>|(\{(.*)\})/e","",$desc));
 $ttxml .=$tit."\n"; //title
 $ttxml .= "\n";     //an

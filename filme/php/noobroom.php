@@ -121,7 +121,7 @@ $l = urldecode($queryArr[1]);
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    <script>"7=Server: " + sserver + " 9=HD/SD: " + shd;</script>
+    <script>" 7=Server: " + sserver + " 9=HD/SD: " + shd;</script>
 		</text>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
@@ -321,6 +321,7 @@ ret;
 	<title><?php echo $tit; ?></title>
 	<menu>main menu</menu>
 <?php
+
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -343,7 +344,7 @@ foreach($videos as $video) {
    $t2=explode('<',$t1[1]);
    $title=$t2[0];
    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-   $title1=$title;
+      $title1=$title;
    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
      echo '
      <item>
@@ -405,9 +406,6 @@ foreach ($arr as $key => $val) {
  $title=$arr[$key][0];
  $link=$arr[$key][1];
    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-   if (!$srt[$link])
-      $title1=$title." (*)";
-   else
       $title1=$title;
    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
      echo '

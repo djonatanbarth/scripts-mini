@@ -281,7 +281,7 @@
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 	
 
-	<infoDisplay offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="100">
+	<infoDisplay offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="98">
 
     <progressBar backgroundColor="10:105:150" offsetXPC="5" offsetYPC="70" widthPC="90" heightPC="20">
 
@@ -325,7 +325,7 @@
   	</progressBar>
 
 	</infoDisplay>
-  <previewWindow windowColor="0:0:0" offsetXPC="0" widthPC="100" offsetYPC="0" heightPC="100">
+  <previewWindow windowColor="0:0:0" offsetXPC="0" widthPC="100" offsetYPC="0" heightPC="98">
   </previewWindow>
 	<onUserInput>
 		input = currentUserInput();

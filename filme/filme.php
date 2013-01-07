@@ -262,7 +262,7 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
-
+<!--
   <item>
     <title>online-moviez.com - Adult filme</title>
     <onClick>
@@ -309,7 +309,7 @@ ret;
     </onClick>
     <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 
 </channel>
 </rss>

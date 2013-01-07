@@ -4,7 +4,7 @@ $query = $_GET["file"];
 if($query) {
    $queryArr = explode(',', $query);
    $link = $queryArr[0];
-   $serv = $queryArr[1];
+   $server = $queryArr[1];
 }
 function str_between($string, $start, $end){ 
 	$string = " ".$string; $ini = strpos($string,$start); 
@@ -29,7 +29,7 @@ $link=urldecode($link);
   preg_match_all("/z\d{6}/",$h1[1],$m);
   $ch=$m[0];
   if ($ch[1]) {
-  if ($serv=="HD")
+  if ($server=="HD")
      $y=$ch[0];
   else
      $y=$ch[1];

@@ -163,8 +163,8 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $html = file_get_contents("http://alotporn.com/categories/");
-$html = str_between($html,'<div id="submenu">','id="page">');
-$videos = explode('<a', $html);
+//$html = str_between($html,'<div id="submenu">','id="page">');
+$videos = explode('div id="category', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
@@ -173,7 +173,7 @@ foreach($videos as $video) {
     $link="http://alotporn.com".$t1[0];
     $link=str_replace("recent/","",$link);
 
-    $t2=explode(">",$t[1]);
+    $t2=explode(">",$t[2]);
     $t3=explode("<",$t2[1]);
   	$title=$t3[0];
 

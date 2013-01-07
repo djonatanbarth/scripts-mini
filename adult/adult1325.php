@@ -166,7 +166,13 @@ $host = "http://127.0.0.1/cgi-bin";
 <link><?php echo $host; ?>/scripts/filme/php/online-moviez1.php</link>
 <image>image/adult.png</image>
 </item>
-
+<!--
+<item>
+<title>Porn TV</title>
+<link><?php echo $host; ?>/scripts/adult/porn_tv.php</link>
+<image>image/adult.png</image>
+</item>
+-->
 <!--
 <item>
 <title>Porn TV</title>
@@ -197,13 +203,14 @@ $host = "http://127.0.0.1/cgi-bin";
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/extremetube.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>friktube</title>
   <link><?php echo $host; ?>/scripts/adult/friktube.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/friktube.gif</image>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>pornmehorny</title>
