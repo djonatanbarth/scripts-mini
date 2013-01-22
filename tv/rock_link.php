@@ -35,18 +35,23 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
 $t1=explode(":",$y);
 $y=$t1[1];
 $dl=$dir.$y;
+$l="http://www.livehd.tv/rtmp/flash-mbr.php";
+$h=file_get_contents($l);
+//streamer>rtmpe://91.213.34.18:1935/live<
+$rtmp=str_between($h,"rtmpe:","/live");
+$rtmp="rtmp:".$rtmp."/vod";
 $out='#!/bin/sh
 cat <<EOF
 Content-type: video/mp4
 
 EOF
-exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -r "rtmp://93.114.43.3:1935/vod" -a "vod" -y "mp4:'.$y.'"';
+exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -r "'.$rtmp.'" -a "vod" -y "mp4:'.$y.'"';
 $fp = fopen('/usr/local/etc/www/cgi-bin/scripts/tv/rock.cgi', 'w');
 fwrite($fp, $out);
 fclose($fp);
 exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/tv/rock.cgi");
 $out='#!/bin/sh
-exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -r "rtmp://93.114.43.3:1935/vod" -a "vod" -y "mp4:'.$y.'" -o "'.$dl.'"';
+exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -r "'.$rtmp.'" -a "vod" -y "mp4:'.$y.'" -o "'.$dl.'"';
 $fp = fopen('/usr/local/etc/www/cgi-bin/scripts/tv/rock_d.cgi', 'w');
 fwrite($fp, $out);
 fclose($fp);

@@ -326,7 +326,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/dailymotion.png" />
 	<annotation>Dailymotion is about finding new ways to see, share and engage your world through the power of online video. You can find - or upload - videos about your interests and hobbies, eyewitness accounts of recent news and distant places, and everything else from the strange to the spectacular.</annotation>
 </item>
-
+<!--
 <item>
 <title>HD Podcast</title>
 	<link><?php echo $host; ?>/scripts/clip/php/podcasthd.php</link>
@@ -335,6 +335,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/podcast.png" />
 	<annotation>HD-Podcasts (High Definition)  | podcast.tv is an international video podcast directory with podcast recommendations and useful podcasting functions for enjoying podcasts and learn how to podcast</annotation>
 </item>
+-->
 <!--
 <item>
 <title>clipfish.de</title>

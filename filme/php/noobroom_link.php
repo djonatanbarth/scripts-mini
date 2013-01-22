@@ -66,9 +66,9 @@ $l1=$noob."/views.php?f=".$id;
 //http://178.159.0.84/index.php?file=292&start=0&hd=0&auth=0&type=flv
 //http://96.47.226.90/index.php?file=339&start=0&hd=0&auth=0&type=flv&tv=0
 if ($server == "0")
-   $movie="http://178.159.0.82/index.php?file=".$id."&start=0&type=flv&hd=0&auth=0&tv=0";
+   $movie="http://178.159.0.56/index.php?file=".$id."&start=0&type=flv&hd=0&auth=0&tv=0";
 elseif ($server == "3")
-   $movie="http://178.159.0.84/index.php?file=".$id."&start=0&type=flv&hd=0&auth=0&tv=0";
+   $movie="http://178.159.0.57/index.php?file=".$id."&start=0&type=flv&hd=0&auth=0&tv=0";
 elseif ($server == "6")
    $movie="http://96.47.226.90/index.php?file=".$id."&start=0&type=flv&hd=0&auth=0&tv=0";
 else
