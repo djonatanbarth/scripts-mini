@@ -223,6 +223,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $link="http://www.database.eu.pn/index.php/database/exportsimpletv";
+$link="http://www.vlcplaylist.eu.pn/index.php/database/exportsimpletv";
 $html=file_get_contents($link);
 
 $html=str_between($html,'style="color','</div>');

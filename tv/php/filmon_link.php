@@ -47,10 +47,16 @@ $link=$link."-y ".$y." -a ".$a." -W http://www.filmon.com/tv/modules/FilmOnTV/fi
 $link=$link." -p http://www.filmon.com,".$rtmp1;
 $link=str_replace(" ","%20",$link);
 print $link;
-/*
-$new_file = "/tmp/filmon_stream.txt";
-$fh = fopen($new_file, 'w');
-fwrite($fh, $y);
-fclose($fh)
-*/
+
+$out='#!/bin/sh
+cat <<EOF
+Content-type: video/mp4
+
+EOF
+exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -p "http://www.filmon.com" -W "http://www.filmon.com/tv/modules/FilmOnTV/files/flashapp/filmon/FilmonPlayer.swf" -r "'.$rtmp1.'" -a "'.$a.'" -y "'.$y.'"';
+$fp = fopen('/usr/local/etc/www/cgi-bin/scripts/tv/filmon.cgi', 'w');
+fwrite($fp, $out);
+fclose($fp);
+exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/tv/filmon.cgi");
+sleep(1);
 ?>

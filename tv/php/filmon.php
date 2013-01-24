@@ -48,7 +48,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="50" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 1 or 2 to jump +- 50
+    Press 1 or 2 for jump +- 50
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -238,7 +238,8 @@ foreach($videos1 as $video1) {
     <script>
     showIdle();
     url="'.$host.'/scripts/tv/php/filmon_link.php?file='.$id.'" + "," + server;
-    movie=getUrl(url);
+    movie1=getUrl(url);
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/filmon.cgi?'.$id.'";
     cancelIdle();
     playItemUrl(movie,10);
     </script>
