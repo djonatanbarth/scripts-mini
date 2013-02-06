@@ -8,5 +8,7 @@ function str_between($string, $start, $end){
 $link = $_GET["file"];
 $html = file_get_contents($link);
 $link = str_between($html, 'url: "', '"');
+if (!preg_match("/mp4/",$link))
+  $link=str_between($html,'file": "','"');
 print $link;
 ?>

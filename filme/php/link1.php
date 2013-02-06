@@ -862,6 +862,14 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    //http://flashx.tv/video/D1OY7UBGNW4B/gefaehrtndvdscr-pwnd
    //http://flashx.tv/player/embed_player.php?vid=6724&width=661&height=400&autoplay=no
    //http://flashx.tv/fxplayer/fxtv.php?hash=D1OY7UBGNW4B&width=661&height=400&autoplay=yes
+   //http://flashx.tv/video/5KA3ONU881WN/White
+   if (preg_match("/flashx.tv\/video\/([\w\-]+)/",$filelink,$match)) {
+     $id=$match[1];
+     $filelink="http://play.flashx.tv/nuevo/player/cst.php?hash=".$id;
+     $h=file_get_contents($filelink);
+     $link=trim(str_between($h,"<file>","</file>"));
+   }
+  /*
   if (strpos($filelink,"player.php") === false) {
     $a1=explode("/",$filelink);
     $id=$a1[4];
@@ -869,6 +877,7 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
     $h=file_get_contents($filelink);
     $id = str_between($h,"hash=","&");
   }
+
   $filelink="http://flashx.tv/fxplayer/fxtv.php?hash=".$id."&width=661&height=400&autoplay=yes";
   $h=file_get_contents($filelink);
   if (strpos($h,"href") === false) {
@@ -883,6 +892,7 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
     $h=file_get_contents("/tmp/dolce");
  }
   $link=str_between($h,'href="','"');
+  */
 } elseif (strpos($filelink, 'sharefiles4u.com') !== false) {
    //http://www.sharefiles4u.com/cwfqw29ylesp/nrx-ausgewechselt.avi
    //http://stage666.net/cgi-bin/dl.cgi/kylgrtsmovb2rbldug23w3o45jkdpr23gv4cxbsdjq/video.avi

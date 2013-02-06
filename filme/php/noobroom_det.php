@@ -20,6 +20,7 @@ if ($t2[0])
   $link="http://imdb.com".$t2[0];
 else
   $link="http://imdb.com".str_between($html,'http://imdb.com','"');
+//$link="http://www.imdb.com/title/tt2061712/";
 $html=file_get_contents($link);
 $ttxml="";
 exec ("rm -f /tmp/movie.dat");
@@ -31,6 +32,11 @@ $img=$t3[0];
 $t1=explode('<h1 class="header"',$html);
 $t2=explode('>',$t1[1]);
 $t3=explode('<',$t2[1]);
+$year=str_between($html,'span class="nobr">','</span');
+$year=str_replace("(","",$year);
+$year=str_replace(")","",$year);
+$year=trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$year));
+$year="Year: ".$year;
 $tit=trim($t3[0]);
 $tit=str_replace("&#x27;","'",$tit);
 $tit=str_replace("&nbsp;"," ",$tit);
@@ -40,13 +46,28 @@ $tit=str_replace("&#xCE;","I",$tit);
 $tit=str_replace("&#xEE;","i",$tit);
 $tit=str_replace("&#xE2;","a",$tit);
 
-$imdb="IMDB: ".trim(str_between($html,'ratingValue">','<'));
-$gen=str_between($html,'div class="infobar">','</div>');
-
+$imdb="IMDB: ".trim(str_between($html,'span itemprop="ratingValue">','<'));
+$gen1=str_between($html,'div class="infobar">','</div>');
+$t1=explode('itemprop="duration"',$gen1);
+$t2=explode('>',$t1[1]);
+$t3=explode('<',$t2[1]);
+$durata="Duration: ".trim($t3[0]);
+$gen="Genre: ";
 //$gen = trim(preg_replace("/<(.*)>|(\{(.*)\})/e","",$gen));
+$videos = explode('href="/genre', $gen1);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+  $t1=explode(">",$video);
+  $t2=explode("<",$t1[1]);
+  $gen .=trim($t2[0])." | ";
+}
+$gen=substr($gen, 0, -2);
 $gen = trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$gen));
 $gen=str_replace("&nbsp;","",$gen);
 $gen=str_replace("\n","",$gen);
+$gen=str_replace("\t","",$gen);
+$gen=str_replace("  ","",$gen);
 //$gen="Gen: ".$gen;
 //echo $gen;
 $desc=trim(str_between($html,'<p itemprop="description">',"</p>"));
@@ -59,13 +80,14 @@ $desc=str_replace("&#xEE;","i",$desc);
 $desc=str_replace("&#xE2;","a",$desc);
 $desc = trim(preg_replace("/<(.*)>|(\{(.*)\})/e","",$desc));
 $ttxml .=$tit."\n"; //title
-$ttxml .= "\n";     //an
+$ttxml .= $year."\n";     //an
 $ttxml .=$img."\n"; //image
 $ttxml .=$gen."\n"; //gen
-$ttxml .="\n"; //regie
+$ttxml .=$durata."\n"; //regie
 $ttxml .=$imdb."\n"; //imdb
 $ttxml .="\n"; //actori
 $ttxml .=$desc."\n"; //descriere
+
 $new_file = "/tmp/movie.dat";
 $fh = fopen($new_file, 'w');
 fwrite($fh, $ttxml);

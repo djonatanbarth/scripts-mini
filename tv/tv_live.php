@@ -236,14 +236,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>TV Live - Deutschland (youfreetv.net)</title>
 <link><?php echo $host; ?>/scripts/tv/youfreetv.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>TV Live - Deutschland (tv-kino.net)</title>
 <link><?php echo $host; ?>/scripts/tv/tv-kino.php</link>

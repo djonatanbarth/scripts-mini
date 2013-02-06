@@ -8,6 +8,21 @@ function str_between($string, $start, $end){
 $id = $_GET["file"];
 $link1="http://justin.tv/".$id;
 $link2="http://usher.justin.tv/find/".$id.".xml?type=any";
+$l="http://www.justin.tv/widgets/live_site_player.swf";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch,CURLOPT_REFERER,"http://www.justin.tv/".$id);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_NOBODY, TRUE);
+  curl_setopt($ch, CURLOPT_HEADER, TRUE);
+  $h=curl_exec($ch);
+  curl_close($ch);
+  $t1=explode("Location:",$h);
+  $t2=explode("?",$t1[1]);
+  $swf=trim($t2[0]);
+/*
 $h=file_get_contents($link1);
 $swf=str_between($h,'swfobject.embedSWF("','"');
 if ($swf == "") {
@@ -17,6 +32,7 @@ $swf=str_between($h,"new SWFObject('","'");
 if (strpos($swf,"http") === false) {
 $swf="http://www.justin.tv".$swf;
 }
+*/
 $h=file_get_contents($link2);
 $token=trim(str_between($h,"<token>","</token>"));
 //$token=str_replace('\\\\','',$token);
