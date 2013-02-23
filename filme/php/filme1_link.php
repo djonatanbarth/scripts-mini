@@ -258,7 +258,7 @@ $s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net
 $s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com|zurvid\.com|flashx\.tv|ufliq\.com|ovfile\.com";
 $s=$s."|sharefiles4u\.com|filebox\.com|glumbouploads\.com|ginbig\.com|divxbase\.com|allmyvideos\.net";
 $s=$s."|gorillavid\.in|streamcloud\.eu|zalaa\.com|vreer\.com|zixshare\.com|veervid\.com|uploadboost\.com";
-$s=$s."|ufliq\.com|muchshare\.net|nowvideo\.eu|vidbull\.com/i";
+$s=$s."|ufliq\.com|muchshare\.net|nowvideo\.eu|vidbull\.com|nosvideo\.com/i";
 if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 }

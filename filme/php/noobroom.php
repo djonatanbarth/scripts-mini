@@ -330,6 +330,10 @@ ret;
   curl_setopt($ch,CURLOPT_REFERER,$l);
   $html = curl_exec($ch);
   curl_close($ch);
+if (strpos($l,"azlist") === false) {
+$t1=explode('<h1>#</h1>',$html);
+$html=$t1[0];
+}
 if (strpos($l,"genre.php") === false) {
 $videos = explode("href='/?", $html);
 

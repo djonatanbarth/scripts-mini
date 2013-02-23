@@ -45,7 +45,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Apăsaţi 2 pentru download, 3 pentru Download Manager
+    Press 2 for download, 3 for download manager
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -226,7 +226,7 @@ foreach($videos as $video) {
     $description=str_between($video,'description": "','",');
     $location=str_between($video,'location": "','",');
     $dj="DJ: ".str_between($video,'dj": "','",');
-    //$pub = trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$t2[0]));
+    $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
 
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
     echo '

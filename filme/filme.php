@@ -184,7 +184,7 @@ ret;
 <item>
 <title>Noobroom</title>
 <link><?php echo $host; ?>/scripts/filme/php/noobroom_main.php</link>
-<annotation>http://37.128.191.200</annotation>
+<annotation>http://noobroom.com</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
 

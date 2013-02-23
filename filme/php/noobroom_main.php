@@ -12,6 +12,7 @@ $host = "http://127.0.0.1/cgi-bin";
 setRefreshTime(-1);
 </onExit>
 <onRefresh>
+itemCount = getPageInfo("itemCount");
   setRefreshTime(-1);
 </onRefresh>
 

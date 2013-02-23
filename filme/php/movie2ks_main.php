@@ -174,6 +174,14 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
+echo '
+<item>
+<title>Favorite list</title>
+<link>'.$host.'/scripts/filme/php/movie2ks_fav.php</link>
+<annotation>Favorite list</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+';
    $title="0-9";
    $link="http://www.movie2k.to/tvshows-all-1.html";
    $link = $host."/scripts/filme/php/movie2ks_sez.php?query=".$link.",".urlencode($title);

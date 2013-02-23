@@ -10,11 +10,28 @@
   error_info          = "";
 </script>
 <onEnter>
+  cachePath = getStoragePath("key");
+  optionsPath = cachePath + "onehd.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    buf = "60000";
+  }
+  else
+  {
+    buf = getStringArrayAt(optionsArray, 0);
+  }
   startitem = "middle";
   info = "2=download, 3=stop download, 1=check dl. status";
   setRefreshTime(1);
 </onEnter>
+<onExit>
+  arr = null;
+  arr = pushBackStringArray(arr, buf);
+  print("arr=",arr);
 
+  writeStringToFile(optionsPath, arr);
+</onExit>
 <onRefresh>
   setRefreshTime(-1);
   itemCount = getPageInfo("itemCount");
@@ -54,7 +71,7 @@
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="55" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    4/6 jump +- 100, 7/9 jump +- 500
+    <script>"4/6 jump +- 100, 7/9 jump +- 500 0= Buffer: " + buf;</script>
 		</text>
   	<text redraw="yes" offsetXPC="75" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -207,6 +224,42 @@ else if (userInput == "three" || userInput == "3")
  dummy=getUrl(topUrl);
  info= "Stop download";
  ret = "true";
+}
+else if (userInput == "zero" || userInput == "0")
+{
+		if (buf == "60000")
+           buf = "40000";
+		else if (buf == "40000")
+           buf = "20000";
+        else if (buf == "20000")
+          buf = "10000";
+        else if (buf == "10000")
+          buf = "8000";
+        else if (buf == "8000")
+          buf = "6000";
+        else if (buf == "6000")
+          buf = "4000";
+        else if (buf == "4000")
+          buf = "2000";
+        else if (buf == "2000")
+          buf = "1000";
+        else if (buf == "1000")
+          buf = "500";
+        else if (buf == "500")
+          buf = "400";
+        else if (buf == "400")
+          buf = "300";
+        else if (buf == "300")
+          buf = "200";
+        else if (buf == "200")
+          buf = "100";
+        else if (buf == "100")
+          buf = "0";
+        else if (buf == "0")
+          buf = "60000";
+        else
+		 buf = "60000";
+  ret = "true";
 }
 redrawDisplay();
 ret;

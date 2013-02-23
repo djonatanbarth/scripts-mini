@@ -32,9 +32,15 @@ if (file_exists("/tmp/usbmounts/sda1/download")) {
      $dir = "";
      $dir_log = "";
 }
+$link_buf="/usr/local/etc/dvdplayer/onehd.dat";
+$buf=trim(file_get_contents($link_buf));
 $t1=explode(":",$y);
 $y=$t1[1];
 $dl=$dir.$y;
+$l="http://www.livehd.tv/live.php";
+$h=file_get_contents($l);
+$token=str_between($h,"token':'","'");
+if ( $token == "" ); $token="6c69766568642e747620657374652063656c206d616920746172652121";
 $l="http://www.livehd.tv/rtmp/flash-mbr.php";
 $h=file_get_contents($l);
 //streamer>rtmpe://91.213.34.18:1935/live<
@@ -45,13 +51,13 @@ cat <<EOF
 Content-type: video/mp4
 
 EOF
-exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -r "'.$rtmp.'" -a "vod" -y "mp4:'.$y.'"';
+exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -q -v -b '.$buf.' -l 2 -T '.$token.' -q -v -r "'.$rtmp.'" -a "vod" -y "mp4:'.$y.'"';
 $fp = fopen('/usr/local/etc/www/cgi-bin/scripts/tv/rock.cgi', 'w');
 fwrite($fp, $out);
 fclose($fp);
 exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/tv/rock.cgi");
 $out='#!/bin/sh
-exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -b 60000 -q -v -r "'.$rtmp.'" -a "vod" -y "mp4:'.$y.'" -o "'.$dl.'"';
+exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -q -v -b '.$buf.' -l 2 -T '.$token.' -q -v -r "'.$rtmp.'" -a "vod" -y "mp4:'.$y.'" -o "'.$dl.'"';
 $fp = fopen('/usr/local/etc/www/cgi-bin/scripts/tv/rock_d.cgi', 'w');
 fwrite($fp, $out);
 fclose($fp);

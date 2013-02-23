@@ -273,6 +273,15 @@ columnCount=4
 </item>
 
 <item>
+<title>football (youtube)</title>
+<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,football</link>
+<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/youtube.png" />
+<image>/usr/local/etc/www/cgi-bin/scripts/tv/image/youtube.png</image>
+<location>http://www.youtube.com/user/football/videos</location>
+<annotation>youtube.com</annotation>
+</item>
+
+<item>
 <title>soccerclips.net</title>
 <link><?php echo $host; ?>/scripts/tv/sport/soccerclips_main.php</link>
 <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/tv/image/soccerclips.jpg" />

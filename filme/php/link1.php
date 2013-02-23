@@ -1165,6 +1165,28 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
    $h = curl_exec($ch);
    $link=unpack_DivXBrowserPlugin(2,$h);
+} elseif (strpos($filelink,"nosvideo.com") !== false) {
+   //http://nosvideo.com/?v=vl4w98yheol7
+   $h=file_get_contents($filelink);
+   $id=str_between($h,'name="id" value="','"');
+   $referer=str_between($h,'referer" value="','"');
+   $fname=str_between($h,'fname" value="','"');
+   if ($fname) {
+   $post="op=download1&id=".$id."&rand=&referer=".urlencode($referer)."&usr_login=&fname=".$fname."&method_free=&method_premium=&down_script=1&method_free=Continue+to+Video";
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $filelink);
+     //curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+     curl_setopt ($ch, CURLOPT_POST, 1);
+     curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+     $h = curl_exec($ch);
+     curl_close($ch);
+   }
+   //http://nosvideo.com/xml/tqpiilpwsfkbmb8v61280.xml
+   $l1=unpack_DivXBrowserPlugin(1,$h);
+   $h=file_get_contents($l1);
+   $link=trim(str_between($h,"<file>","</file>"));
 }
 print $link;
 ?>

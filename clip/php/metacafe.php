@@ -197,8 +197,12 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $page = $_GET["query"];
+$p=($page-1)*15;
+//http://www.metacafe.com/?catalogIndex=24&isFramed=0&componentID=4&defaultCatalogID=2
+//http://www.metacafe.com/?catalogIndex=43&isFramed=0&componentID=4&defaultCatalogID=2
 //http://www.metacafe.com/page-1/
 $link="http://www.metacafe.com/page-".$page."/";
+$link="http://www.metacafe.com/?catalogIndex=".$p."&isFramed=0&componentID=4&defaultCatalogID=2";
 $html = file_get_contents($link);
 if($page > 1) { ?>
 
@@ -219,7 +223,7 @@ $url = $sThisFile."?query=".($page-1);
 <?php } ?>
 <?php
 
-$videos = explode('li id="i', $html);
+$videos = explode('<article>', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 
