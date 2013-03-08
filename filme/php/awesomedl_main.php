@@ -6,14 +6,11 @@ $host = "http://127.0.0.1/cgi-bin";
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
-  start="0";
 </onEnter>
-<onExit>
-setRefreshTime(-1);
-</onExit>
+
 <onRefresh>
-itemCount = getPageInfo("itemCount");
   setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
 </onRefresh>
 
 <mediaDisplay name="threePartsView"
@@ -28,11 +25,11 @@ itemCount = getPageInfo("itemCount");
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="50"
+	itemWidthPC="30"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="50"
+	capWidthPC="30"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -49,15 +46,14 @@ itemCount = getPageInfo("itemCount");
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
+
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="254:254:254">
-    <script>info;</script>
+  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <script>print(annotation); annotation;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-		image/movies.png
-		</image>
+
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -150,10 +146,16 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
-
 <channel>
-	<title>Movies from Noobroom</title>
+	<title>awesomedl - series</title>
 	<menu>main menu</menu>
+
+<item>
+<title>Latest updates</title>
+<link>http://127.0.0.1/cgi-bin/scripts/filme/php/awesomedl.php?query=http://www.awesomedl.com/,Latest+updates</link>
+<annotation>Latest updates</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
 
 
 <?php
@@ -162,117 +164,31 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-  $title="Favorite";
-  $link = $host."/scripts/filme/php/noobroom_fav.php";
-  echo '
-  <item>
-  <title>'.$title.'</title>
-  <link>'.$link.'</link>
-  <image></image>
-  </item>
-  ';
-//
-$l="http://noobroom.com/";
+$l="http://www.awesomedl.com/";
 $h=file_get_contents($l);
-//http://72.8.190.49
-$noob=str_between($h,'value="','"');
-//$h=file_get_contents($noob."/");
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $noob."/");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  //curl_setopt($ch,CURLOPT_REFERER,$noob."/azlist.php");
-  $h = curl_exec($ch);
-  curl_close($ch);
-$id=str_between($h,"views.php?f=",'"');
-    $title="Latest";
-    $link=$noob."/latest.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-    $title="A-Z list";
-    $link=$noob."/azlist.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-    $title="Top Rating";
-	$link=$noob."/rating.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-$l1=$noob."/views.php?f=".$id;
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $l1);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_HEADER, 1);
-  curl_setopt($ch, CURLOPT_NOBODY, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch,CURLOPT_REFERER,$link);
-  $html = curl_exec($ch);
-  curl_close($ch);
+$html=str_between($h,"All Popular Shows","</div>");
+$videos = explode('<li', $html);
 
-//$html = file_get_contents($noob."/genre.php");
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $noob."/genre.php");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  //curl_setopt($ch,CURLOPT_REFERER,$noob."/azlist.php");
-  $html = curl_exec($ch);
-  curl_close($ch);
-//http://37.128.191.200/genre.php?b=00000000000000000000100000
-$img = "image/movies.png";
-$len= strlen("00000000000000000000100000");
-$videos = explode('checkbox" name="', $html);
 unset($videos[0]);
-$n=1;
 $videos = array_values($videos);
+
 foreach($videos as $video) {
-    $l="";
-    for ($k=1;$k<$len+1;$k++) {
-      if ($k==$n)
-        $l.="1";
-      else
-        $l.="0";
-    }
-    $n++;
-    $link=$noob."/genre.php?b=".$l;
-
-    $t3 = explode('>', $video);
-    $t4 = explode('<', $t3[1]);
-    $title = $t4[0];
-
-		$link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
+  $t1=explode("href='",$video);
+  $t2=explode("'",$t1[1]);
+  $link=$t2[0];
+  
+  $t3=explode(">",$t1[1]);
+  $t4=explode("<",$t3[1]);
+  $title=$t4[0];
+echo '
+<item>
+<title>'.$title.'</title>
+<link>http://127.0.0.1/cgi-bin/scripts/filme/php/awesomedl.php?query='.urlencode($link).','.urlencode($title).'</link>
+<annotation>'.$title.'</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+';
 }
-
 ?>
 
 </channel>

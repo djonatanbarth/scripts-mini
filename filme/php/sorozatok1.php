@@ -1,19 +1,23 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
+$query = $_GET["query"];
+if($query) {
+   $queryArr = explode(',', $query);
+   $page =$queryArr[0];
+   $search = urldecode($queryArr[1]);
+   $tit = urldecode($queryArr[2]);
+}
 ?>
 <rss version="2.0">
 <onEnter>
   startitem = "middle";
   setRefreshTime(1);
-  start="0";
 </onEnter>
-<onExit>
-setRefreshTime(-1);
-</onExit>
+
 <onRefresh>
-itemCount = getPageInfo("itemCount");
   setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
 </onRefresh>
 
 <mediaDisplay name="threePartsView"
@@ -28,11 +32,11 @@ itemCount = getPageInfo("itemCount");
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="50"
+	itemWidthPC="45"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="50"
+	capWidthPC="45"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -49,23 +53,28 @@ itemCount = getPageInfo("itemCount");
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
+
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="254:254:254">
-    <script>info;</script>
+
+		<text align="center" redraw="yes"
+          lines="10" fontSize=17
+		      offsetXPC=55 offsetYPC=55 widthPC=40 heightPC=42 
+		      backgroundColor=0:0:0 foregroundColor=200:200:200>
+			<script>print(annotation); annotation;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-		image/movies.png
+		<image  redraw="yes" offsetXPC=61 offsetYPC=22.5 widthPC=25 heightPC=30>
+		<script>print(img); img;</script>
 		</image>
-        <idleImage>image/POPUP_LOADING_01.png</idleImage>
-        <idleImage>image/POPUP_LOADING_02.png</idleImage>
-        <idleImage>image/POPUP_LOADING_03.png</idleImage>
-        <idleImage>image/POPUP_LOADING_04.png</idleImage>
-        <idleImage>image/POPUP_LOADING_05.png</idleImage>
-        <idleImage>image/POPUP_LOADING_06.png</idleImage>
-        <idleImage>image/POPUP_LOADING_07.png</idleImage>
-        <idleImage>image/POPUP_LOADING_08.png</idleImage>
+		<idleImage> image/POPUP_LOADING_01.png </idleImage>
+		<idleImage> image/POPUP_LOADING_02.png </idleImage>
+		<idleImage> image/POPUP_LOADING_03.png </idleImage>
+		<idleImage> image/POPUP_LOADING_04.png </idleImage>
+		<idleImage> image/POPUP_LOADING_05.png </idleImage>
+		<idleImage> image/POPUP_LOADING_06.png </idleImage>
+		<idleImage> image/POPUP_LOADING_07.png </idleImage>
+		<idleImage> image/POPUP_LOADING_08.png </idleImage>
 
 		<itemDisplay>
 			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
@@ -76,6 +85,7 @@ itemCount = getPageInfo("itemCount");
 					{
 					  location = getItemInfo(idx, "location");
 					  annotation = getItemInfo(idx, "annotation");
+					  img = getItemInfo(idx,"image");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -148,132 +158,94 @@ ret;
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
-
 	</item_template>
-
 <channel>
-	<title>Movies from Noobroom</title>
+	<title><?php echo $tit; ?></title>
 	<menu>main menu</menu>
-
-
 <?php
 function str_between($string, $start, $end){ 
 	$string = " ".$string; $ini = strpos($string,$start); 
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-  $title="Favorite";
-  $link = $host."/scripts/filme/php/noobroom_fav.php";
-  echo '
-  <item>
-  <title>'.$title.'</title>
-  <link>'.$link.'</link>
-  <image></image>
-  </item>
-  ';
-//
-$l="http://noobroom.com/";
-$h=file_get_contents($l);
-//http://72.8.190.49
-$noob=str_between($h,'value="','"');
-//$h=file_get_contents($noob."/");
+//http://online-sorozatok.tv/tag.php?t=a-betolakodo
+//http://online-sorozatok.tv/tag.php?t=a-betolakodo&page=2
+$link=$search."&page=".$page;
   $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $noob."/");
+  curl_setopt($ch, CURLOPT_URL, $link);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  //curl_setopt($ch,CURLOPT_REFERER,$noob."/azlist.php");
-  $h = curl_exec($ch);
-  curl_close($ch);
-$id=str_between($h,"views.php?f=",'"');
-    $title="Latest";
-    $link=$noob."/latest.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-    $title="A-Z list";
-    $link=$noob."/azlist.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-    $title="Top Rating";
-	$link=$noob."/rating.php";
-    $link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
-$l1=$noob."/views.php?f=".$id;
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $l1);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_HEADER, 1);
-  curl_setopt($ch, CURLOPT_NOBODY, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch,CURLOPT_REFERER,$link);
   $html = curl_exec($ch);
   curl_close($ch);
 
-//$html = file_get_contents($noob."/genre.php");
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $noob."/genre.php");
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  //curl_setopt($ch,CURLOPT_REFERER,$noob."/azlist.php");
-  $html = curl_exec($ch);
-  curl_close($ch);
-//http://37.128.191.200/genre.php?b=00000000000000000000100000
-$img = "image/movies.png";
-$len= strlen("00000000000000000000100000");
-$videos = explode('checkbox" name="', $html);
+if($page > 1) { ?>
+
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page-1).",".urlencode($search).",".urlencode($tit);
+?>
+<title>Previous Page</title>
+<link><?php echo $url;?></link>
+<annotation>Previous Page</annotation>
+<image>image/left.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<?php } ?>
+<?php
+$videos = explode('class="video_i', $html);
 unset($videos[0]);
-$n=1;
 $videos = array_values($videos);
+
 foreach($videos as $video) {
-    $l="";
-    for ($k=1;$k<$len+1;$k++) {
-      if ($k==$n)
-        $l.="1";
-      else
-        $l.="0";
+
+//  link  
+  $v1 = explode('href="', $video);
+  $v2 = explode('"', $v1[1]);
+  $link = $v2[0];
+//  titlu
+  $ser=str_between($video,'song_name">','<');
+  $ser_num=str_between($video,'artist_name">','<');
+  $titlu=$ser_num;
+
+//  imagine  
+  $v1 = explode('src="', $video);
+  $v2 = explode('"', $v1[1]);
+  $image = $v2[0];
+  $image=str_replace(" ","%20",$image);
+
+//  descriere
+  $descriere=$ser." - ".$ser_num;
+
+  if($link!="") {
+    $link  = $host."/scripts/filme/php/filme1_link.php?file=".$link.",".urlencode($descriere);
+    echo'
+    <item>
+    <title>'.$titlu.'</title>
+    <link>'.$link.'</link>
+    <annotation>'.$titlu.'</annotation>
+    <image>'.$image.'</image>
+    <media:thumbnail url="'.$image.'" />
+    <mediaDisplay name="threePartsView"/>
+    </item>
+    ';
     }
-    $n++;
-    $link=$noob."/genre.php?b=".$l;
-
-    $t3 = explode('>', $video);
-    $t4 = explode('<', $t3[1]);
-    $title = $t4[0];
-
-		$link1 = $host."/scripts/filme/php/noobroom.php?query=".urlencode($title).",".urlencode($link);
-	echo '
-	<item>
-	<title>'.$title.'</title>
-	<link>'.$link1.'</link>
-	<annotation>'.$title.'</annotation>
-	<mediaDisplay name="threePartsView"/>
-	</item>
-	';
 }
 
 ?>
+<item>
+<?php
+$sThisFile = 'http://127.0.0.1'.$_SERVER['SCRIPT_NAME'];
+$url = $sThisFile."?query=".($page+1).",".urlencode($search).",".urlencode($tit);
+?>
+<title>Next Page</title>
+<link><?php echo $url;?></link>
+<annotation>Next page</annotation>
+<image>image/right.jpg</image>
+<mediaDisplay name="threePartsView"/>
+</item>
 
 </channel>
 </rss>

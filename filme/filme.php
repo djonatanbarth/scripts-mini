@@ -210,6 +210,12 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
+<item>
+<title>awesomedl - series</title>
+<link><?php echo $host; ?>/scripts/filme/php/awesomedl_main.php</link>
+<annotation>http://www.awesomedl.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
 <!--
 <item>
 <title>hd-box.org</title>
@@ -243,6 +249,13 @@ ret;
 <title>onlinewebfilmek (in lb. maghiara)</title>
 <link><?php echo $host; ?>/scripts/filme/php/onlinewebfilmek.php?file=http://onlinewebfilmek.blogspot.com</link>
 <annotation>http://onlinewebfilmek.blogspot.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>sorozatok.tv - series (lb. maghiara)</title>
+<link><?php echo $host; ?>/scripts/filme/php/sorozatok_main.php</link>
+<annotation>http://online-sorozatok.tv/sorozatok.php</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
 

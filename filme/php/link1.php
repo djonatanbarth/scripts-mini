@@ -7,15 +7,19 @@ $filelink=urldecode($filelink);
 if (strpos($filelink,"adf.ly") !==false) {
   $t1=explode("http",$filelink);
   $filelink1="http".$t1[2];
-  if ($filelink1 == "") {
+  if ($filelink1 == "http") {
   $h1=file_get_contents($filelink);
   $filelink=str_between($h1,"var url = '","'");
+  if (!$filelink) $filelink=str_between($h1,"var zzz = '","'");
+  /*
   if (strpos($filelink,"adf.ly") === false)
     $filelink = "http://adf.ly".$filelink;
   } else {
   $filelink=$filelink1;
+  */
   }
 }
+//echo $filelink;
 if (strpos($filelink,"moovie.cc") !== false) {
  $a = @get_headers($filelink);
  //print_r($a);
@@ -78,6 +82,8 @@ function unpack_DivXBrowserPlugin($n_func,$html_cod,$sub=false) {
     $ret_val = str_between($r,"file','","'");
   if ($ret_val == "")
     $ret_val = str_between($r,"playlist=","&");  //nosvideo
+  if ($ret_val == "")
+    $ret_val = str_between($r,"clip:{url:'","'"); //putme.org
   if ($sub==true) {
     $srt=str_between($r,"captions.file','","'");
     $srt = str_replace(" ","%20",$srt);
@@ -412,6 +418,7 @@ return $r;
 function putlocker($string) {
      //http://www.putlocker.com/embed/067DF715716F10C5
      //http://www.putlocker.com/file/067DF715716F10C5
+     //http://www.putlocker.com/embed/88EE985C2352B26A
      $string=str_replace("file","embed",$string);
      $id=substr(strrchr($string,"/"),1);
      $ch = curl_init();
@@ -668,8 +675,9 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $s = str_between($filelink,"videoserver",".");
    $f = str_between($filelink,"key=","&");
    $link = "http://static.filebox.ro/filme/".$s."/".$f.".flv";
-} elseif (strpos($filelink, 'videobam.com/widget') !== false) {
+} elseif (strpos($filelink, 'videobam.com') !== false) {
    //http://videobam.com/widget/Xykqy/3"
+   //http://videobam.com/Uogry
    $h = file_get_contents($filelink);
    $link=str_between($h,',"url":"','"');
    $link=str_replace("\\","",$link);
@@ -1187,6 +1195,174 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $l1=unpack_DivXBrowserPlugin(1,$h);
    $h=file_get_contents($l1);
    $link=trim(str_between($h,"<file>","</file>"));
+} elseif (strpos($filelink,"dailymotion.com") !==false) {
+  //http://www.dailymotion.com/video/xsg0qa
+  if (strpos($filelink,"embed") !== false) {
+    $h=file_get_contents($filelink);
+    //echo $h;
+    $l=str_between($h,'stream_h264_url":"','"');
+    $link=str_replace("\\","",$l);
+  } else {
+    $html = file_get_contents($filelink);
+    $t1 = explode('sdURL', $html);
+    $sd=urldecode($t1[1]);
+    $t1=explode('"',$sd);
+    $sd=$t1[2];
+    $sd=str_replace("\\","",$sd);
+    $n=explode("?",$sd);
+    $nameSD=$n[0];
+    $nameSD=substr(strrchr($nameSD,"/"),1);
+    $t1 = explode('hqURL', $html);
+    $hd=urldecode($t1[1]);
+    $t1=explode('"',$hd);
+    $hd=$t1[2];
+    $hd=str_replace("\\","",$hd);
+    $n=explode("?",$hd);
+    $nameHD=$n[0];
+    $nameHD=substr(strrchr($nameHD,"/"),1);
+    if ($hd <> "") {
+     $link = $hd;
+    }
+    if (($sd <> "") && ($hd=="")) {
+     $link = $sd;
+    }
+  }
+} elseif (strpos($filelink,"purevid.com") !==false) {
+   //http://www.purevid.com/v/881OPvv332wmou24943/
+   //http://www.purevid.com/?m=embed&id=881OPvv332wmou24943
+  if(preg_match('/(v\/|\?v=|id=)([\w\-]+)/', $filelink, $match))
+   $id = $match[2];
+   //http://www.purevid.com/?m=video_info_embed_flv&id=881OPvv332wmou24943
+   $filelink="http://www.purevid.com/?m=video_info_embed_flv&id=".$id;
+   $h=file_get_contents($filelink);
+   $link=str_between($h,'"url":"','"');
+   $link=str_replace("\\","",$link);
+} elseif (strpos($filelink, 'modovideo.com') !==false) {
+  //http://www.modovideo.com/video.php?v=fx8jyb4o9g9yhl37xqnm7idchw67q7zb
+  //http://www.modovideo.com/frame.php?v=fx8jyb4o9g9yhl37xqnm7idchw67q7zb
+  //http://www.modovideo.com/video?v=xa8xysu73n6h2djewvhwsox2e736y0cb
+  //http://www.modovideo.com/video?v=rtb95xgy5sk81t032t3mt0wkp9kjcvz4
+  $t=explode("v=",$filelink);
+  $id=$t[1];
+  $filelink = "http://www.modovideo.com/frame.php?v=".$id;
+  $h = file_get_contents($filelink);
+  $link = str_between($h,"plugin.video=","&");
+} elseif (strpos($filelink,"180upload.com") !==false) {
+  //http://180upload.com/embed-iyoqowagoivm-728x360.html
+  //http://180upload.com/iyoqowagoivm
+  //http://180upload.com/095esb3kw747
+  //op=download2&id=iyoqowagoivm&rand=ae62ucsw5oduor27myoerr7ggt65omxrjujcqby&referer=http%3A%2F%2Fhqkings.com%2F2012%2Fred-lights-2012-bluray-720p-700mb%2F&method_free=&method_premium=&down_direct=1
+  if (strpos($filelink,"embed") !== false) {
+   $h=file_get_contents($filelink);
+  } else {
+     $t1=explode("/",$filelink);
+     $id=$t1[3];
+     $filelink="http://180upload.com/embed-".$id."-728x360.html";
+     $h=file_get_contents($filelink);
+  }
+  $link=unpack_DivXBrowserPlugin(2,$h);
+} elseif (strpos($filelink,"vidto.me") !==false) {
+  //http://vidto.me/2roeh1a5q83u.html
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   //curl_setopt($ch, CURLOPT_REFERER, $filelink);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+   $h = curl_exec($ch);
+   $id=str_between($h,'id" value="','"');
+   $referer=str_between($h,'referer" value="','"');
+   $fname=str_between($h,'fname" value="','"');
+   $hash=str_between($h,'hash" value="','"');
+   if ($fname) {
+   //op=download1&usr_login=&id=2roeh1a5q83u&fname=Masterchef.The.Professionals.AU.s01e21.WS.PDTV.XviD.BF1.avi&referer=http%3A%2F%2Fwww.awesomedl.com%2F2013%2F03%2Fmasterchef-professionals-au-season-1.html&hash=yoazemi3t5a4xxhyrlqu7l5b76id6iqf&imhuman=Proceed+to+video
+   $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=".urlencode($referer)."&hash=".$hash."&imhuman=Proceed+to+video";
+   //echo $post;
+   sleep(10);
+     //$ch = curl_init();
+     //curl_setopt($ch, CURLOPT_URL, $filelink);
+     curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+     curl_setopt ($ch, CURLOPT_POST, 1);
+     curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+     curl_setopt($ch, CURLOPT_REFERER, $filelink);
+     $h = curl_exec($ch);
+     curl_close($ch);
+     //echo $h;
+     $link=str_between($h,"var file_link = '","'");
+   }
+} elseif (strpos($filelink,"played.to") !==false) {
+  //http://played.to/hfsjjt5gbmm4
+  $h=file_get_contents($filelink);
+   $id=str_between($h,'id" value="','"');
+   $referer=str_between($h,'referer" value="','"');
+   $fname=str_between($h,'fname" value="','"');
+   $hash=str_between($h,'hash" value="','"');
+   $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=".urlencode($referer)."&hash=".$hash."&imhuman=Continue+to+Video";
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   curl_setopt($ch, CURLOPT_REFERER, $filelink);
+   $h = curl_exec($ch);
+   curl_close($ch);
+   $link=str_between($h,'file: "','"');
+} elseif (strpos($filelink,"primeshare.tv") !==false) {
+  //http://primeshare.tv/download/7679248EB7
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   //curl_setopt($ch, CURLOPT_REFERER, $filelink);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+   $h = curl_exec($ch);
+   $hash=str_between($h,'hash" value="','"');
+   $post="hash=".$hash;
+   sleep(11);
+     //$ch = curl_init();
+     //curl_setopt($ch, CURLOPT_URL, $filelink);
+     curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+     curl_setopt ($ch, CURLOPT_POST, 1);
+     curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+     curl_setopt($ch, CURLOPT_REFERER, $filelink);
+     $h = curl_exec($ch);
+     curl_close($ch);
+     $t1=explode("clip:",$h);
+     $link=str_between($t1[1],"url: '","'");
+} elseif (strpos($filelink,"putme.org") !==false) {
+  //http://www.putme.org/tu7m7nvv268j
+  $h=file_get_contents($filelink);
+   $id=str_between($h,'id" value="','"');
+   $referer=str_between($h,'referer" value="','"');
+   //$fname=str_between($h,'fname" value="','"');
+   $rand=str_between($h,'rand" value="','"');
+   //op=download2&id=tu7m7nvv268j&rand=mer7ukwuszjvgo3ilst2snemjj6swtm5umhwshi&referer=&method_free=&method_premium=&down_direct=1
+   //op=download2&id=tu7m7nvv268j&rand=hc53bstci6oyvyonaz5s7duolirbt2ioiycpjda&referer=&method_free=&method_premium=&down_direct=1
+   $post="op=download2&id=".$id."&rand=".$rand."&referer=".urlencode($referer)."&method_free=&method_premium=&down_direct=1";
+   //echo $post;
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   curl_setopt($ch, CURLOPT_REFERER, $filelink);
+   $h = curl_exec($ch);
+   curl_close($ch);
+   //echo $h;
+   $link=unpack_DivXBrowserPlugin(2,$h);
+} elseif (strpos($filelink,"gorillavid.in") !==false) {
+  //http://gorillavid.in/embed-f0sbhwq2kk30-600x480.html
+  $h=file_get_contents($filelink);
+  $link=str_between($h,'file: "','"');
 }
+
 print $link;
 ?>

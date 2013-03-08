@@ -1,42 +1,15 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
-function str_between($string, $start, $end){
-	$string = " ".$string; $ini = strpos($string,$start);
-	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
-	return substr($string,$ini,$len);
-}
-$query = $_GET["query"];
-$queryArr = explode(',', $query);
-$tit = urldecode($queryArr[0]);
-$l = urldecode($queryArr[1]);
 ?>
 <rss version="2.0">
-<script>
-  translate_base_url  = "http://127.0.0.1/cgi-bin/translate?";
-
-  storagePath             = getStoragePath("tmp");
-  storagePath_stream      = storagePath + "stream.dat";
-  storagePath_playlist    = storagePath + "playlist.dat";
-  
-  error_info          = "";
-</script>
 <onEnter>
   setRefreshTime(1);
 </onEnter>
-<onExit>
-  arr = null;
-  arr = pushBackStringArray(arr, subtitle);
-  arr = pushBackStringArray(arr, server);
-  arr = pushBackStringArray(arr, hhd);
-  print("arr=",arr);
 
-  writeStringToFile(optionsPath, arr);
-</onExit>
 <onRefresh>
-    itemCount = getPageInfo("itemCount");
-    setRefreshTime(-1);
-    redrawdisplay();
+  setRefreshTime(-1);
+  itemCount = getPageInfo("itemCount");
 </onRefresh>
 
 <mediaDisplay name="threePartsView"
@@ -73,7 +46,7 @@ $l = urldecode($queryArr[1]);
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="70" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    1=favorite, 2= download,0=dl. manager,4/6= jump -+100, right for more...
+    1=delete, 2= download,0=dl. manager,4/6= jump -+100, right for more...
 		</text>
   	<text redraw="yes" align="left" offsetXPC="80" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -164,7 +137,7 @@ else if (userInput == "two" || userInput == "2")
 	 dlok = loadXMLFile(topUrl);
 	 "true";
 }
-else if (userInput == "0" || userInput == "zero")
+else if (userInput == "zero" || userInput == "0")
    {
     jumpToLink("destination");
     "true";
@@ -206,7 +179,7 @@ ret="true";
 else if (userInput == "one" || userInput == "1")
 {
  showIdle();
- url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_add.php?mod=add*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1");
+ url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_add.php?mod=delete*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1");
  dummy=getUrl(url);
  cancelIdle();
  redrawDisplay();
@@ -216,6 +189,7 @@ redrawdisplay();
 ret;
 </script>
   </onUserInput>
+
 	</mediaDisplay>
 
 	<item_template>
@@ -229,115 +203,52 @@ ret;
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
 		</mediaDisplay>
+
 	</item_template>
 <destination>
 	<link>http://127.0.0.1/cgi-bin/scripts/util/level.php
 	</link>
 </destination>
-<channel>
-	<title><?php echo $tit; ?></title>
-	<menu>main menu</menu>
+  <channel>
+
+    <title>Noobroom - favorite</title>
+
 <?php
-
-  $ch = curl_init();
-  curl_setopt($ch, CURLOPT_URL, $l);
-  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
-  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  curl_setopt($ch,CURLOPT_REFERER,$l);
-  $html = curl_exec($ch);
-  curl_close($ch);
-if (strpos($l,"azlist") === false) {
-$t1=explode('<h1>#</h1>',$html);
-$html=$t1[0];
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
 }
-if (strpos($l,"genre.php") === false) {
-$videos = explode("href='/?", $html);
-
+if (file_exists("/data"))
+  $f= "/data/noobroom.dat";
+else
+  $f="/usr/local/etc/noobroom.dat";
+if (file_exists($f)) {
+$html=file_get_contents($f);
+$videos=explode("<item>",$html);
 unset($videos[0]);
 $videos = array_values($videos);
-
 foreach($videos as $video) {
-   $t1=explode("'",$video);
-   $link=$t1[0];
-   
-   $t1=explode('>',$video);
-   $t2=explode('<',$t1[1]);
-   $title=$t2[0];
-   $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-      $title1=$title;
-   $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
-     echo '
-     <item>
-     <title>'.$title1.'</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + "no" + "," + server + "," + hhd;
-     movie=geturl(url);
-     cancelIdle();
-    storagePath = getStoragePath("tmp");
-    storagePath_stream = storagePath + "stream.dat";
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "'.$title.'");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    ';
-    $f = "/usr/local/bin/home_menu";
-    if (file_exists($f)) {
-    echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
-    ';
-    } else {
-    echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
-    ';
-    }
-    echo '
-     </script>
-     </onClick>
-    <download>'.$link1.'</download>
-    <title1>'.urlencode($title).'</title1>
-    <link1>'.urlencode($link).'</link1>
-    <name>'.$name.'</name>
-    <movie>'.$link.'</movie>
-     </item>
-     ';
-}
-} else {
-$videos = explode("href='/?", $html);
-
-unset($videos[0]);
-$videos = array_values($videos);
-
-foreach($videos as $video) {
-   $t1=explode("'",$video);
-   $link=$t1[0];
-
-   $t1=explode('>',$video);
-   $t2=explode('<',$t1[1]);
-   $title=$t2[0];
-   $arr[]=array($title, $link);
+  $l=str_between($video,"<link>","</link>");
+  //echo $l."<BR>";
+  $title=urldecode(str_between($video,"<title>","</title>"));
+  $arr[]=array($title, $l);
 }
 asort($arr);
 foreach ($arr as $key => $val) {
- $title=$arr[$key][0];
- $link=$arr[$key][1];
-   $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-      $title1=$title;
-   $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
+  $l=$arr[$key][1];
+  $title=$arr[$key][0];
+
+    //$link=$l;
+    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
+    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$l.",no,";
      echo '
      <item>
-     <title>'.$title1.'</title>
+     <title>'.$title.'</title>
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + "no" + "," + server + "," + hhd;
+     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$l.'" + "," + subtitle + "," + server + "," + hhd;
      movie=geturl(url);
      cancelIdle();
     storagePath = getStoragePath("tmp");
@@ -367,13 +278,15 @@ foreach ($arr as $key => $val) {
      </onClick>
     <download>'.$link1.'</download>
     <title1>'.urlencode($title).'</title1>
-    <link1>'.urlencode($link).'</link1>
+    <link1>'.urlencode($l).'</link1>
     <name>'.$name.'</name>
-    <movie>'.$link.'</movie>
+    <movie>'.$l.'</movie>
      </item>
      ';
 }
 }
 ?>
+
+
 </channel>
-</rss>
+</rss>                                                                                                                             

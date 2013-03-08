@@ -25,11 +25,11 @@ $host = "http://127.0.0.1/cgi-bin";
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="50"
+	itemWidthPC="80"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="50"
+	capWidthPC="80"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -39,23 +39,21 @@ $host = "http://127.0.0.1/cgi-bin";
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
-	sliding="no"
-	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    2 = delete. Reload page after
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>print(annotation); annotation;</script>
 		</text>
-		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-  image/tv_radio.png
-		</image>
 		<idleImage> image/POPUP_LOADING_01.png </idleImage>
 		<idleImage> image/POPUP_LOADING_02.png </idleImage>
 		<idleImage> image/POPUP_LOADING_03.png </idleImage>
@@ -126,7 +124,16 @@ if (userInput == "pagedown" || userInput == "pageup")
   setFocusItemIndex(idx);
 	setItemFocus(0);
   redrawDisplay();
-  "true";
+  ret="true";
+}
+else if (userInput == "two" || userInput == "2")
+{
+ showIdle();
+ url="http://127.0.0.1/cgi-bin/scripts/filme/php/sorozatok_add.php?mod=delete*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1");
+ dummy=getUrl(url);
+ cancelIdle();
+ redrawDisplay();
+ ret="true";
 }
 ret;
 </script>
@@ -149,123 +156,46 @@ ret;
 	</item_template>
   <channel>
 
-    <title>TV Live</title>
+    <title>sorozatok favorite</title>
 
-<item>
-<title>TV Live - favorite list</title>
-<link><?php echo $host; ?>/scripts/tv/php/ohlulz_fav.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
+<?php
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
+if (file_exists("/data"))
+  $f= "/data/sorozatok.dat";
+else
+  $f="/usr/local/etc/sorozatok.dat";
+if (file_exists($f)) {
+$html=file_get_contents($f);
+$videos=explode("<item>",$html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+  $l=str_between($video,"<link>","</link>");
+  $title=urldecode(str_between($video,"<title>","</title>"));
+  $arr[]=array($title, $l);
+}
+asort($arr);
+foreach ($arr as $key => $val) {
+  $l=$arr[$key][1];
+  $title=$arr[$key][0];
+  $link = $host."/scripts/filme/php/sorozatok1.php?query=1,".urlencode($l).",".urlencode($title);
+    echo '
+    <item>
+    <title>'.$title.'</title>
+    <annotation>'.$title.'</annotation>
+    <link>'.$link.'</link>
+    <title1>'.urlencode($title).'</title1>
+    <link1>'.$l.'</link1>
+    </item>
+    ';
+}
+}
+?>
 
-<item>
-<title>High Definition TV</title>
-<link><?php echo $host; ?>/scripts/tv/tvsector.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-
-<item>
-<title>TV Live - Music</title>
-<link><?php echo $host; ?>/scripts/tv/music_tv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - Sport</title>
-<link><?php echo $host; ?>/scripts/tv/tv_sport_live.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<!--
-<item>
-<title>TV Live - RTMP list</title>
-<link><?php echo $host; ?>/scripts/tv/rtmp.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
-<item>
-<title>Playlist from database.eu.pn</title>
-<link><?php echo $host; ?>/scripts/tv/simpletv.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - Other RTMP List</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/other_rtmp.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live - Other</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/tv_diverse_live.rss</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from ilive.to</title>
-<link><?php echo $host; ?>/scripts/tv/ilive.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-
-<item>
-<title>TV Live from freedocast.com</title>
-<link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>TV Live from Justin.tv</title>
-<link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>FilmOn</title>
-<link><?php echo $host; ?>/scripts/tv/php/filmon.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Youtube live</title>
-<link><?php echo $host; ?>/scripts/tv/yt_live_main.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-<item>
-<title>TV Live - Deutschland (tv-kino.net)</title>
-<link><?php echo $host; ?>/scripts/tv/tv-kino.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-
-<item>
-<title>TV Live - Vietnam (vtc.com.vn)</title>
-<link><?php echo $host; ?>/scripts/tv/vtc.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<!--
-<item>
-<title>mozhay TV (Russian) - press Audio to change channel</title>
-<link><?php echo $host; ?>/scripts/tv/mozhay.php</link>
-<media:thumbnail url="image/tv_radio.png" />
-<mediaDisplay name="threePartsView"/>
-</item>
--->
 
 </channel>
 </rss>                                                                                                                             

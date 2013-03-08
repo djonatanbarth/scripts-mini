@@ -247,18 +247,22 @@ if (preg_match("/loads7/i",$filelink)) {
   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
   $html = curl_exec($ch);
   curl_close($ch);
+if (preg_match("/awesomedl/i",$filelink)) {
+  $t1=explode("Watch Online:",$html);
+  $html=$t1[1];
+}
 /**################ All links ################**/
-$s="/vidxden\.c|divxden\.c|vidbux\.c|movreel\.c|videoweed\.(c|e)|novamov\.(c|e)|vk\.com";
-$s=$s."|movshare\.net|youtube\.c|flvz\.com|rapidmov\.net|putlocker\.com|";
-$s=$s."peteava\.ro\/embed|peteava\.ro\/id|content\.peteava\.ro";
+$s="/adf\.ly|vidxden\.c|divxden\.c|vidbux\.c|movreel\.c|videoweed\.(c|e)|novamov\.(c|e)|vk\.com";
+$s=$s."|movshare\.net|youtube\.c|flvz\.com|rapidmov\.net|putlocker\.com|played\.to|primeshare\.tv|";
+$s=$s."peteava\.ro\/embed|peteava\.ro\/id|content\.peteava\.ro|180upload\.com|vidto\.me|putme\.org";
 $s=$s."|vimeo\.com|googleplayer\.swf|filebox\.ro\/get_video|vkontakte\.ru|megavideo\.c|videobam\.com";
-$s=$s."|divxstage\.net|divxstage\.eu|stream2k\.com|sockshare\.com|xvidstage\.com";
+$s=$s."|divxstage\.net|divxstage\.eu|stream2k\.com|sockshare\.com|xvidstage\.com|gorillavid\.in";
 $s=$s."|nolimitvideo\.com|stage666\.net\/|rapidload\.org|vidstream\.us|2gb-hosting\.com";
 $s=$s."|dimshare\.com|movdivx\.com|sharevideo22\.com|dr9000\.com|altervideo\.net|royalvids\.eu";
 $s=$s."|skyload\.net|rapidvideo\.com|uploadc\.com|uploadville\.com|zurvid\.com|flashx\.tv|ufliq\.com|ovfile\.com";
 $s=$s."|sharefiles4u\.com|filebox\.com|glumbouploads\.com|ginbig\.com|divxbase\.com|allmyvideos\.net";
 $s=$s."|gorillavid\.in|streamcloud\.eu|zalaa\.com|vreer\.com|zixshare\.com|veervid\.com|uploadboost\.com";
-$s=$s."|ufliq\.com|muchshare\.net|nowvideo\.eu|vidbull\.com|nosvideo\.com/i";
+$s=$s."|ufliq\.com|muchshare\.net|nowvideo\.eu|vidbull\.com|nosvideo\.com|dailymotion\.com|purevid\.com|modovideo\.com/i";
 if(preg_match_all("/(http\b.*?)(\"|\')+/i",$html,$matches)) {
 $links=$matches[1];
 }
@@ -266,11 +270,18 @@ for ($i=0;$i<count($links);$i++) {
   $cur_link=$links[$i];
   if (preg_match($s,$cur_link)) {
     if ($cur_link <> $last_link) {
-      if (!preg_match("/facebook|twitter|img\.youtube/",$cur_link)) {
         if (strpos($cur_link,"adf.ly") !== false) {
           $t1=explode("http",$cur_link);
-          $cur_link="http".$t1[2];
+          $cur_link1=$t1[2];
+          if ($cur_link1) $cur_link="http".$cur_link1;
+          if (!$cur_link1) {
+           $h1=file_get_contents($cur_link);
+           $cur_link=str_between($h1,"var url = '","'");
+           if (!$cur_link) $cur_link=str_between($h1,"var zzz = '","'");
+          }
+          if (!preg_match($s,$cur_link)) $cur_link="twitter";
         }
+      if (!preg_match("/facebook|twitter|img\.youtube/",$cur_link)) {
         $link="http://127.0.0.1/cgi-bin/scripts/filme/php/link1.php?file=".urlencode($cur_link);
         $server = str_between($cur_link,"http://","/");
         $last_link=$cur_link;

@@ -1,27 +1,12 @@
-<?xml version='1.0' encoding='UTF8' ?>
+#!/usr/local/bin/Resource/www/cgi-bin/php
+<?php echo "<?xml version='1.0' encoding='UTF-8' ?>";
+$host = "http://127.0.0.1/cgi-bin";
+?>
 <rss version="2.0">
 <onEnter>
-  cachePath = getStoragePath("key");
-  optionsPath = cachePath + "onehd.dat";
-  optionsArray = readStringFromFile(optionsPath);
-  if(optionsArray == null)
-  {
-    buf = "60000";
-  }
-  else
-  {
-    buf = getStringArrayAt(optionsArray, 0);
-  }
   startitem = "middle";
   setRefreshTime(1);
 </onEnter>
-<onExit>
-  arr = null;
-  arr = pushBackStringArray(arr, buf);
-  print("arr=",arr);
-
-  writeStringToFile(optionsPath, arr);
-</onExit>
 
 <onRefresh>
   setRefreshTime(-1);
@@ -61,16 +46,16 @@
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="55" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    <script>"Press 1 to change Buffer: " + buf;</script>
-		</text>
+
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>print(annotation); annotation;</script>
 		</text>
-
+		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
+  image/tv_radio.png
+		</image>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
@@ -79,16 +64,15 @@
         <idleImage>image/POPUP_LOADING_06.png</idleImage>
         <idleImage>image/POPUP_LOADING_07.png</idleImage>
         <idleImage>image/POPUP_LOADING_08.png</idleImage>
-
 		<itemDisplay>
-			<text align="left" lines="1" cornerRounding=5 offsetXPC=0 offsetYPC=2 widthPC=100 heightPC=96>
+			<text align="left" lines="1" offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
 					if(focus==idx) 
 					{
 					  location = getItemInfo(idx, "location");
-					  annotation = getItemInfo(idx, "annotation");
+					  annotation = getItemInfo(idx, "title");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -141,50 +125,9 @@ if (userInput == "pagedown" || userInput == "pageup")
   print("new idx: "+idx);
   setFocusItemIndex(idx);
 	setItemFocus(0);
+  redrawDisplay();
   "true";
 }
-else if (userInput == "one" || userInput == "1")
-{
-		if (buf == "60000")
-           buf = "40000";
-		else if (buf == "40000")
-           buf = "20000";
-        else if (buf == "20000")
-          buf = "10000";
-        else if (buf == "10000")
-          buf = "8000";
-        else if (buf == "8000")
-          buf = "6000";
-        else if (buf == "6000")
-          buf = "4000";
-        else if (buf == "4000")
-          buf = "2000";
-        else if (buf == "2000")
-          buf = "1000";
-        else if (buf == "1000")
-          buf = "500";
-        else if (buf == "500")
-          buf = "400";
-        else if (buf == "400")
-          buf = "300";
-        else if (buf == "300")
-          buf = "200";
-        else if (buf == "200")
-          buf = "100";
-        else if (buf == "100")
-          buf = "0";
-        else if (buf == "0")
-          buf = "60000";
-        else
-		 buf = "60000";
-  arr = null;
-  arr = pushBackStringArray(arr, buf);
-  print("arr=",arr);
-
-  writeStringToFile(optionsPath, arr);
-  ret = "true";
-}
-redrawDisplay();
 ret;
 </script>
 </onUserInput>
@@ -204,52 +147,44 @@ ret;
 		</mediaDisplay>
 
 	</item_template>
-
 <channel>
-	<title>OneHD - Concerts</title>
+	<title>Youtube live</title>
+	<menu>main menu</menu>
 
 <item>
-<title>Unsorted(Nesortate)</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_other.rss</link>
-<annotation></annotation>
-<mediaDisplay name="threePartsView"/>
+<title>Favorite</title>
+<link><?php echo $host; ?>/scripts/tv/yt_live_fav.php</link>
+<media:thumbnail url="image/tv_radio.png" />
 </item>
 
-<item>
-<title>Dance</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_dance.rss</link>
-<annotation></annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
+<?php
+$l="http://www.youtube.com/live/all";
+$html=file_get_contents($l);
+$videos = explode('branded-page-module-title', $html);
 
-<item>
-<title>Pop</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_pop.rss</link>
-<annotation></annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
+unset($videos[0]);
+$videos = array_values($videos);
 
-<item>
-<title>Rock</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_rock.rss</link>
-<annotation></annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Jazz</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_jazz.rss</link>
-<annotation></annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>Classic</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_classic.rss</link>
-<annotation></annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-
+foreach($videos as $video) {
+  $t1=explode('href="',$video);
+  $t2=explode('"',$t1[1]);
+  $link=$t2[0];
+  
+  $t1=explode('title="',$video);
+  $t2=explode('"',$t1[1]);
+  $title=$t2[0];
+  
+  if (strpos($link,"channel") !==false) {
+   $ch = substr(strrchr($link, "/"), 1);
+   echo '
+   <item>
+   <title>'.$title.'</title>
+   <link>'.$host."/scripts/tv/yt_live.php?file=".$ch.','.urlencode($title).',1</link>
+   <media:thumbnail url="image/tv_radio.png" />
+   </item>
+   ';
+  }
+}
+?>
 </channel>
 </rss>
