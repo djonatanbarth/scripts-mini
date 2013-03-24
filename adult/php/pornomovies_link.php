@@ -9,8 +9,7 @@ function str_between($string, $start, $end){
 
 $link = $_GET["file"];
     $html = file_get_contents($link);
-		$link = str_between($html, 's1.addVariable("file","http', '"');
-		$link = "http".$link;
+		$link = str_between($html, 'file", "', '"');
 		$link=urldecode($link);
 //$html = file_get_contents($link);
 //$link = str_between($html, '<location>', '<');

@@ -14,7 +14,7 @@ $host = "http://127.0.0.1/cgi-bin";
 </script>
 <onEnter>
   startitem = "middle";
-  server = "SD";
+  server = "HD";
   setRefreshTime(1);
 </onEnter>
 <onRefresh>
@@ -206,7 +206,7 @@ if (file_exists($filename)) {
   $user=str_replace("@","%40",$user);
   $pass=trim($a[1]);
 
-  $l="http://futubox.to/users/sign_in";
+  $l="http://futubox.to/user/sign_in";
   $post="user[login]=".$user."&user[password]=".$pass."&user[remember_me]=1";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
@@ -220,8 +220,11 @@ if (file_exists($filename)) {
   $t1=explode('authenticity_token',$html);
   $t2=explode('value="',$t1[1]);
   $t3=explode('"',$t2[1]);
+  $torr=$t3[0];
+  $t2=explode('value="',$t1[2]);
+  $t3=explode('"',$t2[1]);
   $token=$t3[0];
-  $post="utf8=%E2%9C%93&authenticity_token=".urlencode($token)."&user%5Blogin%5D=".$user."&user%5Bpassword%5D=".$pass."&user%5Bremember_me%5D=0&commit=Sign+in";
+  $post="utf8=".$torr."&authenticity_token=".urlencode($token)."&user%5Blogin%5D=".$user."&user%5Bpassword%5D=".$pass."&user%5Bremember_me%5D=0&commit=Sign+in";
   curl_setopt ($ch, CURLOPT_POST, 1);
   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
   $html = curl_exec($ch);

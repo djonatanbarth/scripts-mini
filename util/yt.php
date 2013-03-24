@@ -8,14 +8,16 @@
 $a_itags=array(37,22,18);
 
 $file=$_GET["file"];
-if(preg_match('/youtube\.com\/(v\/|watch\?v=)([\w\-]+)/', $file, $match)) {
+if(preg_match('/youtube\.com\/(v\/|watch\?v=|embed\/)([\w\-]+)/', $file, $match)) {
   $id = $match[2];
   $link = 'http://www.youtube.com/get_video_info?&video_id=' . $id . '&el=vevo&ps=default';
+  //echo $link;
   $html=file_get_contents($link);
   $html = urldecode($html);
   $link   = "http://www.youtube.com/watch?v=".$id;
   $html   = file_get_contents($link);
-  preg_match('#playerConfig = {(?P<out>.*)};#im', $html, $out);
+  //echo $html;
+  preg_match('#config = {(?P<out>.*)};#im', $html, $out);
   $parts  = json_decode('{'.$out['out'].'}', true);
   $videos = explode(',', $parts['args']['url_encoded_fmt_stream_map']);
 foreach ($videos as $video) {

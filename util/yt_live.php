@@ -17,7 +17,7 @@ if(preg_match('/(v\/|\?v=|embed\/)([\w\-]+)/', $file, $match)) {
   $link   = "http://www.youtube.com/watch?v=".$id;
   //echo $link;
   $html   = file_get_contents($link);
-  preg_match('#playerConfig = {(?P<out>.*)};#im', $html, $out);
+  preg_match('#config = {(?P<out>.*)};#im', $html, $out);
   $parts  = json_decode('{'.$out['out'].'}', true);
   $videos = explode(',', $parts['args']['url_encoded_fmt_stream_map']);
 foreach ($videos as $video) {

@@ -46,7 +46,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 2 for download, 3 for download manager
+    Apasati 2 pentru download, 3 pentru download manager
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -200,7 +200,7 @@ if($search) {
 ?>
 <title>Previous Page</title>
 <link><?php echo $url;?></link>
-<annotation>Previous Page</annotation>
+<annotation>Pagina anterioara</annotation>
 <image>image/left.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -216,7 +216,7 @@ function str_between($string, $start, $end){
 }
 
 
-$videos = explode('<div style="overflow:hidden;width:220px;">', $html);
+$videos = explode('div class="video"', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -226,16 +226,16 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $link = "http://pornomovies.com".$t2[0];
 
+    $t3=explode(">",$t1[2]);
+    $t4=explode("<",$t3[1]);
+    $title=$t4[0];
     $t1 = explode('src="', $video);
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
 
-    $t1 = explode('alt="', $video);
-    $t2 = explode('"', $t1[1]);
-    $title = $t2[0];
 
 		$link = $host."/scripts/adult/php/pornomovies_link.php?file=".$link;
-    $data = trim(str_between($video,'Length:',"</a>"));
+    $data = trim(str_between($video,'duration">',"<"));
     $data = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$data);
     $data = "Durata: ".$data;
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".flv";
@@ -286,7 +286,7 @@ if($search) {
 ?>
 <title>Next Page</title>
 <link><?php echo $url;?></link>
-<annotation>Next Page</annotation>
+<annotation>Pagina urmatoare</annotation>
 <image>image/right.jpg</image>
 <mediaDisplay name="threePartsView"/>
 </item>

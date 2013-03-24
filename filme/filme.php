@@ -216,6 +216,13 @@ ret;
 <annotation>http://www.awesomedl.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+
+<item>
+<title>phim47 (Vietnam)</title>
+<link><?php echo $host; ?>/scripts/filme/php/phim47_main.php</link>
+<annotation>http://phim47.com</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
 <!--
 <item>
 <title>hd-box.org</title>

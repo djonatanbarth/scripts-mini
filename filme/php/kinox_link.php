@@ -278,10 +278,5 @@ if (strpos($html,"Part 2") !==false) {
         ';
 }
 ?>
-<item>
-<title>Set megavideo premium account</title>
-<link>/usr/local/etc/www/cgi-bin/scripts/filme/php/megavideo.rss</link>
-<mediaDisplay name="onePartView" />
-</item>
 </channel>
 </rss>

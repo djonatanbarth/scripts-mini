@@ -40,7 +40,7 @@ $host = "http://127.0.0.1/cgi-bin";
 	showDefaultInfo="no"
 	imageFocus=""
 	sliding="no"
-	idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
+    idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 		
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -54,7 +54,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>print(annotation); annotation;</script>
 		</text>
 		<image  redraw="yes" offsetXPC=60 offsetYPC=35 widthPC=30 heightPC=30>
-		/usr/local/etc/www/cgi-bin/scripts/filme/image/desene.png
+		image/movies.png
 		</image>
         <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
@@ -149,59 +149,78 @@ ret;
 
 	</item_template>
 <channel>
-	<title>Kids...</title>
-<!--
-<item>
-<title>Kinderfilme</title>
-<link><?php echo $host; ?>/scripts/filme/php/Kinderfilme.php</link>
-<annotation>http://youtube.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
--->
-<item>
-<title>DisneyChannel Germany - youtube</title>
-<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,DisneyChannelGermany</link>
-<image>image/youtube.gif</image>
-<location>http://www.youtube.com/user/DisneyChannelGermany</location>
-<annotation>DisneyChannel Germany - youtube</annotation>
-<media:thumbnail url="image/youtube.gif" />
-</item>
+	<title>phim47</title>
+	<menu>main menu</menu>
+<?php
+function str_between($string, $start, $end){ 
+	$string = " ".$string; $ini = strpos($string,$start); 
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
+	return substr($string,$ini,$len); 
+}
+	echo '
+	<item>
+	<title>Movies</title>
+	<link>'.$host.'/scripts/filme/php/phim47.php?query=1,http://phim47.com/movie-list/phim-le</link>
+	<annotation>Movies</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
+//$h = file_get_contents("http://phim47.com/movie-list/phim-le.html");
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, "http://phim47.com/movie-list/phim-le.html");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  //curl_setopt($ch, CURLOPT_REFERER, $l);
+  //curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+  $h = curl_exec($ch);
+  curl_close($ch);
+$html=str_between($h,'show_category show_cat','</ul');
+$videos = explode('<li', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+    $t1=explode('href="',$video);
+    $t2=explode('"',$t1[1]);
+    $t3=explode(".html",$t2[0]);
+    $link=$t3[0];
+	$link = $host."/scripts/filme/php/phim47.php?query=1,".$link;
+	$t1=explode('title="',$video);
+	$t2=explode('"',$t1[1]);
+	$title=$t2[0];
+	
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
+}
+$html=str_between($h,'show_country show_cat','</ul');
+$videos = explode('<li', $html);
+unset($videos[0]);
+$videos = array_values($videos);
+foreach($videos as $video) {
+    $t1=explode('href="',$video);
+    $t2=explode('"',$t1[1]);
+    $t3=explode(".html",$t2[0]);
+    $link=$t3[0];
+	$link = $host."/scripts/filme/php/phim47.php?query=1,".$link;
+	$t1=explode('title="',$video);
+	$t2=explode('"',$t1[1]);
+	$title=$t2[0];
 
-<item>
-<title>WaltDisneyStudiosDE Germany - youtube</title>
-<link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,WaltDisneyStudiosDE</link>
-<image>image/youtube.gif</image>
-<location>http://www.youtube.com/user/WaltDisneyStudiosDE</location>
-<annotation>WaltDisneyStudiosDE Germany - youtube</annotation>
-<media:thumbnail url="image/youtube.gif" />
-</item>
-
-
-<item>
-<title>ToonJet Cartoon Channel</title>
-<link>http://blip.tv/toonjet-cartoon-channel/rss</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/filme/image/ToonJet.jpg" />
-<mediaDisplay name="threePartsView" itemBackgroundColor="0:0:0" backgroundColor="0:0:0" sideLeftWidthPC="0" itemImageXPC="5" itemXPC="20" itemYPC="20" itemWidthPC="65" capWidthPC="70" unFocusFontColor="101:101:101" focusFontColor="255:255:255" idleImageWidthPC="8" idleImageHeightPC="10">
-        <idleImage>image/POPUP_LOADING_01.png</idleImage>
-        <idleImage>image/POPUP_LOADING_02.png</idleImage>
-        <idleImage>image/POPUP_LOADING_03.png</idleImage>
-        <idleImage>image/POPUP_LOADING_04.png</idleImage>
-        <idleImage>image/POPUP_LOADING_05.png</idleImage>
-        <idleImage>image/POPUP_LOADING_06.png</idleImage>
-        <idleImage>image/POPUP_LOADING_07.png</idleImage>
-        <idleImage>image/POPUP_LOADING_08.png</idleImage>
-		<backgroundDisplay>
-			<image  offsetXPC=0 offsetYPC=0 widthPC=100 heightPC=100>
-			image/mele/backgd.jpg
-			</image>
-		</backgroundDisplay>
-		<image  offsetXPC=0 offsetYPC=2.8 widthPC=100 heightPC=15.6>
-		image/mele/rss_title.jpg
-		</image>
-		<text  offsetXPC=27 offsetYPC=8 widthPC=35 heightPC=10 fontSize=20 backgroundColor=-1:-1:-1 foregroundColor=255:255:255>
-  ToonJet Cartoon Channel
-		</text>
-	    </mediaDisplay>
-</item>
+	echo '
+	<item>
+	<title>'.$title.'</title>
+	<link>'.$link.'</link>
+	<annotation>'.$title.'</annotation>
+	<mediaDisplay name="threePartsView"/>
+	</item>
+	';
+}
+?>
 </channel>
 </rss>

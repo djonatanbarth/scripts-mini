@@ -280,7 +280,7 @@ columnCount=4
 <location>http://www.youtube.com/user/football/videos</location>
 <annotation>youtube.com</annotation>
 </item>
-
+<!--
 <item>
 <title>soccerclips.net</title>
 <link><?php echo $host; ?>/scripts/tv/sport/soccerclips_main.php</link>
@@ -289,7 +289,7 @@ columnCount=4
 <location>http://www.soccerclips.net</location>
 <annotation>Football videos, football news, forum and more. SoccerClips is a community of football fans.</annotation>
 </item>
-
+-->
 <item>
 <title>Bing</title>
 <link><?php echo $host; ?>/scripts/tv/bing_sport.php</link>
