@@ -6,10 +6,7 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len);
 }
 $id = $_GET["file"];
-$l="http://noobroom.com/";
-$h=file_get_contents($l);
-//http://72.8.190.49
-$noob=str_between($h,'value="','"');
+$noob=file_get_contents("/tmp/n.txt");
 ///?imdb.com/title/tt2084342"
 //http://37.128.191.193/
 //$html=file_get_contents("http://37.128.191.200/?".$id);
@@ -21,6 +18,8 @@ if ($t2[0])
 else
   $link="http://imdb.com".str_between($html,'http://imdb.com','"');
 //$link="http://www.imdb.com/title/tt2061712/";
+//http://ia.media-imdb.com/images/M/MV5BMTkzMTUwMDAyMl5BMl5BanBnXkFtZTcwMDIwMTQ1OA@@._V1_SY317_CR1,0,214,317_.jpg
+//$link="http://www.imdb.com/title/tt0903624/";
 $html=file_get_contents($link);
 $ttxml="";
 exec ("rm -f /tmp/movie.dat");
@@ -58,7 +57,7 @@ $videos = explode('href="/genre', $gen1);
 unset($videos[0]);
 $videos = array_values($videos);
 foreach($videos as $video) {
-  $t1=explode(">",$video);
+  $t1=explode('itemprop="genre">',$video);
   $t2=explode("<",$t1[1]);
   $gen .=trim($t2[0])." | ";
 }
@@ -87,7 +86,7 @@ $ttxml .=$durata."\n"; //regie
 $ttxml .=$imdb."\n"; //imdb
 $ttxml .="\n"; //actori
 $ttxml .=$desc."\n"; //descriere
-
+echo $ttxml;
 $new_file = "/tmp/movie.dat";
 $fh = fopen($new_file, 'w');
 fwrite($fh, $ttxml);

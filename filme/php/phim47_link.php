@@ -54,10 +54,10 @@ $l1=str_between($h,'var link_free = "','"');
   $h = curl_exec($ch);
   curl_close($ch);
 }
-if (strpos($h,"class='w_now") !== false) {
-$t1=explode("class='w_now",$h);
-$t2=explode("href=",$t1[1]);
-$t3=explode(">",$t2[1]);
+if (strpos($h,"class='w_now'") !== false) {
+$t1=explode("class='w_now'",$h);
+$t2=explode('href=',$t1[1]);
+$t3=explode(' ',$t2[1]);
 $l1=trim($t3[0]);
 //$l1=str_between($h,'var link_free = "','"');
 //echo $l1;
@@ -71,6 +71,7 @@ $l1=trim($t3[0]);
   $h = curl_exec($ch);
   curl_close($ch);
 }
+//echo $l1;
 $l1=str_between($h,"proxy.link=",'&');
 $t1=explode("*",$l1);
 $l=$t1[1];

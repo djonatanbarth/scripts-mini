@@ -172,13 +172,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>TV Live - Sport</title>
 <link><?php echo $host; ?>/scripts/tv/tv_sport_live.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>TV Live - RTMP list</title>
@@ -193,7 +194,7 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>TV Live - Other RTMP List</title>
 <link>/usr/local/etc/www/cgi-bin/scripts/tv/other_rtmp.rss</link>
@@ -207,7 +208,7 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>TV Live from ilive.to</title>
 <link><?php echo $host; ?>/scripts/tv/ilive.php?query=1,</link>
@@ -215,14 +216,14 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-
+<!--
 <item>
 <title>TV Live from freedocast.com</title>
 <link><?php echo $host; ?>/scripts/tv/freedocast.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>TV Live from Justin.tv</title>
 <link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>

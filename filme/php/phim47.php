@@ -211,7 +211,7 @@ if($search) {
 
 <?php } ?>
 <?php
-$videos = explode('div class="poster"', $html);
+$videos = explode('zitemList', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);

@@ -4,8 +4,67 @@ $host = "http://127.0.0.1/cgi-bin";
 ?>
 <rss version="2.0">
 <onEnter>
+  cachePath = getStoragePath("key");
+  optionsPath = cachePath + "noobroom.dat";
+  optionsArray = readStringFromFile(optionsPath);
+  if(optionsArray == null)
+  {
+    subtitle = "on";
+     server = "-1";
+     sserver="Default";
+     hhd = "0";
+     shd = "SD";
+  }
+  else
+  {
+    subtitle = getStringArrayAt(optionsArray, 0);
+    server = getStringArrayAt(optionsArray, 1);
+    hhd = getStringArrayAt(optionsArray, 2);
+  }
+  if (subtitle == " " || subtitle == "" || subtitle == null)
+    subtitle = "on";
+  if (server == " " || server == "" || server == null)
+    {
+    server = "-1";
+    sserver="Default";
+    }
+  if (hhd == " " || hhd == "" || hhd == null)
+    {
+     hhd = "0";
+     shd="SD";
+    }
+  startitem = "middle";
+    if (hhd == "0")
+      shd="SD";
+    else if (hhd == "1")
+      shd="HD";
+    else if (hhd == "2")
+      shd="MP4";
+    else if (hhd == "3")
+      shd="HMP4";
+    if (server == "-1")
+      sserver="Defaut";
+    else if (server == "0")
+      sserver="Montreal";
+    else if (server == "1")
+      sserver="Philadelphia";
+    else if (server == "2")
+      sserver="Frankfurt";
+    else if (server == "3")
+      sserver="Amsterdam";
+    else if (server == "4")
+      sserver="France";
   setRefreshTime(1);
 </onEnter>
+<onExit>
+  arr = null;
+  arr = pushBackStringArray(arr, subtitle);
+  arr = pushBackStringArray(arr, server);
+  arr = pushBackStringArray(arr, hhd);
+  print("arr=",arr);
+
+  writeStringToFile(optionsPath, arr);
+</onExit>
 
 <onRefresh>
   setRefreshTime(-1);
@@ -15,7 +74,7 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
-
+	
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -24,11 +83,11 @@ $host = "http://127.0.0.1/cgi-bin";
 	itemImageWidthPC="0"
 	itemXPC="8"
 	itemYPC="25"
-	itemWidthPC="80"
+	itemWidthPC="50"
 	itemHeightPC="8"
 	capXPC="8"
 	capYPC="25"
-	capWidthPC="80"
+	capWidthPC="50"
 	capHeightPC="64"
 	itemBackgroundColor="0:0:0"
 	itemPerPage="8"
@@ -48,13 +107,25 @@ $host = "http://127.0.0.1/cgi-bin";
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="70" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
     1=delete, 2= download,0=dl. manager,4/6= jump -+100, right for more...
 		</text>
-  	<text redraw="yes" align="left" offsetXPC="80" offsetYPC="12" widthPC="20" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
-  	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    <script>adn;</script>
+	<image  redraw="yes" offsetXPC=60 offsetYPC=25 widthPC=30 heightPC=50>
+         <script>print(image); image;</script>
+		</image>
+	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="14" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    <script>"3= Sub on/off. Sub: " + subtitle + " 7=Server: " + sserver + " 9=SD/HD/MP4/HMP4:" + shd;</script>
 		</text>
-        <idleImage>image/POPUP_LOADING_01.png</idleImage>
+   	<text  redraw="yes" align="center" offsetXPC="60" offsetYPC="80"  heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
+		  <widthPC>
+			<script>
+				if (an == "" || an == null ) "0";
+				else "30";
+			</script>
+		   </widthPC>
+		  <script>print(an); an;</script>
+		</text>
+       <idleImage>image/POPUP_LOADING_01.png</idleImage>
         <idleImage>image/POPUP_LOADING_02.png</idleImage>
         <idleImage>image/POPUP_LOADING_03.png</idleImage>
         <idleImage>image/POPUP_LOADING_04.png</idleImage>
@@ -68,10 +139,10 @@ $host = "http://127.0.0.1/cgi-bin";
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx)
+					if(focus==idx) 
 					{
-                      img = getItemInfo(idx,"image");
-                      adn = getItemInfo(idx, "title");
+					  image = getItemInfo(idx, "image");
+					  an =  getItemInfo(idx, "an");
 					}
 					getItemInfo(idx, "title");
 				</script>
@@ -79,7 +150,7 @@ $host = "http://127.0.0.1/cgi-bin";
   				<script>
   					idx = getQueryItemIndex();
   					focus = getFocusItemIndex();
-  			    if(focus==idx) "16"; else "14";
+  			    if(focus==idx) "14"; else "14";
   				</script>
 				</fontSize>
 			  <backgroundColor>
@@ -127,10 +198,20 @@ if (userInput == "pagedown" || userInput == "pageup")
   setItemFocus(0);
   ret = "true";
 }
+else if (userInput == "three" || userInput == "3")
+{
+if (subtitle == "off")
+  subtitle = "on";
+else if (subtitle == "on")
+  subtitle = "off";
+else
+  subtitle = "on";
+ret = "true";
+}
 else if (userInput == "two" || userInput == "2")
 	{
      showIdle();
-     url=getItemInfo(getFocusItemIndex(),"download") + server + "," + hhd;
+     url=getItemInfo(getFocusItemIndex(),"download") + server + "," + hhd + ",0";
      movie=getUrl(url);
      cancelIdle();
 	 topUrl = "http://127.0.0.1/cgi-bin/scripts/util/download.cgi?link=" + movie + ";name=" + getItemInfo(getFocusItemIndex(),"name");
@@ -165,6 +246,72 @@ else if(userInput == "four" || userInput == "4")
   setFocusItemIndex(idx);
 	setItemFocus(0);
   "true";
+}
+else if(userInput == "seven" || userInput == "7")
+{
+if (server == "-1")
+  {
+    server = "0";
+    sserver="Montreal";
+  }
+
+else if (server == "0")
+  {
+    server = "1";
+    sserver="Philadelphia";
+  }
+
+else if (server == "1")
+  {
+    server = "2";
+    sserver="Frankfurt";
+  }
+
+else if (server == "2")
+  {
+    server = "3";
+    sserver="Amsterdam";
+  }
+
+else if (server == "3")
+  {
+    server = "4";
+    sserver="France";
+  }
+
+else if (server == "4")
+  {
+    server = "-1";
+    sserver="Default";
+  }
+else
+  {
+    server= "-1";
+    sserver="Default";
+  }
+}
+else if(userInput == "nine" || userInput == "9")
+{
+if (hhd == "0")
+ {
+  hhd = "1";
+  shd = "HD";
+ }
+else if(hhd == "1")
+ {
+  hhd = "2";
+  shd = "MP4";
+ }
+else if(hhd == "2")
+ {
+  hhd = "3";
+  shd = "HMP4";
+ }
+else if(hhd == "3")
+ {
+  hhd = "0";
+  shd = "SD";
+ }
 }
 else if (userInput == "right" || userInput == "R")
 {
@@ -238,17 +385,20 @@ asort($arr);
 foreach ($arr as $key => $val) {
   $l=$arr[$key][1];
   $title=$arr[$key][0];
+  $title=str_replace("\'","'",$title);
 
-    //$link=$l;
+    $link=$l;
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$l.",no,";
-     echo '
+	$year="";
+    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
+    $image="http://174.120.232.227/~usahowie/2img/".$link.".jpg";
+    echo '
      <item>
      <title>'.$title.'</title>
      <onClick>
      <script>
      showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$l.'" + "," + subtitle + "," + server + "," + hhd;
+     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$l.'" + "," + subtitle + "," + server + "," + hhd + ",0";
      movie=geturl(url);
      cancelIdle();
     storagePath = getStoragePath("tmp");
@@ -266,11 +416,11 @@ foreach ($arr as $key => $val) {
     $f = "/usr/local/bin/home_menu";
     if (file_exists($f)) {
     echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer22.rss");
     ';
     } else {
     echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer.rss");
+    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer1.rss");
     ';
     }
     echo '
@@ -281,6 +431,8 @@ foreach ($arr as $key => $val) {
     <link1>'.urlencode($l).'</link1>
     <name>'.$name.'</name>
     <movie>'.$l.'</movie>
+    <image>'.$image.'</image>
+	<an>'.$year.'</an>
      </item>
      ';
 }

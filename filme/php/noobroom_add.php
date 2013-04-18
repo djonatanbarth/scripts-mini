@@ -25,7 +25,9 @@ if($query) {
 if ($mod == "add") {
 if ($dir <> "") {
 $html=file_get_contents($dir);
-if (strpos($html,$title) === false)
+$match="/"."<link>".$link."<\/link>/";
+//if (strpos($html,$title) === false)
+if (!preg_match($match,$html))
   $html=$html."<item><link>".$link."</link><title>".$title."</title></item>";
 } else {
 $dir = $f;

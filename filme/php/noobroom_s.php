@@ -1,7 +1,6 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
-$noob=file_get_contents("/tmp/n.txt");
 function str_between($string, $start, $end){
 	$string = " ".$string; $ini = strpos($string,$start);
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
@@ -9,8 +8,9 @@ function str_between($string, $start, $end){
 }
 $query = $_GET["query"];
 $queryArr = explode(',', $query);
-$tit = urldecode($queryArr[0]);
-$l = urldecode($queryArr[1]);
+$noob = urldecode($queryArr[0]);
+$tit = urldecode($queryArr[1]);
+$search = urldecode($queryArr[2]);
 ?>
 <rss version="2.0">
 <script>
@@ -93,7 +93,7 @@ $l = urldecode($queryArr[1]);
 <mediaDisplay name="threePartsView"
 	sideLeftWidthPC="0"
 	sideRightWidthPC="0"
-	
+
 	headerImageWidthPC="0"
 	selectMenuOnRight="no"
 	autoSelectMenu="no"
@@ -158,7 +158,7 @@ $l = urldecode($queryArr[1]);
 				<script>
 					idx = getQueryItemIndex();
 					focus = getFocusItemIndex();
-					if(focus==idx) 
+					if(focus==idx)
 					{
 					  image = getItemInfo(idx, "image");
 					  an =  getItemInfo(idx, "an");
@@ -374,13 +374,14 @@ ret;
 	</link>
 </destination>
 <channel>
-	<title><?php echo $tit; ?></title>
+	<title>Search: <?php echo $tit; ?></title>
 	<menu>main menu</menu>
 <?php
 error_reporting(0);
 set_time_limit(60);
 $cookie="/tmp/noobroom.txt";
-//echo $l;
+
+$l=$noob."/latest.php";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -394,16 +395,41 @@ if (strpos($l,"azlist") === false) {
 $t1=explode('<h1>#</h1>',$html);
 $html=$t1[0];
 }
-if (strpos($l,"azlist") !== false) {
-  $t1=explode("href='/?", $html);
-  $t2=explode("'",$t1[1]);
-  $link=$t2[0];
 
-   $t3=explode('>',$t1[1]);
-   $t4=explode('<',$t3[1]);
-   $title=$t4[0];
+//$videos = explode("href='/?", $html);
+$videos = explode("<br>", $html);
+unset($videos[0]);
+$videos = array_values($videos);
+
+foreach($videos as $video) {
+//echo $video."<BR>";
+   $t0=explode("href='/?",$video);
+   $t1=explode("'",$t0[1]);
+   $link=$t1[0];
+
+   $t1=explode('>',$t0[1]);
+   $t2=explode('<',$t1[1]);
+   $title=$t2[0];
+   //$name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
+   
+   $t1=explode("<",$video);
+   if (preg_match("(\d+)",$t1[0],$m))
+     $year=" (".$m[0].")";
+   else
+     $year="";
+   $match="/".$search."/i";
+   if ($link && (preg_match($match,$title)))  $arr[]=array($title, $link,$year);
+   //echo $link."-".$title."-".$year."<BR>";
+}
+//die();
+if ($arr) {
+asort($arr);
+foreach ($arr as $key => $val) {
+ $title=$arr[$key][0];
+ $link=$arr[$key][1];
+ $year=$arr[$key][2];
    $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-   $year="";
+
       $title1=$title.$year;
    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
    $image=$noob."/2img/".$link.".jpg";
@@ -452,164 +478,6 @@ if (strpos($l,"azlist") !== false) {
      </item>
      ';
    }
-}
-if (strpos($l,"genre.php") === false) {
-//$videos = explode("href='/?", $html);
-$videos = explode("<br>", $html);
-
-unset($videos[0]);
-$videos = array_values($videos);
-
-foreach($videos as $video) {
-   $t0=explode("href='/?",$video);
-   $t1=explode("'",$t0[1]);
-   $link=$t1[0];
-
-   $t1=explode('>',$t0[1]);
-   $t2=explode('<',$t1[1]);
-   $title=$t2[0];
-   $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-
-   if (strpos($l,"rating") === false)
-      $t1=explode("<",$video);
-   else {
-      $t0=explode("</b>",$video);
-      $t1=explode("<",$t0[1]);
-   }
-   if (preg_match("(\d+)",$t1[0],$m))
-     $year=" (".$m[0].")";
-   else
-     $year="";
-      $title1=$title;
-   $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
-   $image=$noob."/2img/".$link.".jpg";
-   if ($title) {
-     echo '
-     <item>
-     <title>'.$title1.'</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + subtitle + "," + server + "," + hhd + ",0";
-     movie=geturl(url);
-     cancelIdle();
-    storagePath = getStoragePath("tmp");
-    storagePath_stream = storagePath + "stream.dat";
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "'.$title.'");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    ';
-    $f = "/usr/local/bin/home_menu";
-    if (file_exists($f)) {
-    echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer22.rss");
-    ';
-    } else {
-    echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer1.rss");
-    ';
-    }
-    echo '
-     </script>
-     </onClick>
-    <download>'.$link1.'</download>
-    <title1>'.urlencode($title).'</title1>
-    <link1>'.urlencode($link).'</link1>
-    <name>'.$name.'</name>
-    <movie>'.$link.'</movie>
-    <image>'.$image.'</image>
-	<an>'.$year.'</an>
-     </item>
-     ';
-   }
-}
-} else {
-//$videos = explode("href='/?", $html);
-$videos = explode("<br>", $html);
-unset($videos[0]);
-$videos = array_values($videos);
-
-foreach($videos as $video) {
-//echo $video."<BR>";
-   $t0=explode("href='/?",$video);
-   $t1=explode("'",$t0[1]);
-   $link=$t1[0];
-
-   $t1=explode('>',$t0[1]);
-   $t2=explode('<',$t1[1]);
-   $title=$t2[0];
-   //$name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-   
-   $t1=explode("<",$video);
-   if (preg_match("(\d+)",$t1[0],$m))
-     $year=" (".$m[0].")";
-   else
-     $year="";
-   if ($link) $arr[]=array($title, $link,$year);
-   //echo $link."-".$title."-".$year."<BR>";
-}
-if ($arr) {
-asort($arr);
-foreach ($arr as $key => $val) {
- $title=$arr[$key][0];
- $link=$arr[$key][1];
- $year=$arr[$key][2];
-   $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
-      $title1=$title;
-   $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
-   $image=$noob."/2img/".$link.".jpg";
-   if ($title) {
-     echo '
-     <item>
-     <title>'.$title1.'</title>
-     <onClick>
-     <script>
-     showIdle();
-     url="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file='.$link.'" + "," + subtitle + "," + server + "," + hhd + ",0";
-     movie=geturl(url);
-     cancelIdle();
-    storagePath = getStoragePath("tmp");
-    storagePath_stream = storagePath + "stream.dat";
-    streamArray = null;
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, "");
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, movie);
-    streamArray = pushBackStringArray(streamArray, video/mp4);
-    streamArray = pushBackStringArray(streamArray, "'.$title.'");
-    streamArray = pushBackStringArray(streamArray, "1");
-    writeStringToFile(storagePath_stream, streamArray);
-    ';
-    $f = "/usr/local/bin/home_menu";
-    if (file_exists($f)) {
-    echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer22.rss");
-    ';
-    } else {
-    echo '
-    doModalRss("rss_file:///usr/local/etc/www/cgi-bin/scripts/util/videoRenderer1.rss");
-    ';
-    }
-    echo '
-     </script>
-     </onClick>
-    <download>'.$link1.'</download>
-    <title1>'.urlencode($title).'</title1>
-    <link1>'.urlencode($link).'</link1>
-    <name>'.$name.'</name>
-    <movie>'.$link.'</movie>
-    <image>'.$image.'</image>
-	<an>'.$year.'</an>
-     </item>
-     ';
-   }
-}
 }
 }
 ?>

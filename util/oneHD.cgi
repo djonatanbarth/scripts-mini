@@ -20,4 +20,4 @@ cat <<EOF
 Content-type: video/flv
 
 EOF
-exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -q -v -b 60000 -l 2 -y $chanel -T $token -W http://www.livehd.tv/player/player.swf -p http://www.livehd.tv/ -r `echo $streamer`
+exec /usr/local/etc/www/cgi-bin/scripts/rtmpdump -q -v -b 60000 -l 2 -y `echo -e $chanel` -T $token -W http://www.livehd.tv/player/player.swf -p http://www.livehd.tv/ -r `echo -e $streamer`

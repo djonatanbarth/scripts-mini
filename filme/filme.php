@@ -182,8 +182,15 @@ ret;
 </item>
 
 <item>
-<title>Noobroom</title>
+<title>Noobroom - movies</title>
 <link><?php echo $host; ?>/scripts/filme/php/noobroom_main.php</link>
+<annotation>http://noobroom.com</annotation>
+<media:thumbnail url="image/movies.png" />
+</item>
+
+<item>
+<title>noobroom - series</title>
+<link><?php echo $host; ?>/scripts/filme/php/noobroom_series_main.php</link>
 <annotation>http://noobroom.com</annotation>
 <media:thumbnail url="image/movies.png" />
 </item>
@@ -219,7 +226,7 @@ ret;
 
 <item>
 <title>phim47 (Vietnam)</title>
-<link><?php echo $host; ?>/scripts/filme/php/phim47_main.php</link>
+<link><?php echo $host; ?>/scripts/filme/php/phim47.php?query=1,http://phim47.com/movie-list/phim-le</link>
 <annotation>http://phim47.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
@@ -252,12 +259,6 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>onlinewebfilmek (in lb. maghiara)</title>
-<link><?php echo $host; ?>/scripts/filme/php/onlinewebfilmek.php?file=http://onlinewebfilmek.blogspot.com</link>
-<annotation>http://onlinewebfilmek.blogspot.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
 
 <item>
 <title>sorozatok.tv - series (lb. maghiara)</title>
