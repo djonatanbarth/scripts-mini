@@ -48,11 +48,11 @@ if ($tv=="0")
 // 14 == Frankfurt
 // 15 == Amsterdam /Default
 // 16 == France
-function get_movie($s,$id1,$auth1,$hd1,$tv1) {
+function get_movie($noob1,$s,$id1,$auth1,$hd1,$tv1) {
   $i=$s;
   if ($tv1=="1") $hd1="0";
   if ($auth1=="0") $i="14";
-  $l=$noob."/fork.php?type=flv&auth=".$auth1."&loc=".$i."&hd=".$hd1."&tv=".$tv1;
+  $l=$noob1."/fork.php?type=flv&auth=".$auth1."&loc=".$i."&hd=".$hd1."&tv=".$tv1;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -70,17 +70,17 @@ function get_movie($s,$id1,$auth1,$hd1,$tv1) {
 //
 if ($hd < 2) {
 if ($server == "0") // Montreal
-  $movie=get_movie("11",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"11",$id,$auth,$hd,$tv);
 elseif ($server == "1") //Philadelphia
-  $movie=get_movie("12",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"12",$id,$auth,$hd,$tv);
 elseif ($server == "2") //Frankfurt
-  $movie=get_movie("14",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"14",$id,$auth,$hd,$tv);
 elseif ($server == "3") //Amsterdam
-  $movie=get_movie("15",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"15",$id,$auth,$hd,$tv);
 elseif ($server == "4") //France
-  $movie=get_movie("16",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"16",$id,$auth,$hd,$tv);
 else //Default
-  $movie=get_movie("15",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"15",$id,$auth,$hd,$tv);
 } else {
   //http://noobroom1.com/15/xxxxxxxxxxxx/1238.mp4
   //http://noobroom1.com/15/xxxxxxxxxxxx/episode_12.mp4
