@@ -152,7 +152,7 @@ ret;
 	<menu>main menu</menu>
 
 <item>
-<title>Favorite</title>
+<title>Canale favorite</title>
 <link><?php echo $host; ?>/scripts/tv/yt_live_fav.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 </item>

@@ -230,7 +230,10 @@ $html=str_between($html,'style="color','</div>');
 //echo $html;
 $video = explode('<br />', $html);
 $c=count($video);
+//echo $c."<BR>";
+//3873
 for ($i=0;$i<$c;$i++) {
+//for ($i=1800;$i<1851;$i++) {
 
   $rtmp="";
   if(strtoupper(substr($video[$i], 0, 7)) === "#EXTINF") {
@@ -241,6 +244,7 @@ for ($i=0;$i<$c;$i++) {
     if (preg_match("/http|mms/i",$next)) {
      if (strpos($next,".m3u8") === false) {
        $link=trim($next);
+       if (preg_match("/playpath|swfUrl|pageUrl/i",$link)) $link="";
        $rtmp=$link;
      }
      if (preg_match("/mms/i",$link))
@@ -259,12 +263,23 @@ for ($i=0;$i<$c;$i++) {
      $opt=preg_replace("/token=/i", "-T ",$opt);
      $opt=preg_replace("/swfsize=/i","-x ",$opt);
      $opt=preg_replace("/swfhash=/i","-w ",$opt);
+     $opt=str_replace("<playpath>"," -y ",$opt);
+     $opt=str_replace("<swfUrl>"," -W ",$opt);
+     $opt=str_replace("<pageUrl>"," -p ",$opt);
      //
 
      $opt="Rtmp-options:".trim($opt);
      $opt=str_replace(" ","%20",$opt);
      $link = "http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream,".$opt.",".$rtmp;
    }
+    $title=urlencode($title);
+    $title=str_replace("%28","(",$title);
+    $title=str_replace("%29",")",$title);
+    $title=str_replace("%3A",":",$title);
+    $title=str_replace("+"," ",$title);
+    $title=urldecode($title);
+    //$title=str_replace("+","_",$title);
+   if (strpos($title,"/") !== false) $rtmp="";
    if ($rtmp) {
     echo '
     <item>

@@ -177,18 +177,6 @@ ret;
     <title>Movie and game trailers</title>
 
 <item>
-<title>www.cinemarx.ro</title>
-<link><?php echo $host; ?>/scripts/trailer/php/cinemarx.php</link>
-<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/trailer/image/cinemax.jpg"/>
-<image>/usr/local/etc/www/cgi-bin/scripts/trailer/image/cinemax.jpg</image>
-<location>http://www.cinemarx.ro/</location>
-<annotation>Last movie trailers</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-
-
-<item>
     <title>ElectronicArtsDE</title>
     <link><?php echo $host; ?>/scripts/php1/youtube_user.php?query=1,ElectronicArtsDE</link>
     <image>/usr/local/etc/www/cgi-bin/scripts/trailer/image/ea.png</image>

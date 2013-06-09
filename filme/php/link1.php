@@ -871,8 +871,10 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    //http://flashx.tv/player/embed_player.php?vid=6724&width=661&height=400&autoplay=no
    //http://flashx.tv/fxplayer/fxtv.php?hash=D1OY7UBGNW4B&width=661&height=400&autoplay=yes
    //http://flashx.tv/video/5KA3ONU881WN/White
+   //http://play.flashx.tv/nuevo/player/enc.php?str=4MfrzrW9yrmvtay5rLHGtMs=
    if (preg_match("/flashx.tv\/video\/([\w\-]+)/",$filelink,$match)) {
      $id=$match[1];
+     echo base64_encode("4MfrzrW9yrmvtay5rLHGtMs=");
      $filelink="http://play.flashx.tv/nuevo/player/cst.php?hash=".$id;
      $h=file_get_contents($filelink);
      $link=trim(str_between($h,"<file>","</file>"));
@@ -1362,6 +1364,41 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   //http://gorillavid.in/embed-f0sbhwq2kk30-600x480.html
   $h=file_get_contents($filelink);
   $link=str_between($h,'file: "','"');
+} elseif (strpos($filelink, 'donevideo.com') !== false) {
+   //http://www.donevideo.com/egs3rveocgf8
+   $string=$filelink;
+   $ch = curl_init($string);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   $h = curl_exec($ch);
+   $id=str_between($h,'id" value="','"');
+   $fname=str_between($h,'fname" value="','"');
+   //$rand=str_between($h,'name="rand" value="','"');
+   $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=&method_free=Continue+to+Video";
+   //$post="op=download2&id=".$id."&rand=".$rand."&referer=&method_free=&method_premium=&down_direct=1";
+   sleep(20);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   $h = curl_exec($ch);
+   $id=str_between($h,'id" value="','"');
+   $referer=urlencode(str_between($h,'referer" value="','"'));
+   $rand=str_between($h,'rand" value="','"');
+$post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=Continue+to+Video&method_premium=&down_direct=1";
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   $h = curl_exec($ch);
+   $link=unpack_DivXBrowserPlugin(1,$h);
+} elseif (strpos($filelink, 'youwatch.org') !== false) {
+   //http://youwatch.org/embed-t9d055slghmu-620x350.html
+   $h=file_get_contents($filelink);
+   $link=str_between($h,'file: "','"');
 }
 
 print $link;

@@ -155,60 +155,44 @@ ret;
 
 	</item_template>
 <channel>
-	<title>TV Live - new</title>
+	<title>TV Live - Other</title>
 	<menu>main menu</menu>
 
-	
-   <item>
-    <title>France 24</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://stream1.france24.yacast.net/f24_liveen",10);</onClick>
-  </item>
-  
-   <item>
-    <title>Cielo</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp86825.live.edgefcs.net/live/cielo_std@17630",10);</onClick>
-  </item>
+<?php
+function str_between($string, $start, $end){
+	$string = " ".$string; $ini = strpos($string,$start);
+	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
+	return substr($string,$ini,$len);
+}
+$l="http://hdforall.googlecode.com/files/tv_others.txt";
+$html=file_get_contents($l);
 
-   <item>
-    <title>Sky Tg 24</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp49989.live.edgefcs.net:1935/live?videoId=53404915001&lineUpId=&pubId=1445083406&playerId=760707277001&affiliateId=/streamRM1@2564",10);</onClick>
-  </item>
+$videos = explode('<title>', $html);
 
-   <item>
-    <title>QVC</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp107861.live.edgefcs.net/live/QVC_Italy_Stream1200@34577",10);</onClick>
-  </item>
+unset($videos[0]);
+$videos = array_values($videos);
 
-   <item>
-    <title>Videolina</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://91.121.222.160/videolinalive/videolinalive.sdp",10);</onClick>
-  </item>
-
-   <item>
-    <title>Quararete TV</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://wowza1.top-ix.org/quartaretetv/quartareteweb",10);</onClick>
-  </item>
-
-   <item>
-    <title>NDR</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,mms://ndr-fs-hh-hi-wmv.wm.llnwd.net/ndr_fs_hh_hi_wmv",10);</onClick>
-  </item>
-
-   <item>
-    <title>hr fernsehen</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://gffstream.fc.llnwd.net/gffstream/005/hr-fernsehen-1",10);</onClick>
-  </item>
+foreach($videos as $video) {
+ $t1=explode("</title",$video);
+ $title=$t1[0];
+ $link=str_between($video,"<url>","</url>");
+    echo '
+    <item>
+    <title>'.$title.'</title>
+    <onClick>
+    <script>
+    showIdle();
+    url="'.$link.'";
+    cancelIdle();
+    playItemUrl(url,10);
+    </script>
+    </onClick>
+    </item>
+    ';
+}
+?>
 
 
-   <item>
-    <title>Video  BR-Mediathek</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://cp121359.live.edgefcs.net:1935/live/b7_bfssued_m@49987",10);</onClick>
-  </item>
-
-   <item>
-    <title>LCP</title>
-    <onClick>playItemUrl("http://127.0.0.1/cgi-bin/translate?stream,,rtmp://stream2.lcp.yacast.net/lcp_live/lcptnt",10);</onClick>
-  </item>
 
 </channel>
 </rss>

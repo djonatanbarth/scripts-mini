@@ -13,7 +13,12 @@ if (strpos($filelink,"is.gd") !==false) {
 if (strpos($filelink,"adf.ly") !==false) {
  $h1=file_get_contents($filelink);
  $temp=$filelink;
+ $filelink=str_between($h1,"var eu = '","'");
+ if (!$filelink)
+   $filelink=str_between($h1,"var zzz = '","'");
+ if (!$filelink) {
   $filelink=str_between($h1,"var url = '","'");
+
   if (strpos($filelink,"adf.ly") === false)
     $filelink = "http://adf.ly".$filelink;
  $a = @get_headers($filelink);
@@ -23,6 +28,7 @@ if (strpos($filelink,"adf.ly") !==false) {
  $filelink=trim($a1[1]);
  if (!$filelink)
   $filelink="http".str_between($h1,"self.location = 'http","'");
+ }
 }
 if (strpos($filelink,"moovie.cc") !== false) {
  $a = @get_headers($filelink);
@@ -211,13 +217,26 @@ function vk($string) {
 	$r=$host."u".$uid."/videos/".$vtag.".360.mp4";
  } else {
     $baza = file_get_contents($string);
+    //echo $string."<BR>";
+    preg_match("/hd=\d{1}/",$string,$m);
+    //print_r ($m);
     $host = str_between($baza,"var video_host = '","'");
     $uid = str_between($baza,"var video_uid = '","'");
     $vtag = str_between($baza,"var video_vtag = '","'");
-    $hd = str_between($baza,"var video_max_hd = '","'");
-    $r = $host."u".$uid."/videos/".$vtag.".360.mp4";
+    //$hd = str_between($baza,"var video_max_hd = '","'");
+    $t1=explode("hd=",$m[0]);
+    $hd=trim($t1[1]);
+    //echo $hd;
     if ($hd == "0") {
       $r = $host."u".$uid."/videos/".$vtag.".240.mp4";
+    } elseif ($hd=="3") {
+      $r = $host."u".$uid."/videos/".$vtag.".720.mp4";
+    } elseif ($hd=="2") {
+      $r = $host."u".$uid."/videos/".$vtag.".480.mp4";
+    } elseif ($hd=="1") {
+      $r = $host."u".$uid."/videos/".$vtag.".360.mp4";
+    } else {
+      $r = $host."u".$uid."/videos/".$vtag.".360.mp4";
     }
  }
   return $r;
@@ -225,6 +244,7 @@ function vk($string) {
 function youtube($file) {
 if (preg_match('%(?:youtube\.com/(?:[^/]+/.+/|(?:v|e(?:mbed)?)/|.*[?&]v=)|youtu\.be/)([^"&?/ ]{11})%i', $file, $match)) {
     $l ="http://www.youtube.com/watch?v=".$match[1];
+    //echo $l;
     $r=file_get_contents("http://127.0.0.1/cgi-bin/scripts/util/yt.php?file=".urlencode($l));
 }
 return $r;
@@ -467,6 +487,9 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   }
   }
 } elseif (strpos($filelink, 'youtu') !== false){
+   //https://www.youtube-nocookie.com/embed/kfQTqjvaezM?rel=0
+    $filelink=str_replace("https","http",$filelink);
+    $filelink=str_replace("youtube-nocookie","youtube",$filelink);
     $link=youtube($filelink);
 } elseif (strpos($filelink, 'flvz.com') !== false){
     $link=flvz($filelink);
@@ -522,12 +545,60 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
   }
 } elseif (strpos($filelink,'vimeo.com') !==false){
   //http://player.vimeo.com/video/16275866
+  ///cgi-bin/translate?info,,http://vimeo.com/16275866
   if (strpos($filelink,"player.vimeo.com") !==false) {
-     $id=substr(strrchr($filelink,"/"),1);
-     $link="http://127.0.0.1/cgi-bin/translate?stream,,http://vimeo.com/".$id;
+     $t1=explode("?",$filelink);
+     $filelink=$t1[0];
+     $t1=explode("/",$filelink);
+     $id=$t1[4];
   } else {
-     $link="http://127.0.0.1/cgi-bin/translate?stream,,".$filelink;
+     $t1=explode("/",$filelink);
+     $id=$t1[3];
   }
+  $cookie="/tmp/cookie.txt";
+  $l="http://vimeo.com/".$id;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
+  $l1="http://player.vimeo.com/config/".$id."?type=moogaloop&referrer=vimeo.com&cdn_server=a.vimeocdn.com&player_server=player.vimeo.com&clip_id=".$id;
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $l1);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $h1 = curl_exec($ch);
+  curl_close($ch);
+
+  $sig_param=str_between($h1,'signature":"','"');
+  $player_url=str_between($h1,'player_url":"','"');
+  $time_param=str_between($h1,'"timestamp":',',');
+  if (strpos($h1,'hd":0') !== false)
+    $hd="sd";
+  else
+    $hd="hd";
+  $stream_url="http://".$player_url."/play_redirect?clip_id=".$id."&sig=".$sig_param."&time=".$time_param."&quality=".$hd."&codecs=H264,VP8,VP6&type=moogaloop&embed_location=&seek=0";
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $stream_url);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch,CURLOPT_REFERER,"http://a.vimeocdn.com/p/flash/moogaloop/5.2.49/moogaloop.swf?v=1.0.0");
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  curl_setopt($ch, CURLOPT_NOBODY, true);
+  curl_setopt($ch, CURLOPT_HEADER  ,1);
+  $html = curl_exec($ch);
+  curl_close($ch);
+  $t1=explode("Location:",$html);
+  $t2=explode("\n",$t1[1]);
+  $link=trim($t2[0]);
 } elseif (strpos($filelink, 'googleplayer.swf') !== false) {
   $t1 = explode("docid=", $filelink);
   $t2 = explode("&",$t1[1]);
@@ -700,7 +771,13 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
    $h = curl_exec($ch);
    curl_close ($ch);
-   $link=unpack_DivXBrowserPlugin(2,$h);
+   //$link=unpack_DivXBrowserPlugin(2,$h);
+   $ret=unpack_DivXBrowserPlugin(2,$h,true);
+   $ret1=explode(",",$ret);
+   $link=$ret1[0];
+   $mysrt=$ret1[1];
+   $l_srt="http://127.0.0.1/cgi-bin/scripts/util/srt_xml.php?file=".urlencode($mysrt);
+   $h=file_get_contents($l_srt);
 } elseif (strpos($filelink, 'filebox.com') !==false) {
   //http://www.filebox.com/embed-mxw6nxj1blfs-970x543.html
   //http://www.filebox.com/mxw6nxj1blfs
@@ -751,8 +828,24 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    $link=uploadc($filelink);
    }
    $link=str_replace(" ","%20",$link);
-} elseif (strpos($filelink,"http://nosvideo.com") !== false) {
+} elseif (strpos($filelink,"nosvideo.com") !== false) {
+   //http://nosvideo.com/?v=vl4w98yheol7
    $h=file_get_contents($filelink);
+   $id=str_between($h,'name="id" value="','"');
+   $referer=str_between($h,'referer" value="','"');
+   $fname=str_between($h,'fname" value="','"');
+   if ($fname) {
+   $post="op=download1&id=".$id."&rand=&referer=".urlencode($referer)."&usr_login=&fname=".$fname."&method_free=&method_premium=&down_script=1&method_free=Continue+to+Video";
+     $ch = curl_init();
+     curl_setopt($ch, CURLOPT_URL, $filelink);
+     //curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+     curl_setopt ($ch, CURLOPT_POST, 1);
+     curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+     curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+     curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+     $h = curl_exec($ch);
+     curl_close($ch);
+   }
    //http://nosvideo.com/xml/tqpiilpwsfkbmb8v61280.xml
    $l1=unpack_DivXBrowserPlugin(1,$h);
    $h=file_get_contents($l1);
@@ -871,6 +964,30 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
     //echo $h;
     $l=str_between($h,'stream_h264_url":"','"');
     $link=str_replace("\\","",$l);
+  } else {
+    $html = file_get_contents($filelink);
+    $t1 = explode('sdURL', $html);
+    $sd=urldecode($t1[1]);
+    $t1=explode('"',$sd);
+    $sd=$t1[2];
+    $sd=str_replace("\\","",$sd);
+    $n=explode("?",$sd);
+    $nameSD=$n[0];
+    $nameSD=substr(strrchr($nameSD,"/"),1);
+    $t1 = explode('hqURL', $html);
+    $hd=urldecode($t1[1]);
+    $t1=explode('"',$hd);
+    $hd=$t1[2];
+    $hd=str_replace("\\","",$hd);
+    $n=explode("?",$hd);
+    $nameHD=$n[0];
+    $nameHD=substr(strrchr($nameHD,"/"),1);
+    if ($hd <> "") {
+     $link = $hd;
+    }
+    if (($sd <> "") && ($hd=="")) {
+     $link = $sd;
+    }
   }
 } elseif (strpos($filelink, 'vidbull.com') !== false) {
    //http://vidbull.com/4oasotfxmxb3.html
@@ -917,6 +1034,133 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
          $id=str_between($html,"flvplayer.swf?f=",".0&");
          $link="http://videa.hu/static/video/".$id;
       }
+} elseif (strpos($filelink,"purevid.com") !==false) {
+   //http://www.purevid.com/v/881OPvv332wmou24943/
+   //http://www.purevid.com/?m=embed&id=881OPvv332wmou24943
+  if(preg_match('/(v\/|\?v=|id=)([\w\-]+)/', $filelink, $match))
+   $id = $match[2];
+   //http://www.purevid.com/?m=video_info_embed_flv&id=881OPvv332wmou24943
+   $filelink="http://www.purevid.com/?m=video_info_embed_flv&id=".$id;
+   $h=file_get_contents($filelink);
+   $link=str_between($h,'"url":"','"');
+   $link=str_replace("\\","",$link);
+} elseif (strpos($filelink, 'videobam.com') !== false) {
+   //http://videobam.com/widget/Xykqy/3"
+   //http://videobam.com/Uogry
+   $h = file_get_contents($filelink);
+   $link=str_between($h,',"url":"','"');
+   $link=str_replace("\\","",$link);
+} elseif (strpos($filelink,"streamcloud.eu") !==false) {
+   //op=download1&usr_login=&id=zo88qnclmj5z&fname=666_-_Best_Of_Piss_Nr_2_German.avi&referer=http%3A%2F%2Fstreamcloud.eu%2Fzo88qnclmj5z%2F666_-_Best_Of_Piss_Nr_2_German.avi.html&hash=&imhuman=Weiter+zum+Video
+   $string = $filelink;
+   $ch = curl_init($string);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+   $h = curl_exec($ch);
+   $id=str_between($h,'"id" value="','"');
+   $fname=str_between($h,'"fname" value="','"');
+   $reff=str_between($h,'referer" value="','"');
+   $hash=str_between($h,'hash" value="','"');
+   $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=".urlencode($reff)."&hash=".$hash."&imhuman=Weiter+zum+Video";
+   sleep(11);
+   //echo $post;
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   $h = curl_exec($ch);
+   //echo $h;
+   $link=str_between($h,'file: "','"');
+   //file: "
+} elseif (strpos($filelink, 'donevideo.com') !== false) {
+   //http://www.donevideo.com/egs3rveocgf8
+   $string=$filelink;
+   $ch = curl_init($string);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   $h = curl_exec($ch);
+   $id=str_between($h,'id" value="','"');
+   $fname=str_between($h,'fname" value="','"');
+   //$rand=str_between($h,'name="rand" value="','"');
+   $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=&method_free=Continue+to+Video";
+   //$post="op=download2&id=".$id."&rand=".$rand."&referer=&method_free=&method_premium=&down_direct=1";
+   sleep(20);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   $h = curl_exec($ch);
+   $id=str_between($h,'id" value="','"');
+   $referer=urlencode(str_between($h,'referer" value="','"'));
+   $rand=str_between($h,'rand" value="','"');
+$post="op=download2&id=".$id."&rand=".$rand."&referer=".$referer."&method_free=Continue+to+Video&method_premium=&down_direct=1";
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_REFERER, $string);
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   $h = curl_exec($ch);
+   $link=unpack_DivXBrowserPlugin(1,$h);
+} elseif (strpos($filelink,"played.to") !==false) {
+  //http://played.to/hfsjjt5gbmm4
+  $h=file_get_contents($filelink);
+   $id=str_between($h,'id" value="','"');
+   $referer=str_between($h,'referer" value="','"');
+   $fname=str_between($h,'fname" value="','"');
+   $hash=str_between($h,'hash" value="','"');
+   $post="op=download1&usr_login=&id=".$id."&fname=".$fname."&referer=".urlencode($referer)."&hash=".$hash."&imhuman=Continue+to+Video";
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt ($ch, CURLOPT_POST, 1);
+   curl_setopt ($ch, CURLOPT_POSTFIELDS, $post);
+   curl_setopt($ch, CURLOPT_REFERER, $filelink);
+   $h = curl_exec($ch);
+   curl_close($ch);
+   $link=str_between($h,'file: "','"');
+} elseif (strpos($filelink,"video.mail.ru") !==false) {
+   //$filelink="http://api.video.mail.ru/videos/mail/alex.costantin/_myvideo/162.json";
+   $ch = curl_init($filelink);
+   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+   curl_setopt($ch, CURLOPT_RETURNTRANSFER  ,1);  // RETURN THE CONTENTS OF THE CALL
+   curl_setopt($ch, CURLOPT_REFERER, "http://my9.imgsmail.ru/r/video2/uvpv3.swf?3");
+   curl_setopt($ch, CURLOPT_COOKIEJAR, '/tmp/cookies.txt');
+   curl_setopt($ch, CURLOPT_COOKIEFILE, '/tmp/cookies.txt');
+   $h = curl_exec($ch);
+   curl_close($ch);
+  $t1=explode('hd":"',$h);
+  $t2=explode('"',$t1[1]);
+  $link=$t2[0];
+  if (!$link) {
+  $t1=explode('sd":"',$h);
+  $t2=explode('"',$t1[1]);
+  $link=$t2[0];
+  }
+   $link=urldecode($link);
+   $link=str_replace("[","\[",$link);
+   $link=str_replace("]","\]",$link);
+   //$link="http://127.0.0.1/cgi-bin/scripts/util/mail.cgi?".$link;
+$out='#!/bin/sh
+cat <<EOF
+Content-type: video/mp4
+
+EOF
+exec /opt/bin/curl --cookie "/tmp/cookies.txt"  "'.$link.'"';
+$fp = fopen('/usr/local/etc/www/cgi-bin/scripts/util/m.cgi', 'w');
+fwrite($fp, $out);
+fclose($fp);
+exec("chmod +x /usr/local/etc/www/cgi-bin/scripts/util/m.cgi");
+sleep (2);
+$link="http://127.0.0.1/cgi-bin/scripts/util/m.cgi?".mt_rand();
 }
 //////////////////////////////////////////////////////////////////
 if (strpos($filelink, 'seriale.filmesubtitrate.info') !==false) {
@@ -1078,6 +1322,7 @@ $file = $srt;
 $file=urldecode($file);
 $ttxml     = '';
 $full_line = '';
+$sub_max = 53;
 $last_end=0;
 if($file_array = file($file))
 {
@@ -1089,59 +1334,70 @@ if($file_array = file($file))
         {
           $begin = round(3600 * $match[1] + 60 * $match[2] + $match[3] + $match[4]/1000);
           $end   = round(3600 *$match[5] + 60 * $match[6] + $match[7] + $match[8]/1000);
-          //$begin = 3600 * $match[1] + 60 * $match[2] + $match[3] + round($match[4]/100)/10;
-          //$end   = 3600 * $match[5] + 60 * $match[6] + $match[7] + round($match[8]/100)/10;
           $line1 = '';
           $line2 = '';
-        $f = "/usr/local/bin/home_menu22";
-        if (!file_exists($f)) {
+          $line3 = '';
           if ($begin > $last_end)
           {
-   $ttxml .=$last_end."\n";
-   $ttxml .=$begin."\n";
-   $ttxml .="\n";
-   $ttxml .="\n";
+           $ttxml .=$last_end."\n";
+           $ttxml .=$begin."\n";
+           $ttxml .="\n";
+           $ttxml .="\n";
           }
+
           $last_end=$end;
-        }
         }
         // if the next line is not blank, get the text
         elseif($line != '')
         {
-          if($line1 != '')
-          {
-            $line2= $line;
-          }
-          else
-          {
-            $line1= $line;
-          }
+          if (!$line1)
+             $line1=$line;
+          else if($line1  && !$line2)
+            $line2=$line;
+          else if ($line1 && $line2)
+            $line3=$line;
         }
 
         // if the next line is blank, write
         if($line == '')
         {
+        if (strlen($line1) >= $sub_max) {
+         $newtext = $line1." ".$line2." ".$line3;
+         $newtext=trim(str_replace("  "," ",$newtext));
+         $newtext = wordwrap($newtext, $sub_max, "<br>");
+         $t1=explode("<br>",$newtext);
+         $line1=$t1[0];
+         $line2=$t1[1];
+        } else if ($line3 && strlen($line2) < $sub_max) {
+         $line2 = $line2." ".$line3;
+         $line2=trim(str_replace("  "," ",$line));
+        } else if (strlen($line2) >= $sub_max) {
+         $newtext = $line1." ".$line2." ".$line3;
+         $newtext=trim(str_replace("  "," ",$newtext));
+         $newtext = wordwrap($newtext, $sub_max, "<br>");
+         $t1=explode("<br>",$newtext);
+         $line1=$t1[0];
+         $line2=$t1[1];
+        }
         if ($line2=="") {
-$ttxml .=$begin."\n";
-$ttxml .=$end."\n";
-$ttxml .=$line2."\n";
-$ttxml .=$line1."\n";
+          $ttxml .=$begin."\n";
+          $ttxml .=$end."\n";
+          $ttxml .=$line2."\n";
+          $ttxml .=$line1."\n";
         } else {
-$ttxml .=$begin."\n";
-$ttxml .=$end."\n";
-$ttxml .=$line1."\n";
-$ttxml .=$line2."\n";
+          $ttxml .=$begin."\n";
+          $ttxml .=$end."\n";
+          $ttxml .=$line1."\n";
+          $ttxml .=$line2."\n";
         }
           $line1 = '';
           $line2 = '';
+          $line3 = '';
         }
       }
 //dummy sub
 if ($end > 0) {
-if (!file_exists($f))
    $ttxml .=$end."\n";
-else
-   $ttxml .="10000"."\n";
 $ttxml .="10002"."\n";
 $ttxml .="\n";
 $ttxml .="\n";

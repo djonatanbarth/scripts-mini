@@ -194,6 +194,20 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
+
+<item>
+<title>TV Live - Other</title>
+<link><?php echo $host; ?>/scripts/tv/tv_new.php</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
+
+<item>
+<title>TV Shows</title>
+<link><?php echo $host; ?>/scripts/tv/tvshows.php?query=1</link>
+<media:thumbnail url="image/tv_radio.png" />
+<mediaDisplay name="threePartsView"/>
+</item>
 <!--
 <item>
 <title>TV Live - Other RTMP List</title>

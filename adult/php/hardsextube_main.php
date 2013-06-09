@@ -163,9 +163,11 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$html = file_get_contents("http://www.hardsextube.com/categories/");
+$html = file_get_contents("http://www.hardsextube.com");
 $img = "image/movies.png";
-//$html = str_between($html,'<div class="catfloat"','</table>');
+
+$html = str_between($html,'ul class="subnav" id="categories"','</ul>');
+//echo $html;
 $videos = explode('href="', $html);
 unset($videos[0]);
 $videos = array_values($videos);
@@ -173,7 +175,8 @@ foreach($videos as $video) {
   	$t3 = explode(">",$video);
   	$t4 = explode("<",$t3[1]);
   	$title = trim($t4[0]);
-  	if ((strpos($video,"?search=") !== false) && ($title <> "") && (strpos($video,"%B9") === false)) {
+  	//echo $title;
+  	if ($title <> "HD") {
   	$link = str_replace(" ","%20",$title);
    
   	$link=$host."/scripts/adult/php/hardsextube.php?query=1,".trim(strtolower($link));

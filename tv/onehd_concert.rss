@@ -207,14 +207,14 @@ ret;
 
 <channel>
 	<title>OneHD - Concerts</title>
-
+<!--
 <item>
 <title>Unsorted(Nesortate)</title>
 <link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_other.rss</link>
 <annotation></annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>Dance</title>
 <link>/usr/local/etc/www/cgi-bin/scripts/tv/onehd_dance.rss</link>

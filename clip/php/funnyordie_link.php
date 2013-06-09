@@ -7,9 +7,12 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
-$link1=str_between($html,"video_tag.attr('src', '","'");
-if ($link1 == "") {
-$link1=str_between($html,'src: "','"');
-}
+//$link1=str_between($html,"video_tag.attr('src', '","'");
+$t1=explode('source src="',$html);
+$t2=explode('"',$t1[2]);
+$link1=$t2[0];
+//if ($link1 == "") {
+//$link1=str_between($html,'src: "','"');
+//}
 print $link1;
 ?>

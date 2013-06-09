@@ -2,7 +2,7 @@
 <?php echo "<?xml version='1.0' encoding='UTF8' ?>";
 $host = "http://127.0.0.1/cgi-bin";
 error_reporting(0);
-
+include ("../../common.php");
 $ff="/tmp/n.txt";
 if (!file_exists($ff)) {
 $l="http://noobroom.com/";
@@ -34,6 +34,7 @@ if (file_exists($noob_log) && !file_exists($cookie)) {
 if ($post) {
   $l=$noob."/login2.php";
   //$l=$noob."/login.php";
+  $h=file_get_contents($check."s2=".urlencode($post));
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);

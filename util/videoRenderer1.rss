@@ -251,7 +251,7 @@ else
 		if(s &lt; 10)  ret_string += "0";
 		ret_string += sprintf("%s", s);
     stream_Point = ret_string;
-		sincro1 = "Salt la: " + stream_Point + " / " + stream_total + sprintf("%s "," ");
+		sincro1 = "Jump to: " + stream_Point + " / " + stream_total + sprintf("%s "," ");
 		tline2 = "";
 		tline1 = "";
 		 }

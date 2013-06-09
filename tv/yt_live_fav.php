@@ -46,7 +46,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2 = delete. Reload page after
+    2 = sterge de la favorite. Reincarcati pagina pentru a vedea rezultatul
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -156,7 +156,7 @@ ret;
 	</item_template>
   <channel>
 
-    <title>Favorite</title>
+    <title>Canale favorite</title>
 
 <?php
 function str_between($string, $start, $end){

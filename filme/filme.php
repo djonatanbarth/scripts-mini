@@ -168,20 +168,6 @@ ret;
 	<title>Movies and Series</title>
 
 <item>
-<title>movie2k.to - movies</title>
-<link><?php echo $host; ?>/scripts/filme/php/movie2k_main.php</link>
-<annotation>http://www.movie2k.to</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
-<title>movie2k.to - series</title>
-<link><?php echo $host; ?>/scripts/filme/php/movie2ks_main.php</link>
-<annotation>http://www.movie2k.to</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-<item>
 <title>Noobroom - movies</title>
 <link><?php echo $host; ?>/scripts/filme/php/noobroom_main.php</link>
 <annotation>http://noobroom.com</annotation>
@@ -217,12 +203,7 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 
-<item>
-<title>awesomedl - series</title>
-<link><?php echo $host; ?>/scripts/filme/php/awesomedl_main.php</link>
-<annotation>http://www.awesomedl.com</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
+
 
 <item>
 <title>phim47 (Vietnam)</title>
@@ -252,21 +233,6 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
-<item>
-<title>onlinefilmletoltes.eu (in lb. maghiara)</title>
-<link><?php echo $host; ?>/scripts/filme/php/onlinefilmletoltes_main.php</link>
-<annotation>http://onlinefilmletoltes.eu</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
-
-<item>
-<title>sorozatok.tv - series (lb. maghiara)</title>
-<link><?php echo $host; ?>/scripts/filme/php/sorozatok_main.php</link>
-<annotation>http://online-sorozatok.tv/sorozatok.php</annotation>
-<mediaDisplay name="threePartsView"/>
-</item>
-
 
 <item>
 <title>www.archive.org - Movies and Films</title>

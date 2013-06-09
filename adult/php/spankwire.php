@@ -226,8 +226,8 @@ foreach($videos as $video) {
     $t1=explode('href="',$video);
     $t2 = explode('"', $t1[1]);
     $link = "http://www.spankwire.com".$t2[0];
-    $t3=explode(">",$t1[2]);
-    $t4=explode("<",$t3[1]);
+    $t3=explode('title="',$video);
+    $t4=explode('"',$t3[1]);
     $title=$t4[0];
     $link = $host."/scripts/adult/php/spankwire_link.php?file=".$link;
 

@@ -181,14 +181,13 @@ $host = "http://127.0.0.1/cgi-bin";
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
-<!--
 <item>
 <title>Tube8</title>
   <link><?php echo $host; ?>/scripts/adult/tube8.php</link>
 <image>/usr/local/etc/www/cgi-bin/scripts/adult/image/tube8.png</image>
 <mediaDisplay name="threePartsView"/>
 </item>
--->
+
 <!--
 <item>
 <title>KeezMovies</title>
