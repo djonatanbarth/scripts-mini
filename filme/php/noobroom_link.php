@@ -35,7 +35,7 @@ if ($tv=="0")
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
-  //curl_setopt($ch,CURLOPT_REFERER,$l);
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);
@@ -48,21 +48,23 @@ if ($tv=="0")
 // 14 == Frankfurt
 // 15 == Amsterdam /Default
 // 16 == France
-function get_movie($noob1,$s,$id1,$auth1,$hd1,$tv1) {
+function get_movie($noob1,$s,$id1,$auth1,$hd1,$tv1,$id1) {
   $i=$s;
   if ($tv1=="1") $hd1="0";
-  //if ($auth1=="0") $i="15";
   $l=$noob1."/fork.php?type=flv&auth=".$auth1."&loc=".$i."&hd=".$hd1."&tv=".$tv1;
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  //curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   curl_setopt($ch, CURLOPT_HEADER, 1);
   curl_setopt($ch, CURLOPT_NOBODY, 1);
-  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_COOKIEFILE, "/tmp/noobroom.txt");
+  curl_setopt($ch, CURLOPT_REFERER,$noob1."/player.swf");
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8","Accept-Language: ro-ro,ro;q=0.8,en-us;q=0.6,en-gb;q=0.4,en;q=0.2","Accept-Encoding: gzip, deflate"));
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
   $html = curl_exec($ch);
   curl_close($ch);
-  //echo $html;
+
   $link=trim(str_between($html,"Location:","/index.php"));
   $movie_link=$link."/index.php?file=".$id1."&start=0&type=flv&hd=".$hd1."&auth=".$auth1."&tv=".$tv1;
   return $movie_link;
@@ -70,17 +72,17 @@ function get_movie($noob1,$s,$id1,$auth1,$hd1,$tv1) {
 //
 if ($hd < 2) {
 if ($server == "0") // Montreal
-  $movie=get_movie($noob,"13",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"13",$id,$auth,$hd,$tv,$id);
 elseif ($server == "1") //Philadelphia
-  $movie=get_movie($noob,"12",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"12",$id,$auth,$hd,$tv,$id);
 elseif ($server == "2") //Frankfurt
-  $movie=get_movie($noob,"14",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"14",$id,$auth,$hd,$tv,$id);
 elseif ($server == "3") //Amsterdam
-  $movie=get_movie($noob,"15",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"15",$id,$auth,$hd,$tv,$id);
 elseif ($server == "4") //France
-  $movie=get_movie($noob,"16",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"16",$id,$auth,$hd,$tv,$id);
 else //Default
-  $movie=get_movie($noob,"15",$id,$auth,$hd,$tv);
+  $movie=get_movie($noob,"15",$id,$auth,$hd,$tv,$id);
 } else {
   //http://noobroom1.com/15/xxxxxxxxxxxx/1238.mp4
   //http://noobroom1.com/15/xxxxxxxxxxxx/episode_12.mp4

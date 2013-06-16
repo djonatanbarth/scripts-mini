@@ -180,17 +180,20 @@ unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1=explode('?',$video);
-    $t2=explode("'",$t1[1]);
-    $link=$t2[0];
+    $t1=explode('href="',$video);
+    $t2=explode('"',$t1[1]);
+    $ref=$t2[0];
+    preg_match("/\?(\w+)/",$video,$m);
+    $link=$m[1];
 
     $t1=explode('src="',$video);
     $t2=explode('"',$t1[1]);
     $image = $t2[0];
-    $image="http://www.tgun.tv".str_replace(" ","%20",$image);
-
+    if (strpos($image,"http") === false)
+      $image="http://www.tgun.tv".str_replace(" ","%20",$image);
+    $image=str_replace("https","http",$image);
     $title = str_between($video,'</a>','</td>');
-
+    if (!preg_match("/alexc|width/",$ref)) {
      echo '
      <item>
      <title>'.$title.'</title>
@@ -217,6 +220,7 @@ foreach($videos as $video) {
      <url>'.$link.'</url>
      </item>
      ';
+  }
 }
 ?>
 

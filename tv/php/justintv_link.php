@@ -9,6 +9,7 @@ $id = $_GET["file"];
 $link1="http://justin.tv/".$id;
 $link2="http://usher.justin.tv/find/".$id.".xml?type=any";
 $l="http://www.justin.tv/widgets/live_site_player.swf";
+$l="http://www-cdn.justin.tv/widgets/live_site_player.swf";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
