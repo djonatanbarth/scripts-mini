@@ -168,7 +168,7 @@ foreach($videos as $video) {
     $link="http://www.tv-kino.net".$t2[0];
     
     $t1=explode('src="',$video);
-    $t2=explode('"',$t1[2]);
+    $t2=explode('"',$t1[3]);
     $image=$t2[0];
     
     $t3=explode('title="',$video);
