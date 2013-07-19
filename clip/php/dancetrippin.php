@@ -45,7 +45,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 2 for download, 3 for download manager
+    Apăsaţi 2 pentru download, 3 pentru Download Manager
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -209,7 +209,9 @@ function xml_fix($string) {
     $v=str_replace("\/","/",$v);
     return $v;
 }
+//http://player.dancetrippin.tv/video/list/dj/
 $link="http://new.dancetrippin.tv/video/list/";
+$link="http://player.dancetrippin.tv/video/list/dj/";
 $html=file_get_contents($link);
 $html=xml_fix($html);
 $videos = explode('venue":', $html);
@@ -219,14 +221,16 @@ $videos = array_values($videos);
 
 foreach($videos as $video) {
 
-    $link="http://new.dancetrippin.tv/video/".str_between($video,'slug": "','"');
+    $link="http://player.dancetrippin.tv/video/".str_between($video,'slug": "','"');
     $title=str_between($video,'title": "','",');
-    $image="http://new.dancetrippin.tv/media/".str_between($video,'image": "','"');
+    //http://player.dancetrippin.tv/media/video_thumbs/6082.jpg
+    $image="http://player.dancetrippin.tv/media/".str_between($video,'image": "','"');
     $image=str_replace(" ","%20",$image);
     $description=str_between($video,'description": "','",');
+    $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
     $location=str_between($video,'location": "','",');
     $dj="DJ: ".str_between($video,'dj": "','",');
-    $description = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$description);
+    //$pub = trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$t2[0]));
 
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
     echo '

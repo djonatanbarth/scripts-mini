@@ -7,6 +7,18 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
     $html = file_get_contents($link);
+    $html= urldecode($html);
+    $l1=urldecode(str_between($html,'video_url":"','"'));
+    /*
+    if (!$l1) {
+    $l2=urldecode(str_between($html,'autoURL":"','"'));
+    $l2=str_replace("\/","/",$l2);
+    $h=file_get_contents($l2);
+    $l1=str_between($h,'"template":"','"');
+    }
+    $l="http:\/\/www.dailymotion.com\/cdn\/manifest\/video\/x10mktb.mnft?auth=1373519236-aa7d608692b88ba128f72f5225a77bb0";
+    $l=str_replace("\/","/",$l);
+    echo $l;
     $t1 = explode('sdURL', $html);
     $sd=urldecode($t1[1]);
     $t1=explode('"',$sd);
@@ -29,4 +41,6 @@ print $hd;
     if (($sd <> "") && ($hd=="")) {
 print $sd;
     }
+*/
+print $l1;
 ?>

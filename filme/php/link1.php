@@ -874,9 +874,11 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
    //http://play.flashx.tv/nuevo/player/enc.php?str=4MfrzrW9yrmvtay5rLHGtMs=
    if (preg_match("/flashx.tv\/video\/([\w\-]+)/",$filelink,$match)) {
      $id=$match[1];
-     echo base64_encode("4MfrzrW9yrmvtay5rLHGtMs=");
+     //echo base64_decode("4MfrzrW9yrmvtay5rLHGtMs=");
+     //http://play.flashx.tv/nuevo/player/fx.php?str=4MfrzrWbw6ertca7sJ6pvcY=
      $filelink="http://play.flashx.tv/nuevo/player/cst.php?hash=".$id;
      $h=file_get_contents($filelink);
+     //echo $filelink;
      $link=trim(str_between($h,"<file>","</file>"));
    }
   /*
@@ -1206,6 +1208,9 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
     $link=str_replace("\\","",$l);
   } else {
     $html = file_get_contents($filelink);
+    $h=urldecode($html);
+    $link=urldecode(str_between($h,'video_url":"','"'));
+    if (!$link) {
     $t1 = explode('sdURL', $html);
     $sd=urldecode($t1[1]);
     $t1=explode('"',$sd);
@@ -1227,6 +1232,7 @@ if ((strpos($filelink,"vidxden") !==false) || (strpos($filelink,"divxden") !==fa
     }
     if (($sd <> "") && ($hd=="")) {
      $link = $sd;
+    }
     }
   }
 } elseif (strpos($filelink,"purevid.com") !==false) {

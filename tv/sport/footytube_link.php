@@ -70,7 +70,16 @@ for ($i=0;$i<count($links);$i++) {
       $html = file_get_contents($cur_link);
       $link = str_between($html,"file: '","'");
   } elseif ((strpos($cur_link, "dailymotion") !== false) || (strpos($cur_link, "dai.ly") !== false)){
+  if (strpos($cur_link,"embed") !== false) {
+    $h=file_get_contents($cur_link);
+    //echo $h;
+    $l=str_between($h,'stream_h264_url":"','"');
+    $link=str_replace("\\","",$l);
+  } else {
     $html = file_get_contents($cur_link);
+    $h=urldecode($html);
+    $link=urldecode(str_between($h,'video_url":"','"'));
+    if (!$link) {
     $t1 = explode('sdURL', $html);
     $sd=urldecode($t1[1]);
     $t1=explode('"',$sd);
@@ -88,11 +97,13 @@ for ($i=0;$i<count($links);$i++) {
     $nameHD=$n[0];
     $nameHD=substr(strrchr($nameHD,"/"),1);
     if ($hd <> "") {
-    $link = $hd;
+     $link = $hd;
     }
     if (($sd <> "") && ($hd=="")) {
-    $link = $sd;
+     $link = $sd;
     }
+    }
+  }
 }
 }
 }

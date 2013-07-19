@@ -1,5 +1,7 @@
 #!/usr/local/bin/Resource/www/cgi-bin/php
-<?php echo "<?xml version='1.0' encoding='UTF8' ?>"; ?>
+<?php echo "<?xml version='1.0' encoding='UTF8' ?>";
+$host = "http://127.0.0.1/cgi-bin";
+?>
 <rss version="2.0">
 <onEnter>
   startitem = "middle";
@@ -43,7 +45,9 @@
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
-
+  	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="75" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
+    2= add favorite
+		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
@@ -126,6 +130,15 @@ if (userInput == "pagedown" || userInput == "pageup")
   redrawDisplay();
   "true";
 }
+else if (userInput == "two" || userInput == "2")
+{
+ showIdle();
+ url="http://127.0.0.1/cgi-bin/scripts/tv/ilive_add.php?mod=add*" + getItemInfo(getFocusItemIndex(),"link1") + "*" + getItemInfo(getFocusItemIndex(),"title1");
+ dummy=getUrl(url);
+ cancelIdle();
+ redrawDisplay();
+ ret="true";
+}
 ret;
 </script>
 </onUserInput>
@@ -163,6 +176,16 @@ if ($page==1) {
   $html = file_get_contents("http://www.ilive.to/channels/");
 } else {
   $html = file_get_contents("http://www.ilive.to/channels/?p=".$page);
+}
+if ($page==1) {
+echo '
+<item>
+<title>Favorite</title>
+<link>'.$host.'/scripts/tv/ilive_fav.php</link>
+<annotation>Favorite</annotation>
+<mediaDisplay name="threePartsView"/>
+</item>
+';
 }
 if($page > 1) { ?>
 
@@ -221,6 +244,8 @@ foreach($videos as $video) {
     </script>
     </onClick>
     <image>'.$image.'</image>
+    <title1>'.urlencode($title).'</title1>
+    <link1>'.urlencode($link).'</link1>
     <media:thumbnail url="'.$image.'" />
     <mediaDisplay name="threePartsView"/>
     </item>

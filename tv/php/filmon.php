@@ -48,9 +48,9 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="50" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 1 or 2 for jump +- 50
+    Apăsaţi 1 sau 2 pentru salt +- 50
 		</text>
-  	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
+  	<text redraw="yes" offsetXPC="75" offsetYPC="12" widthPC="25" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
 		</text>
   	<text  redraw="yes" align="center" offsetXPC="0" offsetYPC="90" widthPC="100" heightPC="8" fontSize="17" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -206,13 +206,14 @@ $l="http://www.filmon.com/tv/htmlmain";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $h = curl_exec($ch);
   curl_close($ch);
 //////////////////////////////////////////////////////////////////////
+//echo $h;
 $videos1 = explode('class="header channel_group searchable',$h);
 $n=1;
 unset($videos1[0]);
@@ -226,11 +227,11 @@ foreach($videos1 as $video1) {
      //echo $video;
      $t1=explode('tags="',$video);
      $t2=explode('"',$t1[1]);
-     $title=$t2[0];
+     $title=trim($t2[0]);
      $t1=explode('id="',$video);
      $t2=explode('"',$t1[1]);
      $id=$t2[0];
-     if (($id <> "") && ($title <> "") && (strpos($video,"FREE SD") !== false)) {
+     if (($id <> "") && ($title <> "") && (strpos($video,"FREE SD") !== false) && (strpos($title,"featured") === false)) {
     echo '
     <item>
     <title>'.$title.'</title>

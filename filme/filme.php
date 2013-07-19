@@ -189,6 +189,7 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>kinox.to</title>
 <link><?php echo $host; ?>/scripts/filme/php/kinox_main.php</link>
@@ -202,15 +203,16 @@ ret;
 <annotation>http://www.online-moviez.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 
-
-
+<!--
 <item>
 <title>phim47 (Vietnam)</title>
 <link><?php echo $host; ?>/scripts/filme/php/phim47.php?query=1,http://phim47.com/movie-list/phim-le</link>
 <annotation>http://phim47.com</annotation>
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
 <!--
 <item>
 <title>hd-box.org</title>

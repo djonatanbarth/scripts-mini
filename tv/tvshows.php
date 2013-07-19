@@ -172,7 +172,11 @@ function str_between($string, $start, $end){
 	return substr($string,$ini,$len); 
 }
 $host = "http://127.0.0.1/cgi-bin";
+//http://www.tgun.tv/menus2/shows/chmenu2.php
 $l="http://www.tgun.tv/menus2/shows/chmenu".$page.".php";
+/*
+rtmp://198.27.74.25/live&file=
+*/
 $html = file_get_contents($l);
 $videos = explode('a Title="', $html);
 
@@ -180,9 +184,22 @@ unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1=explode('href="',$video);
-    $t2=explode('"',$t1[1]);
+    $t1=explode("http://www.tgun.tv/menus",$video);
+    $t2=explode("?",$t1[1]);
     $ref=$t2[0];
+    if (strpos($ref,"playerindex.php") !== false) {
+      $app = "app";
+      $rtmp="rtmp://50.7.241.202/app";
+    } else if (strpos($ref,"playerindex2.php") !== false) {
+      $app="live";
+      $rtmp="rtmp://198.27.74.25/live";
+    } else if (strpos($ref,"playerindex3.php") !== false) {
+      $app="app";
+      $rtmp="rtmp://198.27.74.25/app";
+    } else {
+      $app="";
+      $rtmp="";
+    }
     preg_match("/\?(\w+)/",$video,$m);
     $link=$m[1];
 
@@ -193,14 +210,14 @@ foreach($videos as $video) {
       $image="http://www.tgun.tv".str_replace(" ","%20",$image);
     $image=str_replace("https","http",$image);
     $title = str_between($video,'</a>','</td>');
-    if (!preg_match("/alexc|width/",$ref)) {
+    if (!preg_match("/alexc|width/",$ref) && $app) {
      echo '
      <item>
      <title>'.$title.'</title>
      <onClick>
      <script>
      showIdle();
-     movie="http://127.0.0.1/cgi-bin/scripts/util/translate2.cgi?stream,Rtmp-options:-a%20app%20-W%20http://www.tgun.tv/jwplayer/player.swf%20-p%20http://www.tgun.tv%20-y%20'.$link.',rtmp://198.27.74.25/app";
+     movie="http://127.0.0.1/cgi-bin/scripts/util/translate2.cgi?stream,Rtmp-options:-a%20'.$app.'%20-W%20http://www.tgun.tv/jwplayer/player.swf%20-p%20http://www.tgun.tv%20-y%20'.$link.','.$rtmp.'";
      cancelIdle();
     storagePath = getStoragePath("tmp");
     storagePath_stream = storagePath + "stream.dat";

@@ -281,7 +281,7 @@ columnCount=5
 	<annotation>YouTube videos.</annotation>
 	<mediaDisplay name="onePartView" />
 </item>
-
+<!--
 <item>
 <title>myVideo.de</title>
 	<link><?php echo $host; ?>/scripts/clip/myvideo_de.php</link>
@@ -290,7 +290,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/myvideo_de.jpg" />
 	<annotation>Gratis Videos, kostenlose Video Clips auf MyVideo .  Die brandneuen gratis Videos von Usern, Kinotrailer, gratis Games, Clips von Talenten, die beliebtesten TV-Formate - MyVideo zeigt sie alle gratis & kostenlos!</annotation>
 </item>
-
+-->
 <item>
 <title>funnyordie.com</title>
 	<link><?php echo $host; ?>/scripts/clip/php/funnyordie_main.php</link>
@@ -365,6 +365,7 @@ columnCount=5
     <media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/ard.jpg" />
 </item>
 -->
+<!--
 <item>
 <title>ZDF Mediathek</title>
 	<link><?php echo $host; ?>/scripts/clip/zdf_main.php</link>
@@ -403,6 +404,7 @@ columnCount=5
 		</text>
     </mediaDisplay>
 </item>
+-->
 <!--
 <item>
 <title>ikiwi.at</title>
@@ -423,6 +425,7 @@ columnCount=5
 	<annotation>Aktuelle Nachrichten aus Vorarlberg, sterreich und der Welt: News, Sport Nachrichten, Wetter, Wirtschaft, Kultur, Stars, Veranstaltungen, Reise, Chat, uvm.</annotation>
 </item>
 -->
+<!--
 <item>
 <title>businessworld</title>
 	<link><?php echo $host; ?>/scripts/clip/php/businessworld.php?query=1</link>
@@ -431,6 +434,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/businessworld.gif" />
 	<annotation>businessworld.de - Wirtschaftsinformationen und Kontakte per Video. Publizieren und recherchieren Sie zu Unternehmen, Produkten, Events, Jobs, Karriere, Ideen und Know-how.</annotation>
 </item>
+-->
 <!--
 <item>
 <title>luegmol.ch</title>
@@ -451,6 +455,7 @@ columnCount=5
 	<annotation>LivingZurich.TV | Videos aus und über Zürich</annotation>
 </item>
 -->
+<!--
 <item>
 <title>crovideos.com</title>
 	<link><?php echo $host; ?>/scripts/clip/php/crovideos.php?query=1</link>
@@ -459,6 +464,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/crovideos.png" />
 	<annotation>Videos Kroatien Video Musik MP3 Croatia Urlaub Reisen | CroVideos.com:</annotation>
 </item>
+-->
 <!--
 <item>
 <title>cliphost24.com</title>
@@ -469,6 +475,7 @@ columnCount=5
 	<annotation>Kostenloser Video Upload Service für Video Files bis 50 MB . Es können Video Dateien verschiedenen Formaten hochgeladen werden und optional können die Uploads in der TOP100 veröffentlicht werden.</annotation>
 </item>
 -->
+<!--
 <item>
 <title>deutschlandreporter.de</title>
 	<link><?php echo $host; ?>/scripts/clip/php/deutschlandreporter.php</link>
@@ -477,6 +484,7 @@ columnCount=5
 	<media:thumbnail url="/usr/local/etc/www/cgi-bin/scripts/clip/image/deutschlandreporter.png" />
 	<annotation>GSD | Karl-Heinz Klevers in Wuppertal - Video - Wuppertal - News - Gesellschaft - News - Menschen:</annotation>
 </item>
+-->
 <!--
 <item>
 <title>uprom.tv</title>

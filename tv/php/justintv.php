@@ -52,7 +52,7 @@ if($query) {
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    2= add to favorite, 3 = delete from favorite
+    2= add, 3 = delete
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -193,7 +193,10 @@ if($query) {
 }
 //http://ro.justin.tv/directory?order=hot&page=2&lang=all
 //http://ro.justin.tv/directory/entertainment?order=hot&page=2&lang=all
+//http://www.justin.tv/directory/entertainment?lang=en&page=2
+//http://www.justin.tv/directory/entertainment?lang=all
 $link="http://justin.tv/directory/".$search."?order=hot&page=".$page."&lang=all";
+$link="http://www.justin.tv/directory/".$search."?lang=all&page=".$page;
 $html=file_get_contents($link);
 
 if($page > 1) { ?>
@@ -222,7 +225,7 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$videos = explode('<li id="channel_', $html);
+$videos = explode('a class="directory-channel-thumbnail', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -238,23 +241,17 @@ foreach($videos as $video) {
     $t3 = explode("/",$t2[0]);
     $link = $t3[3];
     }
-    $t3= explode(">",$t1[3]);
+    $t3= explode(">",$t1[2]);
     $t4=explode("<",$t3[1]);
     $descriere=trim($t4[0]);
+    $title=$descriere;
 
     $t1 = explode('src="', $video);
-    $t2 = explode('"', $t1[1]);
+    $t2 = explode('"', $t1[2]);
     $image = $t2[0];
-    if (strpos($image,".jpg") === false) {
-      $t1 = explode('src="', $video);
-      $t2 = explode('"', $t1[2]);
-      $image = $t2[0];
-    }
+
     if (strpos($image,".jpg") === false)
       $image="";
-    $t1 = explode('class="title">', $video);
-    $t2 = explode('<', $t1[1]);
-    $title = trim($t2[0]);
 /*
 
 */
