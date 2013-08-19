@@ -265,7 +265,10 @@ foreach($videos as $video) {
   
   $t1=explode("src='",$video);
   $t2=explode("'",$t1[1]);
-  $img=$noob."/".$t2[0];
+  if (strpos($t2[0],"http")=== false)
+    $img=$noob."/".$t2[0];
+  else
+    $img=$t2[0];
   if (strpos($link,"episodes") !==false) {
    $link=$host."/scripts/filme/php/noobroom_series.php?query=".urlencode($link).",".urlencode($title);
    echo '

@@ -48,7 +48,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="50" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Apăsaţi 1 sau 2 pentru salt +- 50
+    Press 1 or 2 to jump +- 50
 		</text>
   	<text redraw="yes" offsetXPC="75" offsetYPC="12" widthPC="25" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -214,7 +214,7 @@ $l="http://www.filmon.com/tv/htmlmain";
   curl_close($ch);
 //////////////////////////////////////////////////////////////////////
 //echo $h;
-$videos1 = explode('class="header channel_group searchable',$h);
+$videos1 = explode('channel_group searchable',$h);
 $n=1;
 unset($videos1[0]);
 $videos1 = array_values($videos1);

@@ -43,11 +43,11 @@ if ($tv=="0")
   //streamer": "http://noobroom1.com/fork.php?type=flv&auth=xxxxxxxxxxxx&loc=15&hd=0&tv=1"
   $auth=str_between($html,"auth=","&");
   if (!$auth) $auth="0";
-// 11 == Montreal
-// 12 == Philadelphia
+// 11 == Los Angeles
+// 12 == New York
 // 14 == Frankfurt
 // 15 == Amsterdam /Default
-// 16 == France
+// 16 == London
 function get_movie($noob1,$s,$id1,$auth1,$hd1,$tv1,$id1) {
   $i=$s;
   if ($tv1=="1") $hd1="0";
@@ -71,16 +71,16 @@ function get_movie($noob1,$s,$id1,$auth1,$hd1,$tv1,$id1) {
 }
 //
 if ($hd < 2) {
-if ($server == "0") // Montreal
+if ($server == "0") // Montreal -- Los Angeles
   $movie=get_movie($noob,"13",$id,$auth,$hd,$tv,$id);
-elseif ($server == "1") //Philadelphia
+elseif ($server == "1") //Philadelphia  ---> New York
   $movie=get_movie($noob,"12",$id,$auth,$hd,$tv,$id);
 elseif ($server == "2") //Frankfurt
   $movie=get_movie($noob,"14",$id,$auth,$hd,$tv,$id);
 elseif ($server == "3") //Amsterdam
   $movie=get_movie($noob,"15",$id,$auth,$hd,$tv,$id);
-elseif ($server == "4") //France
-  $movie=get_movie($noob,"16",$id,$auth,$hd,$tv,$id);
+elseif ($server == "4") //France   // London
+  $movie=get_movie($noob,"20",$id,$auth,$hd,$tv,$id);
 else //Default
   $movie=get_movie($noob,"15",$id,$auth,$hd,$tv,$id);
 } else {
@@ -94,8 +94,8 @@ elseif ($server == "2") //Frankfurt
   $serv="14";
 elseif ($server == "3") //Amsterdam
   $serv="15";
-elseif ($server == "4") //France
-  $serv="16";
+elseif ($server == "4") //France // London
+  $serv="20";
 else //Default
   $serv="15";
   if ($hd=="2")

@@ -45,15 +45,15 @@ $host = "http://127.0.0.1/cgi-bin";
     if (server == "-1")
       sserver="Defaut";
     else if (server == "0")
-      sserver="Montreal";
+      sserver="Los Angeles";
     else if (server == "1")
-      sserver="Philadelphia";
+      sserver="New York";
     else if (server == "2")
       sserver="Frankfurt";
     else if (server == "3")
       sserver="Amsterdam";
     else if (server == "4")
-      sserver="France";
+      sserver="London";
   setRefreshTime(1);
 </onEnter>
 <onExit>
@@ -252,13 +252,13 @@ else if(userInput == "seven" || userInput == "7")
 if (server == "-1")
   {
     server = "0";
-    sserver="Montreal";
+    sserver="Los Angeles";
   }
 
 else if (server == "0")
   {
     server = "1";
-    sserver="Philadelphia";
+    sserver="New York";
   }
 
 else if (server == "1")
@@ -276,7 +276,7 @@ else if (server == "2")
 else if (server == "3")
   {
     server = "4";
-    sserver="France";
+    sserver="London";
   }
 
 else if (server == "4")
@@ -366,6 +366,20 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
 	return substr($string,$ini,$len);
 }
+$ff="/tmp/n.txt";
+if (!file_exists($ff)) {
+$l="http://noobroom.com/";
+$h=file_get_contents($l);
+$t1=explode('value="',$h);
+$n= count($t1);
+$t2=explode('"',$t1[$n-1]);
+$noob=$t2[0];
+$fh = fopen($ff, 'w');
+fwrite($fh, $noob);
+fclose($fh);
+} else {
+$noob=file_get_contents($ff);
+}
 if (file_exists("/data"))
   $f= "/data/noobroom.dat";
 else
@@ -392,6 +406,7 @@ foreach ($arr as $key => $val) {
 	$year="";
     $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
     $image="http://174.120.232.227/~usahowie/2img/".$link.".jpg";
+    $image=$noob."/2img/".$link.".jpg";
     echo '
      <item>
      <title>'.$title.'</title>

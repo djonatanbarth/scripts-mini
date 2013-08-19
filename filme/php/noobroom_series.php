@@ -63,15 +63,15 @@ $tit = urldecode($queryArr[1]);
     if (server == "-1")
       sserver="Defaut";
     else if (server == "0")
-      sserver="Montreal";
+      sserver="Los Angeles";
     else if (server == "1")
-      sserver="Philadelphia";
+      sserver="New York";
     else if (server == "2")
       sserver="Frankfurt";
     else if (server == "3")
       sserver="Amsterdam";
     else if (server == "4")
-      sserver="France";
+      sserver="London";
   setRefreshTime(1);
 </onEnter>
 <onExit>
@@ -257,13 +257,13 @@ else if(userInput == "seven" || userInput == "7")
 if (server == "-1")
   {
     server = "0";
-    sserver="Montreal";
+    sserver="Los Angeles";
   }
 
 else if (server == "0")
   {
     server = "1";
-    sserver="Philadelphia";
+    sserver="New York";
   }
 
 else if (server == "1")
@@ -281,7 +281,7 @@ else if (server == "2")
 else if (server == "3")
   {
     server = "4";
-    sserver="France";
+    sserver="London";
   }
 
 else if (server == "4")

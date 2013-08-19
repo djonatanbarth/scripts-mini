@@ -5,7 +5,7 @@ wget -q   http://www.livehd.tv/rtmp/flash-mbr.php
 token=`cat live.php | grep token | sed "s/\(.*\)token':'//;s/',\(.*\)//"`
 if [ -z "$token"  ]; then token=6c69766568642e747620657374652063656c206d616920746172652121; fi
 ip=`cat flash-mbr.php | grep rtmp | sed "s_/live\(.*\)__;s_\(.*\)rtmp://__;s_:1935__"`
-if [ -z "$ip"  ]; then ip=91.213.34.18; fi
+if [ -z "$ip"  ]; then ip=91.201.78.3; fi
 streamer=`cat flash-mbr.php | grep rtmp | sed "s_</jwplayer:streamer\(.*\)__;s_\(.*\)jwplayer:streamer>__"`
 channel=`echo $QUERY_STRING|sed "s_\(.*\)live/__g;s_\&amp;_\&_g;s/+//g"`
 if [ -z "$streamer"  ]; then streamer=`echo $QUERY_STRING|sed "s_\&amp;_\&_g;s/+//g;s/93.114.43.3/$ip/g;s:/$channel::"`; fi
