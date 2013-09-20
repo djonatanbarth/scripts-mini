@@ -38,7 +38,7 @@ $host = "http://127.0.0.1/cgi-bin";
 	showHeader="no"
 	showDefaultInfo="no"
 	imageFocus=""
-	sliding="no"
+	sliding="no" idleImageXPC="5" idleImageYPC="5" idleImageWidthPC="8" idleImageHeightPC="10"
 >
 
   	<text align="center" offsetXPC="0" offsetYPC="0" widthPC="100" heightPC="20" fontSize="30" backgroundColor="10:105:150" foregroundColor="100:200:255">
@@ -191,10 +191,10 @@ if($query) {
    $search = $queryArr[1];
 }
 if($page) {
-	$html = file_get_contents("http://www.youclubvideo.com/video/toate-cat-page-".$page."-ord-date-desc");
+	$html = file_get_contents("http://www.alltimeclubbing.com/explore/alltime/page-".$page);
 } else {
   $page = 1;
-	$html = file_get_contents("http://www.youclubvideo.com/video/toate-cat-page-1-ord-date-desc");
+	$html = file_get_contents("http://www.alltimeclubbing.com/explore/alltime");
 }
 
 
@@ -239,8 +239,8 @@ function c($title) {
      return $title;
 }
 $image = "/usr/local/etc/www/cgi-bin/scripts/clip/image/youclubvideo.png";
-$html=str_between($html,'id="media_results"','</ul>');
-$videos = explode('<li', $html);
+//$html=str_between($html,'id="media_results"','</ul>');
+$videos = explode('div class="item"', $html);
 unset($videos[0]);
 $videos = array_values($videos);
 
@@ -256,14 +256,14 @@ foreach($videos as $video) {
     //$t1 = explode('"a_white">', $video);
     //$t2 = explode('<', $t1[2]);
     //$title = $t2[0];
-    $t1=explode('alt="',$video);
+    $t1=explode('title="',$video);
     $t2=explode('"',$t1[1]);
     $title=$t2[0];
-    $title = c(htmlentities($title));
-    $title=trim($title);
+    //$title = c(htmlentities($title));
+    //$title=trim($title);
     $descriere=$title;
     
-    $t1=explode('class="time opacity8">',$video);
+    $t1=explode('video-time label label-inverse">',$video);
     $t2=explode('</span',$t1[1]);
     $durata = "Durata:".trim(preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$t2[0]));
 

@@ -237,7 +237,7 @@ foreach($videos as $video) {
     <script>
     showIdle();
     url=geturl("http://127.0.0.1/cgi-bin/scripts/tv/ilive_link.php?file='.urlencode($link).'");
-    movie="http://127.0.0.1/cgi-bin/scripts/util/translate.cgi?stream," + url;
+    movie="http://127.0.0.1/cgi-bin/scripts/tv/ilive.cgi?'.mt_rand().'";
     annotation=url;
     cancelIdle();
     playItemURL(movie, 10);

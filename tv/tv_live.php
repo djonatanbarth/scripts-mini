@@ -201,14 +201,14 @@ ret;
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>TV Live - IPTV Player</title>
 <link><?php echo $host; ?>/scripts/tv/tv_iptv.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>TV Shows</title>
 <link><?php echo $host; ?>/scripts/tv/tvshows.php?query=1</link>

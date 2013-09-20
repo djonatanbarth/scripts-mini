@@ -76,11 +76,11 @@ if ($server == "0") // Montreal -- Los Angeles
 elseif ($server == "1") //Philadelphia  ---> New York
   $movie=get_movie($noob,"12",$id,$auth,$hd,$tv,$id);
 elseif ($server == "2") //Frankfurt
-  $movie=get_movie($noob,"14",$id,$auth,$hd,$tv,$id);
+  $movie=get_movie($noob,"11",$id,$auth,$hd,$tv,$id);
 elseif ($server == "3") //Amsterdam
   $movie=get_movie($noob,"15",$id,$auth,$hd,$tv,$id);
 elseif ($server == "4") //France   // London
-  $movie=get_movie($noob,"20",$id,$auth,$hd,$tv,$id);
+  $movie=get_movie($noob,"10",$id,$auth,$hd,$tv,$id);
 else //Default
   $movie=get_movie($noob,"15",$id,$auth,$hd,$tv,$id);
 } else {
@@ -91,11 +91,11 @@ if ($server == "0") // Montreal
 elseif ($server == "1") //Philadelphia
   $serv="12";
 elseif ($server == "2") //Frankfurt
-  $serv="14";
+  $serv="11";
 elseif ($server == "3") //Amsterdam
   $serv="15";
 elseif ($server == "4") //France // London
-  $serv="20";
+  $serv="10";
 else //Default
   $serv="15";
   if ($hd=="2")
