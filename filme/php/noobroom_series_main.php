@@ -13,8 +13,23 @@ $l="http://noobroom.com/";
 $h=file_get_contents($l);
 $t1=explode('value="',$h);
 $n= count($t1);
-$t2=explode('"',$t1[$n-1]);
+$t2=explode('"',$t1[1]); // $t1[$n-1]
 $noob=$t2[0];
+if ($n > 2) {
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_HEADER, true);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  $h = curl_exec($ch);
+  curl_close($ch);
+  if (strpos($h,"200 OK") === false) {
+    $t2=explode('"',$t1[2]);
+    $noob=$t2[0];
+  }
+}
 $fh = fopen($ff, 'w');
 fwrite($fh, $noob);
 fclose($fh);

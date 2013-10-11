@@ -200,7 +200,7 @@ foreach($videos as $video) {
     $link = 'http://www.dailymotion.com/user'.$t2[0];
 
     $t1 = explode('src="', $video);
-    $t2 = explode('?', $t1[1]);
+    $t2 = explode('"', $t1[1]);
     $image = $t2[0];
 
     $t1 = explode('title="', $video);
@@ -208,7 +208,7 @@ foreach($videos as $video) {
     $title = trim($t2[0]);
     if ($title == "") {
     $t1=explode('href="',$video);
-    $t2=explode(">",$t1[2]);
+    $t2=explode(">",$t1[3]);
     $t3=explode("<",$t2[1]);
     $title=trim($t3[0]);
     }

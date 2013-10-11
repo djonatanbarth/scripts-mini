@@ -52,7 +52,7 @@ if($query) {
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Apăsaţi 2 pentru download, 3 pentru Download Manager
+    Press 2 for download, 3 for Download Manager
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -226,6 +226,7 @@ if($search) {
 <?php } ?>
 
 <?php
+include ("../../common.php");
 function str_between($string, $start, $end){
 	$string = " ".$string; $ini = strpos($string,$start);
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini;
@@ -237,7 +238,8 @@ function getRewriteString($string) {
     $string    = preg_replace("/&amp;(.)(acute|cedil|circ|ring|tilde|uml|horn);/", "$1", $string);
     return $string;
 }
-$videos = explode('dmpi_video_preview', $html);
+//sd_video_wv3item dmpi_video_item
+$videos = explode('dmpi_video_item', $html);
 
 unset($videos[0]);
 $videos = array_values($videos);
@@ -259,9 +261,10 @@ foreach($videos as $video) {
     $t3=explode("<",$t2[1]);
     $title=trim($t3[0]);
     if ($title == "") $title="Video...";
-    $title = str_replace("&nbsp;","",$title);
-    $title = str_replace("&amp;","&",$title);
-    $title = getRewriteString($title);
+    //$title = str_replace("&nbsp;","",$title);
+    //$title = str_replace("&amp;","&",$title);
+    //$title = getRewriteString($title);
+    $title=fix_s($title);
     /**
     $title = htmlentities($title);
     $title = str_replace("&ccedil;","&#231;",$title);
@@ -290,14 +293,14 @@ foreach($videos as $video) {
     
     $t1=explode('class="dmco_date">',$video);
     $t2=explode('<',$t1[1]);
-    $pub="Data:".$t2[0];
+    $pub="Data:".fix_s($t2[0]);
     
     $t1=explode('class="dmpi_video_description foreground">',$video);
     $t2=explode('</div>',$t1[1]);
     $descriere=$t2[0];
 	$descriere = preg_replace("/(<\/?)(\w+)([^>]*>)/e","",$descriere);
 	$descriere = str_replace("&nbsp;","",$descriere);
-
+    $descriere = fix_s($descriere);
     $name = preg_replace('/[^A-Za-z0-9_]/','_',$title).".mp4";
 
     echo '
