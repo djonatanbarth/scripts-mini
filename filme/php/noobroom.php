@@ -407,6 +407,7 @@ if (strpos($l,"azlist") !== false) {
       $title1=$title.$year;
    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
    $image=$noob."/2img/".$link.".jpg";
+   $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
    if ($title) {
      echo '
      <item>
@@ -483,6 +484,7 @@ foreach($videos as $video) {
       $title1=$title;
    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
    $image=$noob."/2img/".$link.".jpg";
+   $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
    if ($title) {
      echo '
      <item>
@@ -564,6 +566,7 @@ foreach ($arr as $key => $val) {
       $title1=$title;
    $link1="http://127.0.0.1/cgi-bin/scripts/filme/php/noobroom_link.php?file=".$link.",no,";
    $image=$noob."/2img/".$link.".jpg";
+   $image="http://199.192.217.10/~nooboard/2img/".$link.".jpg";
    if ($title) {
      echo '
      <item>

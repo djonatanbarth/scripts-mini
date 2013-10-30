@@ -49,7 +49,7 @@ $host = "http://127.0.0.1/cgi-bin";
 		  <script>getPageInfo("pageTitle");</script>
 		</text>
   	<text align="left" offsetXPC="6" offsetYPC="15" widthPC="100" heightPC="4" fontSize="16" backgroundColor="10:105:150" foregroundColor="100:200:255">
-    Press 2 for download, 3 for download manager
+    Apasati 2 pentru download, 3 pentru download manager
 		</text>
   	<text redraw="yes" offsetXPC="85" offsetYPC="12" widthPC="10" heightPC="6" fontSize="20" backgroundColor="10:105:150" foregroundColor="60:160:205">
 		  <script>sprintf("%s / ", focus-(-1))+itemCount;</script>
@@ -230,15 +230,16 @@ function str_between($string, $start, $end){
 	if ($ini == 0) return ""; $ini += strlen($start); $len = strpos($string,$end,$ini) - $ini; 
 	return substr($string,$ini,$len); 
 }
-$v_id = str_between($html, '<ul class="video-tag-list">', '</ul>');
+//echo $html;
+//$v_id = str_between($html, '<ul class="section03"', '</ul>');
 $v_id = $html;
-$videos = explode('<li id="obj', $v_id);
+$videos = explode('id="obj', $v_id);
 
 unset($videos[0]);
 $videos = array_values($videos);
 
 foreach($videos as $video) {
-    $t1 = explode('<a href="', $video);
+    $t1 = explode('href="', $video);
     $t2 = explode('"', $t1[1]);
     $link = $t2[0];
 
@@ -246,7 +247,7 @@ foreach($videos as $video) {
     $t2 = explode('"', $t1[1]);
     $image = $t2[0];
 
-    $t1 = explode(' title="', $video);
+    $t1 = explode('title="', $video);
     $t2 = explode('"', $t1[1]);
     $title = $t2[0];
 

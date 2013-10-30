@@ -230,13 +230,14 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>TV Live from ilive.to</title>
 <link><?php echo $host; ?>/scripts/tv/ilive.php?query=1,</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <!--
 <item>
 <title>TV Live from freedocast.com</title>
@@ -245,33 +246,36 @@ ret;
 <mediaDisplay name="threePartsView"/>
 </item>
 -->
+<!--
 <item>
 <title>TV Live from Justin.tv</title>
 <link><?php echo $host; ?>/scripts/tv/php/justintv_main.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 <item>
 <title>FilmOn</title>
 <link><?php echo $host; ?>/scripts/tv/php/filmon.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+<!--
 <item>
 <title>Youtube live</title>
 <link><?php echo $host; ?>/scripts/tv/yt_live_main.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
+-->
+<!--
 <item>
 <title>TV Live - Deutschland (tv-kino.net)</title>
 <link><?php echo $host; ?>/scripts/tv/tv-kino.php</link>
 <media:thumbnail url="image/tv_radio.png" />
 <mediaDisplay name="threePartsView"/>
 </item>
-
+-->
 
 <item>
 <title>TV Live - Vietnam (vtc.com.vn)</title>

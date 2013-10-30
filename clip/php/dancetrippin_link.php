@@ -7,8 +7,15 @@ function str_between($string, $start, $end){
 }
 $link = $_GET["file"];
 $html = file_get_contents($link);
-$link = str_between($html, 'url: "', '"');
+$l=str_between($html,"config=",'"');
+$h=file_get_contents(urldecode($l));
+$link = str_between($h, 'url": "', '"');
+$link=str_replace("https","http",$link);
+$movie=file_get_contents("http://127.0.0.1/cgi-bin/scripts/filme/php/link.php?file=".$link);
+/*
 if (!preg_match("/mp4/",$link))
   $link=str_between($html,'file": "','"');
-print $link;
+*/
+//$movie=str_replace("&","&amp;",$movie);
+print $movie;
 ?>

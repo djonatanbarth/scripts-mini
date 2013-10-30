@@ -108,6 +108,20 @@ else //Default
      $movie= $noob."/".$serv."/".$auth."/".$id."_hd.mp4";
    else
      $movie= $noob."/".$serv."/".$auth."/episode_".$id.".mp4";
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $movie);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_HEADER, 1);
+  curl_setopt($ch, CURLOPT_NOBODY, 1);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, "/tmp/noobroom.txt");
+  curl_setopt($ch, CURLOPT_REFERER,$noob."/?".$id);
+  curl_setopt($ch, CURLOPT_HTTPHEADER, array("Accept: text/html,application/xhtml+xml,application/xml;q=0.9,*/*;q=0.8","Accept-Language: ro-ro,ro;q=0.8,en-us;q=0.6,en-gb;q=0.4,en;q=0.2","Accept-Encoding: gzip, deflate"));
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:14.0) Gecko/20100101 Firefox/14.0.1');
+  $h1 = curl_exec($ch);
+  curl_close($ch);
+  $t1=explode("Location:",$h1);
+  $t2=explode("\n",$t1[1]);
+  $movie=trim($t2[0]);
 }
 //////////////////////////////////////////////////////////////////
 $subtitle="off";

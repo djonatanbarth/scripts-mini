@@ -15,7 +15,6 @@ $t1=explode('value="',$h);
 $n= count($t1);
 $t2=explode('"',$t1[1]); // $t1[$n-1]
 $noob=$t2[0];
-if ($n > 2) {
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
@@ -25,14 +24,28 @@ if ($n > 2) {
   curl_setopt($ch, CURLOPT_TIMEOUT, 30);
   $h = curl_exec($ch);
   curl_close($ch);
-  if (strpos($h,"200 OK") === false) {
-    $t2=explode('"',$t1[2]);
-    $noob=$t2[0];
-  }
+  if (strpos($h,"200 OK") !== false) $out=$noob;
+if ($n > 2 && !$out) {
+  $t2=explode('"',$t1[2]);
+  $noob=$t2[0];
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt($ch, CURLOPT_HEADER, true);
+  curl_setopt($ch, CURLOPT_TIMEOUT, 30);
+  $h = curl_exec($ch);
+  curl_close($ch);
+  if (strpos($h,"200 OK") !== false) $out=$noob;
 }
+if ($out) {
 $fh = fopen($ff, 'w');
 fwrite($fh, $noob);
 fclose($fh);
+} else {
+ die();
+}
 } else {
 $noob=file_get_contents($ff);
 }
@@ -51,12 +64,42 @@ if (file_exists($noob_log) && !file_exists($cookie)) {
   $post="email=".$user."&password=".$pass;
 }
 if ($post) {
+  $lp=$check."s2=".urlencode($post);
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $lp);
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_exec($ch);
+  curl_close($ch);
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $noob."/");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt ($ch, CURLOPT_REFERER, $noob."/");
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
+
+  $ch = curl_init();
+  curl_setopt($ch, CURLOPT_URL, $noob."/login.php");
+  curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
+  curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt ($ch, CURLOPT_REFERER, $noob."/");
+  curl_setopt($ch, CURLOPT_COOKIEJAR, $cookie);
+  curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
+  $html = curl_exec($ch);
+  curl_close($ch);
+
   $l=$noob."/login2.php";
-  //$l=$noob."/login.php";
   $ch = curl_init();
   curl_setopt($ch, CURLOPT_URL, $l);
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
+  curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows NT 5.1; rv:22.0) Gecko/20100101 Firefox/22.0');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
   curl_setopt ($ch, CURLOPT_POST, 1);
   curl_setopt ($ch, CURLOPT_REFERER, $noob."/login.php");
@@ -72,6 +115,7 @@ $l=$noob."/series.php";
   curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
   curl_setopt($ch, CURLOPT_USERAGENT, 'Mozilla/5.0 (Windows; U; Windows NT 6.1; en-US; rv:1.9.1.2) Gecko/20090729 Firefox/3.5.2 GTB5');
   curl_setopt($ch, CURLOPT_FOLLOWLOCATION  ,1);
+  curl_setopt ($ch, CURLOPT_REFERER, $noob."/login.php");
   curl_setopt($ch, CURLOPT_COOKIEFILE, $cookie);
   $html = curl_exec($ch);
   curl_close($ch);

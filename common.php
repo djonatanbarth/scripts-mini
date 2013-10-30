@@ -66,5 +66,5 @@ function fix_s($s) {
     $s=urldecode($s);
      return $s;
 }
-$check="http://hddlinks.p.ht/c.php?";
+$check="http://hddlinks.pht.ro/c.php?";
 ?>
